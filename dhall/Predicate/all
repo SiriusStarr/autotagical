@@ -1,0 +1,14 @@
+let between =
+        ../Internal/Predicate/between sha256:0e2edbf587fbb79c9365e990543740e872101074fb23901f7bdbbe74fad5705a
+      ? ../Internal/Predicate/between
+
+let Bound =
+        ../Internal/Predicate/Bound sha256:5df84f4de5c95a2e6e0cadea46dd4fcf4a0345e2190fe034f064351ede3ec30d
+      ? ../Internal/Predicate/Bound
+
+let Predicate =
+        ../Internal/Predicate/Type sha256:f2e4edafdd41ade5527a645f9ae16fb31325419b6bf340c6a81dfa32b60d2462
+      ? ../Internal/Predicate/Type
+
+in  λ(predicates : List Predicate) →
+      between Bound.AllPredicates Bound.AllPredicates predicates

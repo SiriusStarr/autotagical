@@ -1,0 +1,23 @@
+let NameTemplate =
+        ../../Internal/NameTemplate/Folder/Type sha256:8f255b7ff5b97857ac9bf8866fd38022f6a76abc9e78bdfa9ce697f194e2ead7
+      ? ../../Internal/NameTemplate/Folder/Type
+
+let Predicate =
+        ../../Internal/Predicate/Type sha256:f2e4edafdd41ade5527a645f9ae16fb31325419b6bf340c6a81dfa32b60d2462
+      ? ../../Internal/Predicate/Type
+
+in  λ(name : NameTemplate) →
+    λ(predicate : Predicate) →
+    λ(Folder : Type) →
+    λ ( Fix
+      : { getNameF : NameTemplate
+        , getPredicateF : Predicate
+        , getSubfoldersF : List Folder
+        } →
+          Folder
+      ) →
+      Fix
+        { getNameF = name
+        , getPredicateF = predicate
+        , getSubfoldersF = [] : List Folder
+        }

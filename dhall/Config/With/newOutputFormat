@@ -1,0 +1,5 @@
+let OutputFormat =
+        ../../Internal/OutputFormat/Type sha256:90a967648257956b041755ef770b4d5a1adce53345a9443d872080c2f511ca2c
+      ? ../../Internal/OutputFormat/Type
+
+in  λ(format : OutputFormat) → { outputFormat = Some format }

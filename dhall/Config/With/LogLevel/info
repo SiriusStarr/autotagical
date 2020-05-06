@@ -1,0 +1,5 @@
+let LogLevel =
+        ../../../Internal/Logging/LogLevel sha256:8b0ef97f0f052a52dd67e11fa031d0efe3ff18c020f9911ab2179066dee3922e
+      ? ../../../Internal/Logging/LogLevel
+
+in  { logLevel = LogLevel.Info }

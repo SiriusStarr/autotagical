@@ -1,0 +1,5 @@
+let RenamingRule =
+        ../Internal/RenamingSchema/RenamingRule sha256:8e10ff6431dfc53e2972e39049761172511801abc2a726089465cd7a5920571a
+      ? ../Internal/RenamingSchema/RenamingRule
+
+in  λ(rules : List RenamingRule) → rules

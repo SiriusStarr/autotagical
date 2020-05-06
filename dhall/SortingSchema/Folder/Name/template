@@ -1,0 +1,8 @@
+let Component =
+        ../../../Internal/NameTemplate/Folder/Component sha256:713526b7c7b3d4e4b448d56db8d09cb81fbbd06e9ea58a08625f19a9aec3e01a
+      ? ../../../Internal/NameTemplate/Folder/Component
+
+in  λ(components : List Component) →
+      { getFolderNameComponents = components
+      , getFolderNameSeparator = None Text
+      }

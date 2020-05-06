@@ -1,0 +1,12 @@
+let MonthFormat =
+        ./MonthFormat sha256:68591e45385f2983783395728381d90d988fae4c5194a187355131f84b1e1a0a
+      ? ./MonthFormat
+
+let YearFormat =
+        ./YearFormat sha256:b6943c82a96aebfff81eae71343d8727d5764c589668b48edf9e1c4cccf2d9ab
+      ? ./YearFormat
+
+in  < NumberAsMonth : MonthFormat
+    | NumberAsOrdinal
+    | NumberAsYear : { centurySplit : Natural, yearFormat : YearFormat }
+    >

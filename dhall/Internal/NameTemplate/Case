@@ -1,0 +1,7 @@
+< AsCamelCase
+| AsPascalCase
+| AsSnakeCase
+| AsSpinalCase
+| AsTitleCase
+| AsTrainCase
+>

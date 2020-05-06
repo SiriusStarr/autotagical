@@ -1,0 +1,33 @@
+let List/map =
+        https://prelude.dhall-lang.org/List/map sha256:dd845ffb4568d40327f2a817eb42d1c6138b929ca758d50bc33112ef3c885680
+      ? https://prelude.dhall-lang.org/List/map
+
+let Folder =
+        ../../Internal/SortingSchema/Folder sha256:da308686c73f4176e1a9968168dc5bfda657a44c981fb18031a04389132e0f19
+      ? ../../Internal/SortingSchema/Folder
+
+let NameTemplate =
+        ../../Internal/NameTemplate/Folder/Type sha256:8f255b7ff5b97857ac9bf8866fd38022f6a76abc9e78bdfa9ce697f194e2ead7
+      ? ../../Internal/NameTemplate/Folder/Type
+
+let Predicate =
+        ../../Internal/Predicate/Type sha256:f2e4edafdd41ade5527a645f9ae16fb31325419b6bf340c6a81dfa32b60d2462
+      ? ../../Internal/Predicate/Type
+
+in  λ(name : NameTemplate) →
+    λ(predicate : Predicate) →
+    λ(subfolders : List Folder) →
+    λ(Folder : Type) →
+    λ ( Fix
+      : { getNameF : NameTemplate
+        , getPredicateF : Predicate
+        , getSubfoldersF : List Folder
+        } →
+          Folder
+      ) →
+      Fix
+        { getNameF = name
+        , getPredicateF = predicate
+        , getSubfoldersF =
+            List/map Folder@1 Folder (λ(f : Folder@1) → f Folder Fix) subfolders
+        }

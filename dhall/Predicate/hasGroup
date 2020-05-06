@@ -1,0 +1,27 @@
+let Bound =
+        ../Internal/Predicate/Bound sha256:5df84f4de5c95a2e6e0cadea46dd4fcf4a0345e2190fe034f064351ede3ec30d
+      ? ../Internal/Predicate/Bound
+
+let Tag =
+        ../Internal/Tag/Type sha256:3791aa7a52b92db3877472c57cec53ca856858bbad81156ef1bf29e9aeb2baee
+      ? ../Internal/Tag/Type
+
+let TagGroup =
+        ../Internal/TagGroup/Type sha256:d75f7c562774774cdc426d8659e8befded1cc173aa1e6238eb845a846eb35d8c
+      ? ../Internal/TagGroup/Type
+
+in  λ(group : TagGroup) →
+    λ(Predicate : Type) →
+      let PredicateF =
+            < AlwaysF
+            | BetweenF :
+                { getLowerBoundF : Bound
+                , getUpperBoundF : Bound
+                , getBetweenPredicatesF : List Predicate
+                }
+            | HasGroupF : TagGroup
+            | HasTagF : { hasTagF : Tag, withValueF : Optional (List Text) }
+            | NotF : Predicate
+            >
+
+      in  λ(Fix : PredicateF → Predicate) → Fix (PredicateF.HasGroupF group)

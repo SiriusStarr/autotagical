@@ -1,0 +1,6 @@
+let Component =
+        ../../Internal/NameTemplate/File/Component sha256:c79aa4bc8b3122a4ef0e1b137a70ffe31f80642663bdd226783c288af24f92d2
+      ? ../../Internal/NameTemplate/File/Component
+
+in  λ(components : List Component) →
+      { getFileNameComponents = components, getFileNameSeparator = None Text }

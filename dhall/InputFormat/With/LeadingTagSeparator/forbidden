@@ -1,0 +1,5 @@
+let SeparatorRequirement =
+        ../../../Internal/InputFormat/SeparatorRequirement sha256:047b627a9979b467750a376b4f61681cd1071d132c71007fcd2f7a00df993a17
+      ? ../../../Internal/InputFormat/SeparatorRequirement
+
+in  { leadingTagSeparator = SeparatorRequirement.Forbidden }

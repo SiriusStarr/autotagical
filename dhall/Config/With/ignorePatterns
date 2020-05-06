@@ -1,0 +1,5 @@
+let GlobPatterns =
+        ../../Internal/GlobPatterns/Type sha256:26a29e0113646fb623fba2a6657b31b99127b689d510ef6761df7dd49da8a5bb
+      ? ../../Internal/GlobPatterns/Type
+
+in  λ(patterns : GlobPatterns) → { ignorePatterns = Some patterns }

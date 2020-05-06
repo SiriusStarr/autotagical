@@ -1,0 +1,49 @@
+let List/map =
+        https://prelude.dhall-lang.org/List/map sha256:dd845ffb4568d40327f2a817eb42d1c6138b929ca758d50bc33112ef3c885680
+      ? https://prelude.dhall-lang.org/List/map
+
+let Bound =
+        ./Bound sha256:5df84f4de5c95a2e6e0cadea46dd4fcf4a0345e2190fe034f064351ede3ec30d
+      ? ./Bound
+
+let Predicate =
+        ./Type sha256:f2e4edafdd41ade5527a645f9ae16fb31325419b6bf340c6a81dfa32b60d2462
+      ? ./Type
+
+let Tag =
+        ../Tag/Type sha256:3791aa7a52b92db3877472c57cec53ca856858bbad81156ef1bf29e9aeb2baee
+      ? ../Tag/Type
+
+let TagGroup =
+        ../TagGroup/Type sha256:d75f7c562774774cdc426d8659e8befded1cc173aa1e6238eb845a846eb35d8c
+      ? ../TagGroup/Type
+
+in  λ(lb : Bound) →
+    λ(ub : Bound) →
+    λ(ps : List Predicate) →
+    λ(Predicate : Type) →
+      let PredicateF =
+            < AlwaysF
+            | BetweenF :
+                { getLowerBoundF : Bound
+                , getUpperBoundF : Bound
+                , getBetweenPredicatesF : List Predicate
+                }
+            | HasGroupF : TagGroup
+            | HasTagF : { hasTagF : Tag, withValueF : Optional (List Text) }
+            | NotF : Predicate
+            >
+
+      in  λ(Fix : PredicateF → Predicate) →
+            Fix
+              ( PredicateF.BetweenF
+                  { getLowerBoundF = lb
+                  , getUpperBoundF = ub
+                  , getBetweenPredicatesF =
+                      List/map
+                        Predicate@1
+                        Predicate
+                        (λ(p : Predicate@1) → p Predicate Fix)
+                        ps
+                  }
+              )

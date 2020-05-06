@@ -1,0 +1,1 @@
+λ(acknowledgment : Text) → { clobberDestination = Some acknowledgment }

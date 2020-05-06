@@ -1,0 +1,52 @@
+let Case =
+        ../Case sha256:9e2d5a3c338b63a4e067de578f9e65952648ed6ffcf4ee0caaa211cdb2b3a3c5
+      ? ../Case
+
+let Component =
+        ./Component sha256:c79aa4bc8b3122a4ef0e1b137a70ffe31f80642663bdd226783c288af24f92d2
+      ? ./Component
+
+let Interpret =
+        ../Interpret sha256:12b04186b544ddeb7eea9e853345e2c45533d11bcb3dd76e88b15819f99837d0
+      ? ../Interpret
+
+let Predicate =
+        ../../Predicate/Type sha256:f2e4edafdd41ade5527a645f9ae16fb31325419b6bf340c6a81dfa32b60d2462
+      ? ../../Predicate/Type
+
+let Tag =
+        ../../Tag/Type sha256:3791aa7a52b92db3877472c57cec53ca856858bbad81156ef1bf29e9aeb2baee
+      ? ../../Tag/Type
+
+in  λ(case : Case) →
+    λ(component : Component) →
+    λ(Component : Type) →
+      let ComponentF =
+            < FileDuplicateNumberF
+            | FileFormatAsF :
+                { getFileFormatCaseF : Case
+                , getFileFormatComponentF : Component
+                }
+            | FileIfDuplicateF :
+                { getFileDuplicateComponentsF : List Component }
+            | FileIfThenElseF :
+                { getFileIfPredicateF : Predicate
+                , getFileIfTrueComponentsF : List Component
+                , getFileIfFalseComponentsF : List Component
+                }
+            | FileInterpretF :
+                { getFileInterpretAsF : Interpret
+                , getFileInterpretComponentF : Component
+                }
+            | FileOriginalNameF
+            | FileTagValueF : Tag
+            | FileTextLiteralF : Text
+            >
+
+      in  λ(Fix : ComponentF → Component) →
+            Fix
+              ( ComponentF.FileFormatAsF
+                  { getFileFormatCaseF = case
+                  , getFileFormatComponentF = component Component Fix
+                  }
+              )

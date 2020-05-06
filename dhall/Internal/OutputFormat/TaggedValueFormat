@@ -1,0 +1,10 @@
+let TagValueOrder =
+        ../InputFormat/TagValueOrder sha256:2e396d0f33e0b61b28fc6526ad284de13a74cec6aaa6d3006cd3a6c24765a560
+      ? ../InputFormat/TagValueOrder
+
+in  { order : TagValueOrder
+    , preTagValueSeparator : Optional Text
+    , tagValueSeparator : Text
+    , postTagValueSeparator : Optional Text
+    , pureTagsAllowed : Bool
+    }

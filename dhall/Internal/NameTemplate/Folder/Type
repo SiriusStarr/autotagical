@@ -1,0 +1,7 @@
+let Component =
+        ./Component sha256:713526b7c7b3d4e4b448d56db8d09cb81fbbd06e9ea58a08625f19a9aec3e01a
+      ? ./Component
+
+in  { getFolderNameComponents : List Component
+    , getFolderNameSeparator : Optional Text
+    }

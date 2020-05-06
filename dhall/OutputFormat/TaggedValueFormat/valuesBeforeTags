@@ -1,0 +1,14 @@
+let TagValueOrder =
+        ../../Internal/InputFormat/TagValueOrder sha256:2e396d0f33e0b61b28fc6526ad284de13a74cec6aaa6d3006cd3a6c24765a560
+      ? ../../Internal/InputFormat/TagValueOrder
+
+in  λ(preValueSeparator : Optional Text) →
+    λ(valueTagSeparator : Text) →
+    λ(postTagSeparator : Optional Text) →
+    λ(pureTagsAllowed : Bool) →
+      { order = TagValueOrder.ValueBeforeTag
+      , preTagValueSeparator = preValueSeparator
+      , tagValueSeparator = valueTagSeparator
+      , postTagValueSeparator = postTagSeparator
+      , pureTagsAllowed
+      }

@@ -1,0 +1,9 @@
+let GlobPatterns =
+        ../GlobPatterns/Type sha256:26a29e0113646fb623fba2a6657b31b99127b689d510ef6761df7dd49da8a5bb
+      ? ../GlobPatterns/Type
+
+let RenamingSchema =
+        ../RenamingSchema/Type sha256:94dc5d112a7bbcdb1dbabeaf1527977f2cf81859f14dac5139e202dcc6450f13
+      ? ../RenamingSchema/Type
+
+in  { patterns : GlobPatterns, schema : RenamingSchema }

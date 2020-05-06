@@ -1,0 +1,14 @@
+let Order =
+        ./TagValueOrder sha256:2e396d0f33e0b61b28fc6526ad284de13a74cec6aaa6d3006cd3a6c24765a560
+      ? ./TagValueOrder
+
+let Separator =
+        ./Separator sha256:0e5d8464af2df9c7ffae603f39803634d3dcecb28de50af26875820a1074c36d
+      ? ./Separator
+
+in  { order : Order
+    , preTagValueSeparator : Optional Separator
+    , tagValueSeparator : Separator
+    , postTagValueSeparator : Optional Separator
+    , pureTagsAllowed : Bool
+    }

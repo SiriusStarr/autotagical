@@ -1,0 +1,41 @@
+let GlobPatterns =
+        ../GlobPatterns/Type sha256:26a29e0113646fb623fba2a6657b31b99127b689d510ef6761df7dd49da8a5bb
+      ? ../GlobPatterns/Type
+
+let LogDestination =
+        ../Logging/LogDestination sha256:47393d4c5bdc46697670d9b6d4c73c4875c1df2f2cf2f1cbe68b2afe03c0816f
+      ? ../Logging/LogDestination
+
+let LogLevel =
+        ../Logging/LogLevel sha256:8b0ef97f0f052a52dd67e11fa031d0efe3ff18c020f9911ab2179066dee3922e
+      ? ../Logging/LogLevel
+
+let InputFormat =
+        ../InputFormat/Type sha256:33b17ef96b10f2f3395cb0138d822bb04bbdc89bf57837a9b4de4e60a94a203f
+      ? ../InputFormat/Type
+
+let OutputFormat =
+        ../OutputFormat/Type sha256:90a967648257956b041755ef770b4d5a1adce53345a9443d872080c2f511ca2c
+      ? ../OutputFormat/Type
+
+let Renaming =
+        ./Renaming sha256:cb096bc4ef6a244d846ece372cf28dec90f13786defc97e5f08fb992c160785b
+      ? ./Renaming
+
+let SortingSchema =
+        ../SortingSchema/Type sha256:55918431a8e53e10c8ea9e00dffe2be41d1cab52cb881ec89e1f6ce76815d1b7
+      ? ../SortingSchema/Type
+
+in  { clobberDestination : Optional Text
+    , ignorePatterns : Optional GlobPatterns
+    , inputFolders : List Text
+    , inputFormat : InputFormat
+    , inputPatterns : GlobPatterns
+    , keepCopyInInputFolder : Bool
+    , logDestination : LogDestination
+    , logLevel : LogLevel
+    , outputFolders : List Text
+    , outputFormat : Optional OutputFormat
+    , renaming : Optional Renaming
+    , sortingSchema : SortingSchema
+    }

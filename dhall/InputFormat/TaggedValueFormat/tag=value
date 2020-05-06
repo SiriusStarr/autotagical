@@ -1,0 +1,14 @@
+let Separator =
+        ../../Internal/InputFormat/Separator sha256:0e5d8464af2df9c7ffae603f39803634d3dcecb28de50af26875820a1074c36d
+      ? ../../Internal/InputFormat/Separator
+
+let tagsBeforeValues =
+        ./tagsBeforeValues sha256:6eefebd6d8d480f918016e8a69060e0b826f3fee336cdcc18e3e655d6f95f18d
+      ? ./tagsBeforeValues
+
+in  λ(pureTagsAllowed : Bool) →
+      tagsBeforeValues
+        (None Separator)
+        (Separator.Keyword "=")
+        (None Separator)
+        pureTagsAllowed

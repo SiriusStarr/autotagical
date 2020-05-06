@@ -1,0 +1,11 @@
+let NameTemplate =
+        ../Internal/NameTemplate/File/Type sha256:4c0aacc7eb58503439188e9db3609b1c67b57e9a5dd595ebc8ed9a3699842910
+      ? ../Internal/NameTemplate/File/Type
+
+let Predicate =
+        ../Internal/Predicate/Type sha256:f2e4edafdd41ade5527a645f9ae16fb31325419b6bf340c6a81dfa32b60d2462
+      ? ../Internal/Predicate/Type
+
+in  λ(predicate : Predicate) →
+    λ(name : NameTemplate) →
+      { getRenamingPredicate = predicate, getRenamingTemplate = name }

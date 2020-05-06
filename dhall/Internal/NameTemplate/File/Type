@@ -1,0 +1,7 @@
+let Component =
+        ./Component sha256:c79aa4bc8b3122a4ef0e1b137a70ffe31f80642663bdd226783c288af24f92d2
+      ? ./Component
+
+in  { getFileNameComponents : List Component
+    , getFileNameSeparator : Optional Text
+    }

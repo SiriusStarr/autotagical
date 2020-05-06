@@ -1,0 +1,5 @@
+let YearFormat =
+        ../../../../../Internal/NameTemplate/YearFormat sha256:b6943c82a96aebfff81eae71343d8727d5764c589668b48edf9e1c4cccf2d9ab
+      ? ../../../../../Internal/NameTemplate/YearFormat
+
+in  { `99` = YearFormat.TwoDigitYear, `1999` = YearFormat.FourDigitYear }

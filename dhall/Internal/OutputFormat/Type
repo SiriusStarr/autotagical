@@ -1,0 +1,16 @@
+let Order =
+        ../InputFormat/Order sha256:77ea7cca209ab0ef9afd003a580efa8aba29cf572cbe095698679fb25a96d24c
+      ? ../InputFormat/Order
+
+let TaggedValueFormat =
+        ./TaggedValueFormat sha256:695155008931bf451f550cd682d0057920d1498dceac6e133774c6b200c6ba40
+      ? ./TaggedValueFormat
+
+in  { tagOrder : Order
+    , openingSeparator : Text
+    , leadingTagSeparator : Bool
+    , tagSeparator : Text
+    , taggedValueFormat : Optional TaggedValueFormat
+    , trailingTagSeparator : Bool
+    , closingSeparator : Text
+    }
