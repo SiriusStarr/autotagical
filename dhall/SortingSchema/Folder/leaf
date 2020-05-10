@@ -1,31 +1,31 @@
 let template =
-        ./Name/template sha256:fae0ecccfdeb9019c905f23fd1d4d358300dd08b45f2039fcb99e30e1250f6a1
+        ./Name/template sha256:e7850d1d46f67aebfd3f46158ee2574a892e72be1c4b190618f162145ebea549
       ? ./Name/template
 
 let NameTemplate =
-        ../../Internal/NameTemplate/Folder/Type sha256:8f255b7ff5b97857ac9bf8866fd38022f6a76abc9e78bdfa9ce697f194e2ead7
+        ../../Internal/NameTemplate/Folder/Type sha256:4b5ee9941c2398c2749b45d9324fdb122c8a149bd2fe4b17305a550c9559b55d
       ? ../../Internal/NameTemplate/Folder/Type
 
 let Predicate =
-        ../../Internal/Predicate/Type sha256:f2e4edafdd41ade5527a645f9ae16fb31325419b6bf340c6a81dfa32b60d2462
+        ../../Internal/Predicate/Type sha256:39e210b82052eda7f6cd4814c3d907c727b2ebea1c3c135957eef943014b46e9
       ? ../../Internal/Predicate/Type
 
 let text =
-        ./Name/Component/text sha256:011fcc0f9c0a7929fe08b606c3bdf0e2859a0554c8ef2f3aa2b44a4bd156255f
+        ./Name/Component/text sha256:fd8cb105dcdb6f82d71749f8b291eb66df0d65e3ae67046f481d853616559777
       ? ./Name/Component/text
 
 in  λ(name : Text) →
     λ(predicate : Predicate) →
     λ(Folder : Type) →
     λ ( Fix
-      : { getNameF : NameTemplate
-        , getPredicateF : Predicate
-        , getSubfoldersF : List Folder
+      : { nameF : NameTemplate
+        , predicateF : Predicate
+        , subfoldersF : List Folder
         } →
           Folder
       ) →
       Fix
-        { getNameF = template [ text name ]
-        , getPredicateF = predicate
-        , getSubfoldersF = [] : List Folder
+        { nameF = template [ text name ]
+        , predicateF = predicate
+        , subfoldersF = [] : List Folder
         }

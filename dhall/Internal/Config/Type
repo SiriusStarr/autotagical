@@ -19,11 +19,11 @@ let OutputFormat =
       ? ../OutputFormat/Type
 
 let Renaming =
-        ./Renaming sha256:cb096bc4ef6a244d846ece372cf28dec90f13786defc97e5f08fb992c160785b
+        ./Renaming sha256:6e0190d9d9203cfb7137bbbd3075841665ba437e33a0c7fc35af966959b5e4d4
       ? ./Renaming
 
 let SortingSchema =
-        ../SortingSchema/Type sha256:55918431a8e53e10c8ea9e00dffe2be41d1cab52cb881ec89e1f6ce76815d1b7
+        ../SortingSchema/Type sha256:ea2f86ba67b6dcd6a55f587738b72bf86a078a1a1707a82824b0c5e9bd4f8944
       ? ../SortingSchema/Type
 
 in  { clobberDestination : Optional Text

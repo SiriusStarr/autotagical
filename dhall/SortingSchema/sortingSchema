@@ -1,5 +1,5 @@
 let Folder =
-        ../Internal/SortingSchema/Folder sha256:da308686c73f4176e1a9968168dc5bfda657a44c981fb18031a04389132e0f19
+        ../Internal/SortingSchema/Folder sha256:0c185e7ee40b8477af154373176956de56aa754b40ee64efbfb2140a494791df
       ? ../Internal/SortingSchema/Folder
 
 in  λ(fs : List Folder) → fs

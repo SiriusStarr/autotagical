@@ -3,7 +3,7 @@ let Case =
       ? ../../../../Internal/NameTemplate/Case
 
 let format =
-        ../../../../Internal/NameTemplate/File/format sha256:2b0f4bf250a4e6e295e3c0f2419a9f063796545c394e9eb610a4ee33348f43ce
+        ../../../../Internal/NameTemplate/File/format sha256:5053ebffdd5ce25c9b994f6115898fa9a543f2bef3401018a671a6f66438c05d
       ? ../../../../Internal/NameTemplate/File/format
 
 in  format Case.AsTrainCase

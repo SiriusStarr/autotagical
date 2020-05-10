@@ -7,15 +7,15 @@ let Case =
       ? ../../../Internal/NameTemplate/Case
 
 let Component =
-        ../../../Internal/NameTemplate/File/Component sha256:c79aa4bc8b3122a4ef0e1b137a70ffe31f80642663bdd226783c288af24f92d2
+        ../../../Internal/NameTemplate/File/Component sha256:732fac7da6b8aa13bed3aff6440a17d342eab111607cc4e4454454003b287eda
       ? ../../../Internal/NameTemplate/File/Component
 
 let Interpret =
-        ../../../Internal/NameTemplate/Interpret sha256:12b04186b544ddeb7eea9e853345e2c45533d11bcb3dd76e88b15819f99837d0
+        ../../../Internal/NameTemplate/Interpret sha256:da352ee981f47618957222659071fb284597087a51e9426729b3fde383c77a91
       ? ../../../Internal/NameTemplate/Interpret
 
 let Predicate =
-        ../../../Internal/Predicate/Type sha256:f2e4edafdd41ade5527a645f9ae16fb31325419b6bf340c6a81dfa32b60d2462
+        ../../../Internal/Predicate/Type sha256:39e210b82052eda7f6cd4814c3d907c727b2ebea1c3c135957eef943014b46e9
       ? ../../../Internal/Predicate/Type
 
 let Tag =
@@ -27,21 +27,15 @@ in  λ(predicate : Predicate) →
     λ(Component : Type) →
       let ComponentF =
             < FileDuplicateNumberF
-            | FileFormatAsF :
-                { getFileFormatCaseF : Case
-                , getFileFormatComponentF : Component
-                }
-            | FileIfDuplicateF :
-                { getFileDuplicateComponentsF : List Component }
+            | FileFormatAsF : { componentF : Component, formatCaseF : Case }
+            | FileIfDuplicateF : { componentsF : List Component }
             | FileIfThenElseF :
-                { getFileIfPredicateF : Predicate
-                , getFileIfTrueComponentsF : List Component
-                , getFileIfFalseComponentsF : List Component
+                { predicateF : Predicate
+                , trueComponentsF : List Component
+                , falseComponentsF : List Component
                 }
             | FileInterpretF :
-                { getFileInterpretAsF : Interpret
-                , getFileInterpretComponentF : Component
-                }
+                { componentF : Component, interpretAsF : Interpret }
             | FileOriginalNameF
             | FileTagValueF : Tag
             | FileTextLiteralF : Text
@@ -50,13 +44,13 @@ in  λ(predicate : Predicate) →
       in  λ(Fix : ComponentF → Component) →
             Fix
               ( ComponentF.FileIfThenElseF
-                  { getFileIfPredicateF = predicate
-                  , getFileIfTrueComponentsF =
+                  { predicateF = predicate
+                  , trueComponentsF =
                       List/map
                         Component@1
                         Component
                         (λ(c : Component@1) → c Component Fix)
                         components
-                  , getFileIfFalseComponentsF = [] : List Component
+                  , falseComponentsF = [] : List Component
                   }
               )

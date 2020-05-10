@@ -1,19 +1,19 @@
 { asCamelCase =
-      ./asCamelCase sha256:0350c530866d65c8d2c81334e69f1366aeae8af9781a275109c0f7d12b3900a5
+      ./asCamelCase sha256:36eb6c81efd70271b041172b16d7bcaa476ae74498fa3c58b222d605b822e2e2
     ? ./asCamelCase
 , AsPascalCase =
-      ./AsPascalCase sha256:caba179dea56b1eda9b0f7522351542f08a105b2abfb7b7063823a96c3c3fe06
+      ./AsPascalCase sha256:42428023432f0250e811883d2a9a0475727ece08e51f8ea08159bb9b05d7bf96
     ? ./AsPascalCase
 , as_snake_case =
-      ./as_snake_case sha256:f74a61f41facdfb16595457c584b9b2313df8002e6e25a4038cf06e0fbfb3598
+      ./as_snake_case sha256:d56dec6ad3483b51e4c7e4428f4de9a0cf087138c858da50703b2d2e9ebcee49
     ? ./as_snake_case
 , as-spinal-case =
-      ./as-spinal-case sha256:813b6d11424b60dc3ef4473aba5a902105cc766d43ed67babf5d000ed6900f76
+      ./as-spinal-case sha256:01d6bfaf5fb8889c9101ac542db49e94cbddf542da4868868d97cb0aed284071
     ? ./as-spinal-case
 , `As Title Case` =
-      ./AsTitleCase sha256:2b95d371ed63bbd1defbd853aa1c6115a5f899ef9c4b13447d217371d45987cd
+      ./AsTitleCase sha256:d818164a254b7d731749accf0614b529c0a923a84126e946dde37136502d97ea
     ? ./AsTitleCase
 , As-Train-Case =
-      ./As-Train-Case sha256:b324c83a313efbbd5f2a1ace35ba111df0f057148d6ecb283a20b68c7fcded86
+      ./As-Train-Case sha256:f8a76928c98a22f2c3b7f77ef38e5a55d562e7e5b58cc2375a6310f16ce9c312
     ? ./As-Train-Case
 }

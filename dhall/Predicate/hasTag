@@ -15,17 +15,15 @@ in  λ(tag : Tag) →
       let PredicateF =
             < AlwaysF
             | BetweenF :
-                { getLowerBoundF : Bound
-                , getUpperBoundF : Bound
-                , getBetweenPredicatesF : List Predicate
+                { lowerBoundF : Bound
+                , upperBoundF : Bound
+                , predicatesF : List Predicate
                 }
             | HasGroupF : TagGroup
-            | HasTagF : { hasTagF : Tag, withValueF : Optional (List Text) }
+            | HasTagF : { tagF : Tag, withValueF : Optional (List Text) }
             | NotF : Predicate
             >
 
       in  λ(Fix : PredicateF → Predicate) →
             Fix
-              ( PredicateF.HasTagF
-                  { hasTagF = tag, withValueF = None (List Text) }
-              )
+              (PredicateF.HasTagF { tagF = tag, withValueF = None (List Text) })

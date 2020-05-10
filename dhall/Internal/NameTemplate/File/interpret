@@ -3,7 +3,7 @@ let Case =
       ? ../Case
 
 let Component =
-        ./Component sha256:97d4453e4304630b61cc9205b7b1c34b6998bb36dfb1483b8dca592f18b2b3d6
+        ./Component sha256:732fac7da6b8aa13bed3aff6440a17d342eab111607cc4e4454454003b287eda
       ? ./Component
 
 let Interpret =
@@ -18,25 +18,29 @@ let Tag =
         ../../Tag/Type sha256:3791aa7a52b92db3877472c57cec53ca856858bbad81156ef1bf29e9aeb2baee
       ? ../../Tag/Type
 
-in  λ(case : Case) →
+in  λ(interpret : Interpret) →
     λ(component : Component) →
     λ(Component : Type) →
       let ComponentF =
-            < FolderFormatAsF : { componentF : Component, formatCaseF : Case }
-            | FolderIfThenElseF :
+            < FileDuplicateNumberF
+            | FileFormatAsF : { componentF : Component, formatCaseF : Case }
+            | FileIfDuplicateF : { componentsF : List Component }
+            | FileIfThenElseF :
                 { predicateF : Predicate
                 , trueComponentsF : List Component
                 , falseComponentsF : List Component
                 }
-            | FolderInterpretF :
+            | FileInterpretF :
                 { componentF : Component, interpretAsF : Interpret }
-            | FolderOriginalNameF
-            | FolderTagValueF : Tag
-            | FolderTextLiteralF : Text
+            | FileOriginalNameF
+            | FileTagValueF : Tag
+            | FileTextLiteralF : Text
             >
 
       in  λ(Fix : ComponentF → Component) →
             Fix
-              ( ComponentF.FolderFormatAsF
-                  { componentF = component Component Fix, formatCaseF = case }
+              ( ComponentF.FileInterpretF
+                  { componentF = component Component Fix
+                  , interpretAsF = interpret
+                  }
               )

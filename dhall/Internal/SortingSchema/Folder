@@ -1,16 +1,16 @@
 let NameTemplate =
-        ../NameTemplate/Folder/Type sha256:8f255b7ff5b97857ac9bf8866fd38022f6a76abc9e78bdfa9ce697f194e2ead7
+        ../NameTemplate/Folder/Type sha256:4b5ee9941c2398c2749b45d9324fdb122c8a149bd2fe4b17305a550c9559b55d
       ? ../NameTemplate/Folder/Type
 
 let Predicate =
-        ../Predicate/Type sha256:f2e4edafdd41ade5527a645f9ae16fb31325419b6bf340c6a81dfa32b60d2462
+        ../Predicate/Type sha256:39e210b82052eda7f6cd4814c3d907c727b2ebea1c3c135957eef943014b46e9
       ? ../Predicate/Type
 
 in  ∀(Folder : Type) →
     ∀ ( Fix
-      : { getNameF : NameTemplate
-        , getPredicateF : Predicate
-        , getSubfoldersF : List Folder
+      : { nameF : NameTemplate
+        , predicateF : Predicate
+        , subfoldersF : List Folder
         } →
           Folder
       ) →

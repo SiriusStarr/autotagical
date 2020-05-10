@@ -1,7 +1,5 @@
 let Component =
-        ./Component sha256:713526b7c7b3d4e4b448d56db8d09cb81fbbd06e9ea58a08625f19a9aec3e01a
+        ./Component sha256:97d4453e4304630b61cc9205b7b1c34b6998bb36dfb1483b8dca592f18b2b3d6
       ? ./Component
 
-in  { getFolderNameComponents : List Component
-    , getFolderNameSeparator : Optional Text
-    }
+in  { components : List Component, separator : Optional Text }

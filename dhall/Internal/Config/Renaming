@@ -3,7 +3,7 @@ let GlobPatterns =
       ? ../GlobPatterns/Type
 
 let RenamingSchema =
-        ../RenamingSchema/Type sha256:94dc5d112a7bbcdb1dbabeaf1527977f2cf81859f14dac5139e202dcc6450f13
+        ../RenamingSchema/Type sha256:6cb0018409db4b92e248c4ea389aa1c42efafb4b32577a2f5fdace12f6ae9c6d
       ? ../RenamingSchema/Type
 
 in  { patterns : GlobPatterns, schema : RenamingSchema }

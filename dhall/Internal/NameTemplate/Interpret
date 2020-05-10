@@ -8,5 +8,5 @@ let YearFormat =
 
 in  < NumberAsMonth : MonthFormat
     | NumberAsOrdinal
-    | NumberAsYear : { centurySplit : Natural, yearFormat : YearFormat }
+    | NumberAsYear : { latestYear : Natural, yearFormat : YearFormat }
     >

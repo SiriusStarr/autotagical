@@ -17,6 +17,6 @@
       ./newOutputFormat sha256:9da4e4fd9b80bc4ea341b54ada243e3c15a0beb7745f7fa5437460a852e73cad
     ? ./newOutputFormat
 , renaming =
-      ./renaming sha256:563df3735532604cd733678776a3571f003496a7707ad52db12b033cef649e3f
+      ./renaming sha256:fbaf1423d67e26d1c2988c6f7159e359f11a605ca8e66bfa7ccf06040de66352
     ? ./renaming
 }

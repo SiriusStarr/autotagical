@@ -1,1 +1,1 @@
-λ(separator : Text) → { getFileNameSeparator = Some separator }
+λ(separator : Text) → { separator = Some separator }

@@ -7,15 +7,15 @@ let Case =
       ? ../../../../Internal/NameTemplate/Case
 
 let Component =
-        ../../../../Internal/NameTemplate/Folder/Component sha256:713526b7c7b3d4e4b448d56db8d09cb81fbbd06e9ea58a08625f19a9aec3e01a
+        ../../../../Internal/NameTemplate/Folder/Component sha256:97d4453e4304630b61cc9205b7b1c34b6998bb36dfb1483b8dca592f18b2b3d6
       ? ../../../../Internal/NameTemplate/Folder/Component
 
 let Interpret =
-        ../../../../Internal/NameTemplate/Interpret sha256:12b04186b544ddeb7eea9e853345e2c45533d11bcb3dd76e88b15819f99837d0
+        ../../../../Internal/NameTemplate/Interpret sha256:da352ee981f47618957222659071fb284597087a51e9426729b3fde383c77a91
       ? ../../../../Internal/NameTemplate/Interpret
 
 let Predicate =
-        ../../../../Internal/Predicate/Type sha256:f2e4edafdd41ade5527a645f9ae16fb31325419b6bf340c6a81dfa32b60d2462
+        ../../../../Internal/Predicate/Type sha256:39e210b82052eda7f6cd4814c3d907c727b2ebea1c3c135957eef943014b46e9
       ? ../../../../Internal/Predicate/Type
 
 let Tag =
@@ -27,19 +27,14 @@ in  λ(predicate : Predicate) →
     λ(componentsWhenFalse : List Component) →
     λ(Component : Type) →
       let ComponentF =
-            < FolderFormatAsF :
-                { getFolderFormatCaseF : Case
-                , getFolderFormatComponentF : Component
-                }
+            < FolderFormatAsF : { componentF : Component, formatCaseF : Case }
             | FolderIfThenElseF :
-                { getFolderIfPredicateF : Predicate
-                , getFolderIfTrueComponentsF : List Component
-                , getFolderIfFalseComponentsF : List Component
+                { predicateF : Predicate
+                , trueComponentsF : List Component
+                , falseComponentsF : List Component
                 }
             | FolderInterpretF :
-                { getFolderInterpretAsF : Interpret
-                , getFolderInterpretComponentF : Component
-                }
+                { componentF : Component, interpretAsF : Interpret }
             | FolderOriginalNameF
             | FolderTagValueF : Tag
             | FolderTextLiteralF : Text
@@ -48,14 +43,14 @@ in  λ(predicate : Predicate) →
       in  λ(Fix : ComponentF → Component) →
             Fix
               ( ComponentF.FolderIfThenElseF
-                  { getFolderIfPredicateF = predicate
-                  , getFolderIfTrueComponentsF =
+                  { predicateF = predicate
+                  , trueComponentsF =
                       List/map
                         Component@1
                         Component
                         (λ(c : Component@1) → c Component Fix)
                         componentsWhenTrue
-                  , getFolderIfFalseComponentsF =
+                  , falseComponentsF =
                       List/map
                         Component@1
                         Component

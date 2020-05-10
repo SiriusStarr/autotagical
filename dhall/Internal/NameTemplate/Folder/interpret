@@ -18,7 +18,7 @@ let Tag =
         ../../Tag/Type sha256:3791aa7a52b92db3877472c57cec53ca856858bbad81156ef1bf29e9aeb2baee
       ? ../../Tag/Type
 
-in  λ(case : Case) →
+in  λ(interpret : Interpret) →
     λ(component : Component) →
     λ(Component : Type) →
       let ComponentF =
@@ -37,6 +37,8 @@ in  λ(case : Case) →
 
       in  λ(Fix : ComponentF → Component) →
             Fix
-              ( ComponentF.FolderFormatAsF
-                  { componentF = component Component Fix, formatCaseF = case }
+              ( ComponentF.FolderInterpretF
+                  { componentF = component Component Fix
+                  , interpretAsF = interpret
+                  }
               )

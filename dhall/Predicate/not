@@ -3,7 +3,7 @@ let Bound =
       ? ../Internal/Predicate/Bound
 
 let Predicate =
-        ../Internal/Predicate/Type sha256:f2e4edafdd41ade5527a645f9ae16fb31325419b6bf340c6a81dfa32b60d2462
+        ../Internal/Predicate/Type sha256:39e210b82052eda7f6cd4814c3d907c727b2ebea1c3c135957eef943014b46e9
       ? ../Internal/Predicate/Type
 
 let Tag =
@@ -19,12 +19,12 @@ in  λ(p : Predicate) →
       let PredicateF =
             < AlwaysF
             | BetweenF :
-                { getLowerBoundF : Bound
-                , getUpperBoundF : Bound
-                , getBetweenPredicatesF : List Predicate
+                { lowerBoundF : Bound
+                , upperBoundF : Bound
+                , predicatesF : List Predicate
                 }
             | HasGroupF : TagGroup
-            | HasTagF : { hasTagF : Tag, withValueF : Optional (List Text) }
+            | HasTagF : { tagF : Tag, withValueF : Optional (List Text) }
             | NotF : Predicate
             >
 

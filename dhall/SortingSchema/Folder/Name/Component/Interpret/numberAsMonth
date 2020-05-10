@@ -1,53 +1,13 @@
-let Case =
-        ../../../../../Internal/NameTemplate/Case sha256:9e2d5a3c338b63a4e067de578f9e65952648ed6ffcf4ee0caaa211cdb2b3a3c5
-      ? ../../../../../Internal/NameTemplate/Case
-
-let Component =
-        ../../../../../Internal/NameTemplate/Folder/Component sha256:713526b7c7b3d4e4b448d56db8d09cb81fbbd06e9ea58a08625f19a9aec3e01a
-      ? ../../../../../Internal/NameTemplate/Folder/Component
+let interpret =
+        ../../../../../Internal/NameTemplate/Folder/interpret sha256:9600a66ad496928958576fbb8de1239683ad342b39954a6a90d81626a3f5400e
+      ? ../../../../../Internal/NameTemplate/Folder/interpret
 
 let Interpret =
-        ../../../../../Internal/NameTemplate/Interpret sha256:12b04186b544ddeb7eea9e853345e2c45533d11bcb3dd76e88b15819f99837d0
+        ../../../../../Internal/NameTemplate/Interpret sha256:da352ee981f47618957222659071fb284597087a51e9426729b3fde383c77a91
       ? ../../../../../Internal/NameTemplate/Interpret
 
 let MonthFormat =
         ../../../../../Internal/NameTemplate/MonthFormat sha256:68591e45385f2983783395728381d90d988fae4c5194a187355131f84b1e1a0a
       ? ../../../../../Internal/NameTemplate/MonthFormat
 
-let Predicate =
-        ../../../../../Internal/Predicate/Type sha256:f2e4edafdd41ade5527a645f9ae16fb31325419b6bf340c6a81dfa32b60d2462
-      ? ../../../../../Internal/Predicate/Type
-
-let Tag =
-        ../../../../../Internal/Tag/Type sha256:3791aa7a52b92db3877472c57cec53ca856858bbad81156ef1bf29e9aeb2baee
-      ? ../../../../../Internal/Tag/Type
-
-in  λ(component : Component) →
-    λ(format : MonthFormat) →
-    λ(Component : Type) →
-      let ComponentF =
-            < FolderFormatAsF :
-                { getFolderFormatCaseF : Case
-                , getFolderFormatComponentF : Component
-                }
-            | FolderIfThenElseF :
-                { getFolderIfPredicateF : Predicate
-                , getFolderIfTrueComponentsF : List Component
-                , getFolderIfFalseComponentsF : List Component
-                }
-            | FolderInterpretF :
-                { getFolderInterpretAsF : Interpret
-                , getFolderInterpretComponentF : Component
-                }
-            | FolderOriginalNameF
-            | FolderTagValueF : Tag
-            | FolderTextLiteralF : Text
-            >
-
-      in  λ(Fix : ComponentF → Component) →
-            Fix
-              ( ComponentF.FolderInterpretF
-                  { getFolderInterpretAsF = Interpret.NumberAsMonth format
-                  , getFolderInterpretComponentF = component Component Fix
-                  }
-              )
+in  λ(format : MonthFormat) → interpret (Interpret.NumberAsMonth format)
