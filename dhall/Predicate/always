@@ -7,7 +7,7 @@ let Tag =
       ? ../Internal/Tag/Type
 
 let TagGroup =
-        ../Internal/TagGroup/Type sha256:d75f7c562774774cdc426d8659e8befded1cc173aa1e6238eb845a846eb35d8c
+        ../Internal/TagGroup/Type sha256:53d772dbc0ab2e509aa6425d923bc93e4fd75854cfdeb9245c37017f6c08bf29
       ? ../Internal/TagGroup/Type
 
 in  λ(Predicate : Type) →

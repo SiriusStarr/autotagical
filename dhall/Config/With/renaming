@@ -3,7 +3,7 @@ let GlobPatterns =
       ? ../../Internal/GlobPatterns/Type
 
 let RenamingSchema =
-        ../../Internal/RenamingSchema/Type sha256:6cb0018409db4b92e248c4ea389aa1c42efafb4b32577a2f5fdace12f6ae9c6d
+        ../../Internal/RenamingSchema/Type sha256:caaf706ea31e2564f3d65b271a7b4ede2e2b09bd4bf3eeabb75bdda61c69298d
       ? ../../Internal/RenamingSchema/Type
 
 in  λ(patterns : GlobPatterns) →

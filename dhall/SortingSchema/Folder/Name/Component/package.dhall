@@ -1,25 +1,25 @@
 { Format =
-      ./Format/package.dhall sha256:98a540bdbdee4f27452fb68c53b5de2255fe7c71b3654e77b62072c6de9af007
+      ./Format/package.dhall sha256:5324502374639e2f7376bdd68f0aa2621495de90742bf8937f95ba91dddbb8c5
     ? ./Format/package.dhall
 , Interpret =
-      ./Interpret/package.dhall sha256:11b7586a66a6d072ae0c7046662812b3218dc84fdf7fb4ca371655ac8b4dea10
+      ./Interpret/package.dhall sha256:884ad03a83eaed7520846f4abf57a0417d9d785601215890774047fca50fe746
     ? ./Interpret/package.dhall
 , ifThenElse =
-      ./ifThenElse sha256:4b2127c114ce9e82997d1f3f6ec816194aee8995ea441afd26835c6d8f9f490d
+      ./ifThenElse sha256:73eebb3e3866fec93e5faea935980391f66c51fae62f7b9a85ea13660083d278
     ? ./ifThenElse
 , originalName =
-      ./originalName sha256:485a8fc801b3dc7b5d0ad2bf889e97c57b6d63e8d1f54e4b4390e465e60fe8ba
+      ./originalName sha256:755e6f8965f814b4c9363e5e2242962593955803947bb754e014b81bb1938b53
     ? ./originalName
 , tagValue =
-      ./tagValue sha256:8f9b7f8d3f99fbea58a298302775747f0a56ba011b1d0cb4b5c35b909017d386
+      ./tagValue sha256:1a4482e03ba402939e17530dd61343aeb6ac53650f14fa4ed5ee60f412e9576a
     ? ./tagValue
 , text =
-      ./text sha256:fd8cb105dcdb6f82d71749f8b291eb66df0d65e3ae67046f481d853616559777
+      ./text sha256:19ad54d7a89844f8079eae75391c08737252663f82d22c7c33f407989e65f56c
     ? ./text
 , unless =
-      ./unless sha256:270f58cf19e180a74e3d1d466e9eafd39b5495cce26dbad3c867c0d6177c0919
+      ./unless sha256:81606223b04f58edc72f4a9ee44ebfce0b0fb1454f8e5eb048005c0007803c2f
     ? ./unless
 , when =
-      ./when sha256:eb2ea40561851b7fded30765afd1ea016b270bba02570da74e6256aceedb6c7b
+      ./when sha256:623ee5f93ab3ca64091491f88a09a28f24ff6897e30e34a451cb9c5b5d3a5ace
     ? ./when
 }

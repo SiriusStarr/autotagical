@@ -3,5 +3,5 @@ let Tag =
       ? ../Tag/Type
 
 in  < AutotagicalGroup : List Tag
-    | `TagSpaces-v3.4.2` : { json : Text, groupName : Text }
+    | TagSpaces-v3 : { json : Text, groupName : Text }
     >

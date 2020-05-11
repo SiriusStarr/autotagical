@@ -3,7 +3,7 @@ let Bound =
       ? ../Internal/Predicate/Bound
 
 let Predicate =
-        ../Internal/Predicate/Type sha256:39e210b82052eda7f6cd4814c3d907c727b2ebea1c3c135957eef943014b46e9
+        ../Internal/Predicate/Type sha256:7bbd5275d9b92c0c5b1c7c0f05885b85796a14c4813d02aae7148a9d418deedf
       ? ../Internal/Predicate/Type
 
 let Tag =
@@ -11,7 +11,7 @@ let Tag =
       ? ../Internal/Tag/Type
 
 let TagGroup =
-        ../Internal/TagGroup/Type sha256:d75f7c562774774cdc426d8659e8befded1cc173aa1e6238eb845a846eb35d8c
+        ../Internal/TagGroup/Type sha256:53d772dbc0ab2e509aa6425d923bc93e4fd75854cfdeb9245c37017f6c08bf29
       ? ../Internal/TagGroup/Type
 
 in  λ(p : Predicate) →

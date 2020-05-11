@@ -3,7 +3,7 @@ let Case =
       ? ../Case
 
 let Component =
-        ./Component sha256:97d4453e4304630b61cc9205b7b1c34b6998bb36dfb1483b8dca592f18b2b3d6
+        ./Component sha256:3db17b8944377e5c72d75a57b4c0741ba2ba707ad2ebc873f01627ace7bbe066
       ? ./Component
 
 let Interpret =
@@ -11,7 +11,7 @@ let Interpret =
       ? ../Interpret
 
 let Predicate =
-        ../../Predicate/Type sha256:39e210b82052eda7f6cd4814c3d907c727b2ebea1c3c135957eef943014b46e9
+        ../../Predicate/Type sha256:7bbd5275d9b92c0c5b1c7c0f05885b85796a14c4813d02aae7148a9d418deedf
       ? ../../Predicate/Type
 
 let Tag =

@@ -7,7 +7,7 @@ let Tag =
       ? ../Tag/Type
 
 let TagGroup =
-        ../TagGroup/Type sha256:d75f7c562774774cdc426d8659e8befded1cc173aa1e6238eb845a846eb35d8c
+        ../TagGroup/Type sha256:53d772dbc0ab2e509aa6425d923bc93e4fd75854cfdeb9245c37017f6c08bf29
       ? ../TagGroup/Type
 
 in  ∀(Predicate : Type) →

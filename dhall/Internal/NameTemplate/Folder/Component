@@ -7,7 +7,7 @@ let Interpret =
       ? ../Interpret
 
 let Predicate =
-        ../../Predicate/Type sha256:39e210b82052eda7f6cd4814c3d907c727b2ebea1c3c135957eef943014b46e9
+        ../../Predicate/Type sha256:7bbd5275d9b92c0c5b1c7c0f05885b85796a14c4813d02aae7148a9d418deedf
       ? ../../Predicate/Type
 
 let Tag =

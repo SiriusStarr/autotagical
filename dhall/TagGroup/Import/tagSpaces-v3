@@ -1,0 +1,7 @@
+let TagGroup =
+        ../../Internal/TagGroup/Type sha256:53d772dbc0ab2e509aa6425d923bc93e4fd75854cfdeb9245c37017f6c08bf29
+      ? ../../Internal/TagGroup/Type
+
+in  λ(json : Text) →
+    λ(groupName : Text) →
+      TagGroup.TagSpaces-v3 { json, groupName }

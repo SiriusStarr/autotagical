@@ -1,17 +1,17 @@
 let template =
-        ./Name/template sha256:e7850d1d46f67aebfd3f46158ee2574a892e72be1c4b190618f162145ebea549
+        ./Name/template sha256:a62aa3a4904c515d04992affc32eddd8e2ffbbca8e2a35996a9934b75b125a10
       ? ./Name/template
 
 let NameTemplate =
-        ../../Internal/NameTemplate/Folder/Type sha256:4b5ee9941c2398c2749b45d9324fdb122c8a149bd2fe4b17305a550c9559b55d
+        ../../Internal/NameTemplate/Folder/Type sha256:64c9b5b4460cf305506169a8bfe165370816c6f6496bd4c3eb7234e9789f28d1
       ? ../../Internal/NameTemplate/Folder/Type
 
 let Predicate =
-        ../../Internal/Predicate/Type sha256:39e210b82052eda7f6cd4814c3d907c727b2ebea1c3c135957eef943014b46e9
+        ../../Internal/Predicate/Type sha256:7bbd5275d9b92c0c5b1c7c0f05885b85796a14c4813d02aae7148a9d418deedf
       ? ../../Internal/Predicate/Type
 
 let text =
-        ./Name/Component/text sha256:fd8cb105dcdb6f82d71749f8b291eb66df0d65e3ae67046f481d853616559777
+        ./Name/Component/text sha256:19ad54d7a89844f8079eae75391c08737252663f82d22c7c33f407989e65f56c
       ? ./Name/Component/text
 
 in  λ(name : Text) →

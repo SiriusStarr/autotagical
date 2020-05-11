@@ -3,7 +3,7 @@ let Case =
       ? ../../../../../Internal/NameTemplate/Case
 
 let format =
-        ../../../../../Internal/NameTemplate/Folder/format sha256:2254dcb6e836ae0713aa9bccc6787ca8c7b5f68258e0912b36c8cd46b4c4466e
+        ../../../../../Internal/NameTemplate/Folder/format sha256:72ad65957e350a829ba138a4238f9d27efc215b4b7994590a3a5a236d3df8f84
       ? ../../../../../Internal/NameTemplate/Folder/format
 
 in  format Case.AsPascalCase

@@ -3,15 +3,15 @@ let List/map =
       ? https://prelude.dhall-lang.org/List/map
 
 let Folder =
-        ../../Internal/SortingSchema/Folder sha256:0c185e7ee40b8477af154373176956de56aa754b40ee64efbfb2140a494791df
+        ../../Internal/SortingSchema/Folder sha256:bec2134c606d713bbb01d757a4f5d30cb7e798d8c2efea3cbe0d52b1916b2ebd
       ? ../../Internal/SortingSchema/Folder
 
 let NameTemplate =
-        ../../Internal/NameTemplate/Folder/Type sha256:4b5ee9941c2398c2749b45d9324fdb122c8a149bd2fe4b17305a550c9559b55d
+        ../../Internal/NameTemplate/Folder/Type sha256:64c9b5b4460cf305506169a8bfe165370816c6f6496bd4c3eb7234e9789f28d1
       ? ../../Internal/NameTemplate/Folder/Type
 
 let Predicate =
-        ../../Internal/Predicate/Type sha256:39e210b82052eda7f6cd4814c3d907c727b2ebea1c3c135957eef943014b46e9
+        ../../Internal/Predicate/Type sha256:7bbd5275d9b92c0c5b1c7c0f05885b85796a14c4813d02aae7148a9d418deedf
       ? ../../Internal/Predicate/Type
 
 in  λ(name : NameTemplate) →

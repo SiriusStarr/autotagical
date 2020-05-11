@@ -1,5 +1,5 @@
 let Component =
-        ./Component sha256:97d4453e4304630b61cc9205b7b1c34b6998bb36dfb1483b8dca592f18b2b3d6
+        ./Component sha256:3db17b8944377e5c72d75a57b4c0741ba2ba707ad2ebc873f01627ace7bbe066
       ? ./Component
 
 in  { components : List Component, separator : Optional Text }

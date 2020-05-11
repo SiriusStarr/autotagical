@@ -1,4 +1,4 @@
-{ `tagSpaces-v2.4.2` =
-      ./tagSpaces-v3.4.2 sha256:dee9b85243f53364edad6857ff081151ff54538c0e135de56976c940c31ab047
-    ? ./tagSpaces-v3.4.2
+{ tagSpaces-v3 =
+      ./tagSpaces-v3 sha256:a277ad4571084e669a1d1972cc18be10ad6458ba68317b2b11a156fb444be87c
+    ? ./tagSpaces-v3
 }

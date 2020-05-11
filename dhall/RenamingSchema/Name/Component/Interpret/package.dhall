@@ -2,13 +2,13 @@
       ./MonthFormat sha256:dfd6b189f8bb549ba658f2920c2e586c4f47842badfae531a21b215882b773b2
     ? ./MonthFormat
 , numberAsMonth =
-      ./numberAsMonth sha256:4e13a1cfe9d64ac34fc3fcd0fb9126fc786ce624ee4634efcd253b367fd13b93
+      ./numberAsMonth sha256:a8125a110b985d3abd771aa8e4458672119e20a1555bf1d01fce8a2263bf70cd
     ? ./numberAsMonth
 , numberAsOrdinal =
-      ./numberAsOrdinal sha256:16d93e43d3cfc3df0579e56675ceea6d1b52045727da5b4483913fc86de6658b
+      ./numberAsOrdinal sha256:e9d82013dcb8015de37a872a48a343c0445f2dc208b06a92d11612960c95d950
     ? ./numberAsOrdinal
 , numberAsYear =
-      ./numberAsYear sha256:1434ae67e2de228b8e51450ac08ffd1f261d4d2141fe2b1ab28a775abeb18d52
+      ./numberAsYear sha256:7f0b33c40b7441109f8cbca47599854317956eaff8b5ff3e83201918529fa4cc
     ? ./numberAsYear
 , YearFormat =
       ./YearFormat sha256:d19143b5ab758fc6d480f319dad48a2ad2a6d28760ae5efa0de86162d927f472
