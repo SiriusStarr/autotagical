@@ -3,6 +3,12 @@
 {-# LANGUAGE GeneralizedNewtypeDeriving #-}
 {-# LANGUAGE OverloadedStrings #-}
 
+-- |
+-- Module      : Tag
+-- Description : Tags and collections of tags
+--
+-- Individual tags, their tagged values, maps of tags on files, and groups
+-- tags for predicates, as well as Dhall instances for them.
 module Tag
   ( -- * Tags
     Tag (..),
@@ -63,7 +69,7 @@ instance Show Tags where
 
 -- * Tag Groups
 
--- | A group of tags, for querying by a `Predicate`.
+-- | A group of tags, for querying by a `Predicate.Predicate`.
 newtype TagGroup = TagGroup {groupTags :: NonEmptySet Tag}
   deriving (Eq)
   deriving newtype (Show)

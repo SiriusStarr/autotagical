@@ -1,6 +1,12 @@
 {-# LANGUAGE NamedFieldPuns #-}
 {-# LANGUAGE OverloadedStrings #-}
 
+-- |
+-- Module      : Config
+-- Description : Global configuration
+--
+-- Contains all necessary settings for a run of Autotagical, as well as the
+-- Dhall instances to load them.
 module Config
   ( -- * Config
     AutotagicalConfig (..),
@@ -60,12 +66,12 @@ instance Show AutotagicalConfig where
           show inputPatterns,
           "\nIgnore Patterns: ",
           show ignorePatterns,
-          "\nInput Format:\n",
+          "\n",
           show inputFormat,
           "\n\nOutput:\nOutput Folders: ",
           show outputFolders,
-          "\nOutput Format: ",
-          show outputFormat,
+          "\n",
+          maybe "Output Format: None" show outputFormat,
           "\nKeep Copy: ",
           show keepCopyInInputFolder,
           "\nClobber Destination: ",

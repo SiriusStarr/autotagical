@@ -10,8 +10,19 @@ import Config (AutotagicalConfig (..))
 import Dhall (Decoder, autoWith, defaultInputNormalizer)
 import FileHandler (ClobberDestination (..))
 import Logging (LogDestination (..), LogLevel (..))
-import NameTemplate (FileName (..), FileNameComponent (..), FolderName (..), FolderNameComponent (..))
-import Parser (InputFormat (..), Order (..), OutputFormat (..), Separator (..), SeparatorRequirement (..))
+import NameTemplate
+  ( FileName (..),
+    FileNameComponent (..),
+    FolderName (..),
+    FolderNameComponent (..),
+  )
+import Parser
+  ( InputFormat (..),
+    Order (..),
+    OutputFormat (..),
+    Separator (..),
+    SeparatorRequirement (..),
+  )
 import Predicate (Predicate (..))
 import Renaming (RenamingRule (..), RenamingSchema (..))
 import Sorting (Folder (..), SortingSchema (..))

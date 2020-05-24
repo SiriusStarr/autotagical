@@ -8,6 +8,13 @@
 {-# LANGUAGE TemplateHaskell #-}
 {-# LANGUAGE TypeFamilies #-}
 
+-- |
+-- Module      : Predicate
+-- Description : Predicates for querying tags
+--
+-- (Possibly recursive) predicates that evaluate to either True or False for any
+-- given set of tags that might be on a file.  For the purposes of specifying
+-- sorting/renaming behavior.
 module Predicate
   ( -- * Predicate
     checkPredicate,

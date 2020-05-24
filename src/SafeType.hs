@@ -4,6 +4,12 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE TypeFamilies #-}
 
+-- |
+-- Module      : SafeType
+-- Description : Guaranteed safe types
+--
+-- Non-empty sets, lists, and text guaranteed to not contain characters unsafe
+-- for file names (e.g. "/").
 module SafeType
   ( -- * Text
     SafeText,
@@ -39,7 +45,6 @@ newtype SafeText = SafeText Text
   deriving (Eq, Ord)
   deriving newtype (Show)
 
--- |
 instance IsString SafeText where
   fromString s = case validateText $ T.pack s of
     Right t -> t
@@ -129,8 +134,10 @@ instance Show a => Show (NonEmptySet a) where
 instance (FromDhall a, Ord a) => FromDhall (NonEmptySet a) where
   autoWith opts = makeNonEmptySet <$> D.autoWith opts
 
+-- | Create a `NonEmptySet` from a `NonEmptyList`.
 makeNonEmptySet :: Ord a => NonEmptyList a -> NonEmptySet a
 makeNonEmptySet = NonEmptySet . S.fromList . toList
 
+-- | Unwrap a `NonEmptySet`.
 toSet :: NonEmptySet a -> Set a
 toSet = set
