@@ -1,31 +1,31 @@
 { duplicateNumber =
-      ./duplicateNumber sha256:8a76d8e97bd3f84c63c219b2daa7bda99e3915480097ae432bf336fc989e9129
+      ./duplicateNumber sha256:5cee78250bca8f690e1a060dac56c8a8a2ae690b94f8f347e8694c86afa2a87f
     ? ./duplicateNumber
 , Format =
-      ./Format/package.dhall sha256:0a3ba3bd8914da7374125c954d3dee88e3526a64b11f40f53342a27311c077e2
+      ./Format/package.dhall sha256:21bd325aeef6087d6a44650706535f2b895ac4f4b630b219af9aff4e8feb5681
     ? ./Format/package.dhall
 , ifDuplicate =
-      ./ifDuplicate sha256:4678cd023042bb42b0072abb7742e70c58c72f178e0072a71e80db7676944948
+      ./ifDuplicate sha256:7b920f34bf6e5cc579502c0eed32af77ba2bf2acc0c2d890119aa389d365e131
     ? ./ifDuplicate
 , ifThenElse =
-      ./ifThenElse sha256:fb8ae5fa30369153ea78ef9161e08ecd33de46fde2d9b977a052c9d79f2e35ee
+      ./ifThenElse sha256:60df550b366ce36505a208b39231fe2d2a87b5f59a077d7fb2a1739d11f8c544
     ? ./ifThenElse
 , Interpret =
-      ./Interpret/package.dhall sha256:258246339a6a723229375478214700bdc52287aeaaa7f4f6dc143a03b61623f1
+      ./Interpret/package.dhall sha256:edfe2044dcfc66dadbdfbedfdb8c6c30eb790c267cf9940efae55fce5c305e0b
     ? ./Interpret/package.dhall
 , originalName =
-      ./originalName sha256:430ecc2bacc6269993fef01bbc34077cc66396eb897f75d29250e5ffeaf69d50
+      ./originalName sha256:19bf9abbdee679dfc5c429b3ab67c4f863ae99136b8366f407232467f9ec9273
     ? ./originalName
 , tagValue =
-      ./tagValue sha256:af4ba8063e3c84c6fd882657f51ce901f2e0bc9507331715348c10da80ddb48f
+      ./tagValue sha256:6c844f60b7c45b357fa97036e8e628538b90e4bee8b4e89cbaf479a4fefcd04c
     ? ./tagValue
 , text =
-      ./text sha256:76a9862e716febf45800330240594ab18d8e7eb8843cecda25d7d86b820295ef
+      ./text sha256:dabc33de7f49fbe3c8564b6f5d826acddeac291b58525dec33e9fefe7f4c4c91
     ? ./text
 , unless =
-      ./unless sha256:864591f3f52a25c15fbb4a3cc8afc60a65c355fdfa5da114194fbaf64377b7b9
+      ./unless sha256:53e6e38a1e4b6dc3682c43e117f2a818e640c0c8b47b6d62069868ed7b26a0b9
     ? ./unless
 , when =
-      ./when sha256:54ea8794e78e556cf04bd1f303c77a3b5e379d816905614eaf10e8f530f35911
+      ./when sha256:a06d34d64e668fbe4acf0c5ab41f96ffa2a17abc10eb3b15d2a8821e66ab460d
     ? ./when
 }

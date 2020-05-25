@@ -1,5 +1,5 @@
 let Config =
-        ../Internal/Config/Type sha256:8263cebcbcb1c088274656ee170ec1e53d86efe2faaa3a5767dc2ae0ddd1b15d
+        ../Internal/Config/Type sha256:4ccfefa9f04920c0e1d7c6e8f3edccae2e00725501abb8acf366141556372681
       ? ../Internal/Config/Type
 
 let GlobPatterns =
@@ -19,7 +19,7 @@ let OutputFormat =
       ? ../Internal/OutputFormat/Type
 
 let Renaming =
-        ../Internal/Config/Renaming sha256:ff8f4a729c08faf4366548999d60a02bef52d6380ee074251638a073b259669e
+        ../Internal/Config/Renaming sha256:1b049c62075c2bf960726ffbe1d6cda2590560510deaaf51e91da6ca99cd7a5e
       ? ../Internal/Config/Renaming
 
 in  { Type = Config

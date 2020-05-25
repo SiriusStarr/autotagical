@@ -1,10 +1,10 @@
 { Name =
-      ./Name/package.dhall sha256:54dd8ba9b3b0d9b290d520aceb15e21e6a2291884502c76a39aff85814c936a7
+      ./Name/package.dhall sha256:c1ec109652b0fb62c371774a6bdf7dca40c427951a5f39268ee73d09947ac8b9
     ? ./Name/package.dhall
 , renamingSchema =
-      ./renamingSchema sha256:27d73b4a89d42ee5898083ea4b4025ceddcf988d67176ed0e1474cc6f6f04f45
+      ./renamingSchema sha256:b80029439d678e5d820f6d898c676f514670412db15cfbf559ed721a570dc29c
     ? ./renamingSchema
 , rule =
-      ./rule sha256:7ba5a973b2e7ba4484d4ad59734c8fc3fc8a59188b59bf9ac334debe031e0d6d
+      ./rule sha256:ce5de8a1a5e21fadae4c7872bec25b5b4cb324b8836a4e4f7bd0223cb5c6f6ca
     ? ./rule
 }

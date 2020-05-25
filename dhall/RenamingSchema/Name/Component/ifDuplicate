@@ -7,7 +7,7 @@ let Case =
       ? ../../../Internal/NameTemplate/Case
 
 let Component =
-        ../../../Internal/NameTemplate/File/Component sha256:4dc1fffcdc8d11ac89a72802e943af7729a7940233c46dec815457b1d5b19bf0
+        ../../../Internal/NameTemplate/File/Component sha256:8c2763a38b757b216571c7bc3fd5cde3d94b4de0da8354ba9d732f6df73708dd
       ? ../../../Internal/NameTemplate/File/Component
 
 let Interpret =
@@ -27,7 +27,7 @@ in  λ(components : List Component) →
       let ComponentF =
             < FileDuplicateNumberF
             | FileFormatAsF : { componentF : Component, formatCaseF : Case }
-            | FileIfDuplicateF : { componentsF : List Component }
+            | FileIfDuplicateF : List Component
             | FileIfThenElseF :
                 { predicateF : Predicate
                 , trueComponentsF : List Component
@@ -43,11 +43,10 @@ in  λ(components : List Component) →
       in  λ(Fix : ComponentF → Component) →
             Fix
               ( ComponentF.FileIfDuplicateF
-                  { componentsF =
-                      List/map
-                        Component@1
-                        Component
-                        (λ(c : Component@1) → c Component Fix)
-                        components
-                  }
+                  ( List/map
+                      Component@1
+                      Component
+                      (λ(c : Component@1) → c Component Fix)
+                      components
+                  )
               )

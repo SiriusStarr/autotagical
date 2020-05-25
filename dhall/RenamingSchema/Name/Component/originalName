@@ -18,7 +18,7 @@ in  λ(Component : Type) →
       let ComponentF =
             < FileDuplicateNumberF
             | FileFormatAsF : { componentF : Component, formatCaseF : Case }
-            | FileIfDuplicateF : { componentsF : List Component }
+            | FileIfDuplicateF : List Component
             | FileIfThenElseF :
                 { predicateF : Predicate
                 , trueComponentsF : List Component

@@ -1,5 +1,5 @@
 let Config =
-        ./Config/package.dhall sha256:9879d7bbdad64c8f00bd41e2e18979f77a506adeace141779649ad11d5eb7e43
+        ./Config/package.dhall sha256:c4736530c21fb6eb6b889f2bd30cce69f28060de4b9bb6376a54f97d6561940d
       ? ./Config/package.dhall
 
 in    Config.config
@@ -17,7 +17,7 @@ in    Config.config
             ./Predicate/package.dhall sha256:2b93a271f7409d961486dde301ef44b3f0e2d549b256e3f254eb6eba5863af70
           ? ./Predicate/package.dhall
       , RenamingSchema =
-            ./RenamingSchema/package.dhall sha256:7fab0144aebad86b9da0f13efacb7632c23255acab661bd63984418ac596f26a
+            ./RenamingSchema/package.dhall sha256:6b0d8c7c64f3909610a2fb45a0d4a2c4af68f8eead90936071d31635a4a59f0d
           ? ./RenamingSchema/package.dhall
       , SortingSchema =
             ./SortingSchema/package.dhall sha256:d12ef352abac8d038fc4fe3e1a26fc52c80eb02e5ad56c90e2b0255e2b8d2db5

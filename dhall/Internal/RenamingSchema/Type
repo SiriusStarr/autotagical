@@ -1,5 +1,5 @@
 let RenamingRule =
-        ./RenamingRule sha256:55a66ab39e83f18ddd998ffbc50225896f92fe2368dac1fc7e67dbcbe27985d4
+        ./RenamingRule sha256:2c7325eb2f248d34c3d7fada0b47bfb91ca2e9163e71d3dc74e0899af0f9d06f
       ? ./RenamingRule
 
 in  List RenamingRule
