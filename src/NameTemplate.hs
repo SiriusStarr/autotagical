@@ -78,16 +78,16 @@ import Text.Read (readEither)
 -- | Specify the way in which a `FileName` or `FolderName`
 --   folder name component failed to be translated.
 --
---   * `InterpretNumberOnNonNumber`: `FolderInterpret` or `FileInterpret` was
+--   [`InterpretNumberOnNonNumber`] `FolderInterpret` or `FileInterpret` was
 --     called on a value that could not be interpreted as a natural number.
---   * `NullNameTemplate`: The net output of a `FileName` or `FolderName` after
+--   [`NullNameTemplate`] The net output of a `FileName` or `FolderName` after
 --     translation was completely empty.
---   * `NumberAsMonthOutOfRange`: Interpret `NumberAsMonth` was called on a
+--   [`NumberAsMonthOutOfRange`] Interpret `NumberAsMonth` was called on a
 --     value that was a natural number, but was 13 or more.
---   * `NumberAsYearOutOfRange`: Interpret `NumberAsYear` was called on a value
+--   [`NumberAsYearOutOfRange`] Interpret `NumberAsYear` was called on a value
 --     that was a natural number but was 100-999 or 10,000+ (i.e. not 1, 2, or 4
 --     digits).
---   * `TagValueWithoutTag`: `FolderTagValue` or `FileTagValue` requested the
+--   [`TagValueWithoutTag`] `FolderTagValue` or `FileTagValue` requested the
 --     value of a tag that was not on the file.
 data NameTemplateError
   = InterpretNumberOnNonNumber
@@ -144,12 +144,12 @@ instance Show NameTemplateError where
 -- | The case to format a name template component as, given the FormatAs
 --   component.  Examples of each are given below:
 --
--- * `AsCamelCase` -> asCamelCase
--- * `AsPascalCase` -> AsPascalCase
--- * `AsSnakeCase` -> as_snake_case
--- * `AsSpinalCase` -> as-spinal-case
--- * `AsTitleCase` -> As Title Case
--- * `AsTrainCase` -> As-Train-Case
+-- [`AsCamelCase`] @asCamelCase@
+-- [`AsPascalCase`] @AsPascalCase@
+-- [`AsSnakeCase`] @as_snake_case@
+-- [`AsSpinalCase`] @as-spinal-case@
+-- [`AsTitleCase`] @As Title Case@
+-- [`AsTrainCase`] @As-Train-Case@
 data Case
   = AsCamelCase
   | AsPascalCase
@@ -170,10 +170,10 @@ instance Show Case where
 -- | Format to write a name template component interpreted as a month as.
 --   Examples are given below:
 --
--- * `MonthName` -> January
--- * `OneDigitMonth` -> 1
--- * `ThreeLetterMonth` -> Jan
--- * `TwoDigitMonth` -> 01
+-- [`MonthName`] @January@
+-- [`OneDigitMonth`] @1@
+-- [`ThreeLetterMonth`] @Jan@
+-- [`TwoDigitMonth`] @01@
 data MonthFormat
   = MonthName
   | OneDigitMonth
@@ -190,8 +190,8 @@ instance Show MonthFormat where
 -- | Format to write a name template component interpreted as a year as.
 --   Examples are given below:
 --
--- * `FourDigitYear` -> 1995
--- * `TwoDigitYear` -> 95
+-- [`FourDigitYear`] @1995@
+-- [`TwoDigitYear`] @95@
 data YearFormat
   = FourDigitYear
   | TwoDigitYear

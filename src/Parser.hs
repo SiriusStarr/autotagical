@@ -601,10 +601,10 @@ parseFileInfo ord (parser -> p) (takeFileName -> file) =
 -- | Return all possible extensions as a list of extensions.
 --   Examples are given below:
 --
--- * `"file"` -> `("file", [])`
--- * `"file.ext"` -> `("file", [".ext"])`
--- * `"file.tar.gz"` -> `("file", [".tar", ".gz"])`
--- * `".dotfile"` -> `("", [".dotfile"])`
+-- [@"file"@] @("file", [])@
+-- [@"file.ext"@] @("file", [".ext"])@
+-- [@"file.tar.gz"@] @("file", [".tar", ".gz"])@
+-- [@".dotfile"]@ @("", [".dotfile"])@
 splitExtensions :: FilePath -> (FilePath, [String])
 splitExtensions path = go (path, [])
   where

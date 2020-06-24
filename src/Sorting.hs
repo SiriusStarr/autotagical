@@ -44,13 +44,17 @@ import NameTemplate (FolderName, NameTemplateError, translateFolderName)
 import Parser (FileInfo (..))
 import Predicate (Predicate, checkPredicate)
 import SafeType (NonEmptyList)
-import System.FilePath (FilePath)
 import qualified System.FilePath as FP
 import Tag (Tags (..))
 
 -- * Sorting
 
 -- | Specify the way in which a file failed to be sorted.
+--
+--   [`NameTemplateErrors`] A folder was found for the file, but the folder name
+--   templates failed with one or more errors.
+--   [`NoSortingMatch`] No valid folder was found, i.e. no predicate evaluated
+--   to true for the file.
 data SortingError
   = NameTemplateErrors {file :: FileInfo, errors :: [NameTemplateError]}
   | NoSortingMatch {file :: FileInfo}
