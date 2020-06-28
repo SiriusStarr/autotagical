@@ -24,8 +24,8 @@ import qualified Data.Aeson as Json
 import Data.Aeson ((.:), FromJSON)
 import Data.Either.Validation (Validation (..))
 import Data.List (find, intercalate)
-import Data.Map (Map)
-import qualified Data.Map as M
+import Data.Map.Strict (Map)
+import qualified Data.Map.Strict as M
 import Data.String (IsString)
 import qualified Data.Text as T
 import Data.Text (Text)

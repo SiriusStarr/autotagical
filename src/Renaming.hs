@@ -39,7 +39,7 @@ import Data.Bool (bool)
 import Data.Char (isSpace)
 import Data.Either.Validation (Validation (..), validationToEither)
 import Data.Foldable (traverse_)
-import qualified Data.Map as M
+import qualified Data.Map.Strict as M
 import Data.Maybe (fromMaybe)
 import Data.Text (Text)
 import qualified Data.Text as T

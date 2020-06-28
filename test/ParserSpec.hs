@@ -8,7 +8,7 @@ where
 
 import Arbitrary ()
 import Data.Char (isSpace)
-import qualified Data.Map as M
+import qualified Data.Map.Strict as M
 import Data.Text (Text)
 import qualified Data.Text as T
 import Dhall (Decoder, autoWith, defaultInputNormalizer)

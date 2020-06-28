@@ -11,7 +11,7 @@ where
 import Arbitrary ()
 import Data.Either (fromRight)
 import qualified Data.Either.Validation as V
-import qualified Data.Map as M
+import qualified Data.Map.Strict as M
 import Data.Maybe (fromMaybe)
 import qualified Data.Text as T
 import Dhall (Decoder, autoWith, defaultInputNormalizer)
