@@ -74,7 +74,7 @@ instance Show AutotagicalConfig where
           maybe "Output Format: None" show outputFormat,
           "\nKeep Copy: ",
           show keepCopyInInputFolder,
-          "\nClobber Destination: ",
+          "\n",
           show clobberDestination,
           "\n\nLogging:\nLog Level: ",
           show logLevel,
