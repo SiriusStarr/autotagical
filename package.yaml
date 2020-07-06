@@ -1,0 +1,91 @@
+name: autotagical
+version: 0.1.0.0
+github: "SiriusStarr/autotagical"
+license: GPL-3
+license-file: LICENSE.md
+author: "SiriusStarr"
+maintainer: "2049163+SiriusStarr@users.noreply.github.com"
+copyright: "(c) 2020 SiriusStarr"
+
+extra-source-files:
+  - README.md
+  - CHANGELOG.md
+
+description: A utility to automagically rename and sort tagged files (such as those produced by TagSpaces) according to user-defined schemas.
+
+dependencies:
+  - base >= 4.7 && < 5
+  - dhall >= 1.31
+  - text >= 1.2.3
+  - containers >= 0.6.0.1
+  - data-fix >= 0.0.7
+  - recursion-schemes >= 5.1
+  - either >= 5
+  - megaparsec >= 7.0.5
+  - filepath >= 1.4.1
+  - aeson >= 1.4.5
+  - Glob >= 0.10
+  - directory >= 1.3.3.0
+  - text-manipulate >= 0.2.0.1
+  - hashable >= 1.2.6
+  - logging >= 3
+
+library:
+  source-dirs: src
+ghc-options:
+  # This list taken from https://medium.com/mercury-bank/enable-all-the-warnings-a0517bc081c3
+  # Enable all warnings with -Weverything, then disable the ones we don’t care about
+  - -Weverything
+  # missing-exported-signatures turns off the more strict -Wmissing-signatures. See https://ghc.haskell.org/trac/ghc/ticket/14794#ticket
+  - -Wno-missing-exported-signatures
+  # Requires explicit imports of _every_ function (e.g. ‘$’); too strict
+  - -Wno-missing-import-lists
+  # When GHC can’t specialize a polymorphic function. No big deal and requires fixing underlying libraries to solve.
+  - -Wno-missed-specialisations
+  # See missed-specialisations
+  - -Wno-all-missed-specialisations
+  # Don’t use Safe Haskell warnings
+  - -Wno-unsafe
+  # Don’t use Safe Haskell warnings
+  - -Wno-safe
+  # Warning for polymorphic local bindings; nothing wrong with those.
+  - -Wno-missing-local-signatures
+  # Don’t warn if the monomorphism restriction is used
+  - -Wno-monomorphism-restriction
+  - -Wno-implicit-prelude
+  - -Wno-partial-fields
+  # Silence warnings for Arbitrary instances
+  - -Wno-orphans
+  # Silence warnings for missing deriving strategies, as the template Haskell for makeBaseFunctor fails otherwise
+  - -Wno-missing-deriving-strategies
+  - -Werror
+
+executables:
+  autotagical:
+    main: Main.hs
+    source-dirs: app
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+      - -O2
+    dependencies:
+      - autotagical
+
+tests:
+  autotagical-test:
+    main: Spec.hs
+    source-dirs: test
+    ghc-options:
+      - -threaded
+      - -rtsopts
+      - -with-rtsopts=-N
+      # Don't complain about module main missing export for automatic hspec discovery
+      - -Wno-missing-export-lists
+    dependencies:
+      - autotagical
+      - hspec >= 2.6.0
+      - QuickCheck >= 2.13
+      - quickcheck-instances >= 0.3.20
+      - generic-random >= 1.2
+      - temporary >= 1.3

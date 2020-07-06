@@ -1,0 +1,12 @@
+resolver: lts-16.0
+
+packages:
+  - .
+
+# This is necessary for a Windows bug: https://github.com/haskell-hvr/regex-posix/issues/4
+extra-deps:
+  - regex-posix-clib-2.7
+
+flags:
+  regex-posix:
+    _regex-posix-clib: true

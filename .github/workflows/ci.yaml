@@ -1,0 +1,44 @@
+name: Tests
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    name: CI
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        resolver: ["lts-16.4", "lts-16.0"]
+        os: [ubuntu-latest, macOS-latest, windows-latest]
+        include:
+          - resolver: "lts-16.4"
+            ghc: "8.8.3"
+          - resolver: "lts-16.0"
+            ghc: "8.8.3"
+          - os: "windows-latest"
+            ghc: "8.8.2" # Workaround 8.8.3 Windows bug
+
+    steps:
+      - name: Setup GHC
+        uses: actions/setup-haskell@v1.1
+        with:
+          ghc-version: ${{ matrix.ghc }}
+          enable-stack: true
+
+      - name: Clone project
+        uses: actions/checkout@v2
+
+      - name: Cache dependencies
+        uses: actions/cache@v1
+        with:
+          path: ~/.stack
+          key: ${{ runner.os }}-${{ matrix.resolver }}-${{ hashFiles('stack.yaml') }}
+          restore-keys: |
+            ${{ runner.os }}-${{ matrix.resolver }}-
+
+      - name: Build and run tests
+        run: "stack test --fast --no-terminal --resolver=${{ matrix.resolver }} --system-ghc --compiler=ghc-${{ matrix.ghc }}" # Can remove the compiler version forcing when Windows bug is fixed
