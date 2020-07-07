@@ -47,6 +47,7 @@ import Renaming
     writeTag,
   )
 import SafeType (safeText)
+import System.FilePath (hasDrive)
 import Tag (Tag (..), TagValue (..), Tags (..))
 import Test.Hspec
 import Test.Hspec.QuickCheck
@@ -190,7 +191,7 @@ spec = parallel $ do
               writeFileName inFormat (Just $ inToOutFormat inFormat) f {fileTags = useTags} (safeText <$> newName)
           parser = fileParser inFormat
           ord = (tagOrder :: InputFormat -> Order) inFormat
-       in useTags /= Tags M.empty && writeName /= ""
+       in useTags /= Tags M.empty && writeName /= "" && not (hasDrive writeName)
             ==> parseFileInfo ord parser writeName
               `shouldSatisfy` ( \case
                                   Just (FileInfo writeTags _ outName writeExt) ->

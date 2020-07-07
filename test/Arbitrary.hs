@@ -52,6 +52,7 @@ import SafeType
     validateText,
   )
 import Sorting (Folder)
+import System.FilePath (extSeparator, isExtSeparator, isPathSeparator)
 import Tag (Tag (..), TagGroup (..), TagValue, Tags (..))
 import Test.QuickCheck hiding (NonEmptyList)
 import Test.QuickCheck.Instances.Natural ()
@@ -61,8 +62,7 @@ import Test.QuickCheck.Instances.Natural ()
 genSafeText :: Gen SafeText
 genSafeText =
   fromRight undefined . validateText . T.pack
-    <$> listOf1 arbitraryPrintableChar
-      `suchThat` notElem '/'
+    <$> listOf1 arbitraryPrintableChar `suchThat` (not . any isPathSeparator)
 
 instance Arbitrary SafeText where
   arbitrary = genSafeText
@@ -135,11 +135,17 @@ genExtensions =
   ( \es ->
       if null es
         then Nothing
-        else Just . fromRight undefined . validateText . T.concat . fmap (T.cons '.') $ es
+        else
+          Just . fromRight undefined . validateText . T.concat
+            . fmap (T.cons extSeparator)
+            $ es
   )
     <$> listOf
       ( T.pack <$> listOf1 arbitraryPrintableChar
-          `suchThat` (\cs -> notElem '/' cs && notElem '.' cs)
+          `suchThat` ( \cs ->
+                         not (any isPathSeparator cs)
+                           && not (any isExtSeparator cs)
+                     )
       )
 
 instance Arbitrary FileInfo where
