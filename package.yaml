@@ -30,8 +30,6 @@ dependencies:
   - hashable >= 1.2.6
   - logging >= 3
 
-library:
-  source-dirs: src
 ghc-options:
   # This list taken from https://medium.com/mercury-bank/enable-all-the-warnings-a0517bc081c3
   # Enable all warnings with -Weverything, then disable the ones we don’t care about
@@ -58,7 +56,9 @@ ghc-options:
   - -Wno-orphans
   # Silence warnings for missing deriving strategies, as the template Haskell for makeBaseFunctor fails otherwise
   - -Wno-missing-deriving-strategies
-  - -Werror
+
+library:
+  source-dirs: src
 
 executables:
   autotagical:

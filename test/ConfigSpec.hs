@@ -37,6 +37,7 @@ spec = describe "AutotagicalConfig" $ do
       d
       ( AutotagicalConfig
           (ClobberDestination False)
+          True
           Nothing
           ["input"]
           ( InputFormat
@@ -73,6 +74,7 @@ spec = describe "AutotagicalConfig" $ do
       d
       ( AutotagicalConfig
           (ClobberDestination False)
+          False
           (Just $ makePatterns False [".*"])
           ["input"]
           ( InputFormat

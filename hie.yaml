@@ -1,0 +1,22 @@
+cradle:
+  multi:
+    - path: "./test/dhall"
+      config: { cradle: { none } }
+    - path: "./test/json"
+      config: { cradle: { none } }
+    - path: "./dhall"
+      config: { cradle: { none } }
+    - path: "./.stack-work"
+      config: { cradle: { none } }
+    - path: "./"
+      config:
+        cradle:
+          stack:
+            - path: "./src"
+              component: "autotagical:lib"
+            - path: "./app"
+              component: "autotagical:exe:autotagical"
+            - path: "./.stack-work/dist" # Necessary for Paths_autotagical
+              component: "autotagical:exe:autotagical"
+            - path: "./test"
+              component: "autotagical:test:autotagical-test"

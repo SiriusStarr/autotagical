@@ -10,6 +10,7 @@ import Control.Logging
 import Data.Either.Validation (Validation (..))
 import qualified Data.Map.Strict as M
 import qualified Data.Text as T
+import Data.Version (showVersion)
 import qualified Dhall as D
 import FileHandler
   ( determineMoves,
@@ -33,6 +34,7 @@ import Logging
     logSortingFailures,
     logSortingSuccesses,
   )
+import Paths_autotagical (version)
 import System.Environment (getArgs)
 
 main :: IO ()
@@ -90,11 +92,13 @@ main = do
         -- Actually move files
         moveResults <-
           timedLog' "Moving files" $
-            moveFiles (clobberDestination c) (keepCopyInInputFolder c) (outputFolders c) firstMove
+            moveFiles (dryRun c) (clobberDestination c) (keepCopyInInputFolder c) (outputFolders c) firstMove
         secondMoveResults <-
           if M.null secondMove
             then return $ Success ()
             else-- Never keep copy of temporary files
-              timedLog' "Performing second moves" $ moveFiles (clobberDestination c) False (outputFolders c) secondMove
+              timedLog' "Performing second moves" $ moveFiles (dryRun c) (clobberDestination c) False (outputFolders c) secondMove
         logMoves moveResults secondMoveResults
-    _ -> putStrLn "Autotagical requires exactly one argument, a Dhall expression that is a valid Config."
+    _ -> do
+      putStrLn $ "autotagical " ++ showVersion version ++ "\n"
+      putStrLn "Autotagical requires exactly one argument, a Dhall expression that is a valid Config."

@@ -1,5 +1,5 @@
 let Config =
-        ../Internal/Config/Type sha256:4ccfefa9f04920c0e1d7c6e8f3edccae2e00725501abb8acf366141556372681
+        ../Internal/Config/Type sha256:14a3e92350551a1df0cc16abe667962cdecdcd345615deee44a53d086a240a25
       ? ../Internal/Config/Type
 
 let GlobPatterns =
@@ -24,12 +24,13 @@ let Renaming =
 
 in  { Type = Config
     , default =
-      { ignorePatterns = None GlobPatterns
-      , renaming = None Renaming
-      , logLevel = LogLevel.Warn
-      , logDestination = LogDestination.StdOut
-      , outputFormat = None OutputFormat
+      { clobberDestination = None Text
+      , dryRun = False
+      , ignorePatterns = None GlobPatterns
       , keepCopyInInputFolder = False
-      , clobberDestination = None Text
+      , logDestination = LogDestination.StdOut
+      , logLevel = LogLevel.Warn
+      , outputFormat = None OutputFormat
+      , renaming = None Renaming
       }
     }

@@ -1,6 +1,6 @@
 let Component = ../../../dhall/Internal/NameTemplate/Folder/Component
 
-let ifThenElse = ../../../dhall/SortingSchema/Folder/Name/Component/ifThenElse
+let ifThenElse = ../../../dhall/Sorting/Folder/Name/Component/ifThenElse
 
 let P = ../../../dhall/Predicate/package.dhall
 

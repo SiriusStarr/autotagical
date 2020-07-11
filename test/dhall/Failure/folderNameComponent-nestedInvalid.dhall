@@ -1,6 +1,6 @@
 let Component = ../../../dhall/Internal/NameTemplate/Folder/Component
 
-let C = ../../../dhall/SortingSchema/Folder/Name/Component/package.dhall
+let C = ../../../dhall/Sorting/Folder/Name/Component/package.dhall
 
 let P = ../../../dhall/Predicate/package.dhall
 

@@ -1,4 +1,4 @@
-let F = ../../../dhall/SortingSchema/Folder/Name/Component/package.dhall
+let F = ../../../dhall/Sorting/Folder/Name/Component/package.dhall
 
 let tag = ../../../dhall/Tag/tag
 

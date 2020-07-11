@@ -1,3 +1,1 @@
-let F = ../../../dhall/RenamingSchema/Name/Component/package.dhall
-
-in  F.originalName
+let F = ../../../dhall/Renaming/Name/Component/package.dhall in F.originalName

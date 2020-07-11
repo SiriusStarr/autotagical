@@ -1,4 +1,4 @@
-let F = ../../../dhall/RenamingSchema/Name/Component/package.dhall
+let F = ../../../dhall/Renaming/Name/Component/package.dhall
 
 let tag = ../../../dhall/Tag/tag
 

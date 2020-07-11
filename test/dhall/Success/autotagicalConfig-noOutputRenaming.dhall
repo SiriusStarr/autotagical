@@ -7,14 +7,15 @@ in    A::{
           A.GlobPatterns.globPatterns [ "*.jpg", "*/*.png", "literal" ]
       , outputFolders = [ "output" ]
       , sortingSchema =
-          A.SortingSchema.sortingSchema
-            [ A.SortingSchema.Folder.folder
+          A.Sorting.schema
+            [ A.Sorting.Folder.folder
                 "test1"
                 A.Predicate.always
-                [ A.SortingSchema.Folder.leaf
+                [ A.Sorting.Folder.leaf
                     "test2"
                     (A.Predicate.not A.Predicate.always)
                 ]
             ]
       }
     ⫽ A.Config.With.keepInputCopy
+    ⫽ A.Config.With.dryRun

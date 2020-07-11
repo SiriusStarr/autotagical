@@ -1,6 +1,6 @@
 let Component = ../../../dhall/Internal/NameTemplate/File/Component
 
-let C = ../../../dhall/RenamingSchema/Name/Component/package.dhall
+let C = ../../../dhall/Renaming/Name/Component/package.dhall
 
 let P = ../../../dhall/Predicate/package.dhall
 

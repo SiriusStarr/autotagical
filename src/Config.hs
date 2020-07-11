@@ -28,6 +28,7 @@ import Sorting (SortingSchema)
 data AutotagicalConfig
   = AutotagicalConfig
       { clobberDestination :: ClobberDestination,
+        dryRun :: Bool,
         ignorePatterns :: Maybe GlobPatterns,
         inputFolders :: NonEmptyList FilePath,
         inputFormat :: InputFormat,
@@ -46,6 +47,7 @@ instance Show AutotagicalConfig where
   show
     AutotagicalConfig
       { clobberDestination,
+        dryRun,
         ignorePatterns,
         inputFolders,
         inputFormat,
@@ -74,13 +76,15 @@ instance Show AutotagicalConfig where
           maybe "Output Format: None" show outputFormat,
           "\nKeep Copy: ",
           show keepCopyInInputFolder,
+          "\nDry Run: ",
+          show dryRun,
           "\n",
           show clobberDestination,
           "\n\nLogging:\nLog Level: ",
           show logLevel,
           "\nLog Destination: ",
           show logDestination,
-          "\n\nSorting Schema:\n",
+          "\n\n",
           show sortingSchema,
           "\n\nRenaming:"
         ]
@@ -103,6 +107,7 @@ instance FromDhall AutotagicalConfig where
     record
       ( AutotagicalConfig
           <$> field "clobberDestination" (autoWith opts)
+          <*> field "dryRun" (autoWith opts)
           <*> field "ignorePatterns" (autoWith opts)
           <*> field "inputFolders" (autoWith opts)
           <*> field "inputFormat" (autoWith opts)

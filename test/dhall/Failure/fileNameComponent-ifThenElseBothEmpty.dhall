@@ -1,6 +1,6 @@
 let Component = ../../../dhall/Internal/NameTemplate/File/Component
 
-let ifThenElse = ../../../dhall/RenamingSchema/Name/Component/ifThenElse
+let ifThenElse = ../../../dhall/Renaming/Name/Component/ifThenElse
 
 let P = ../../../dhall/Predicate/package.dhall
 

@@ -1,8 +1,8 @@
 let P = ../../../dhall/Predicate/package.dhall
 
-let R = ../../../dhall/RenamingSchema/package.dhall
+let R = ../../../dhall/Renaming/package.dhall
 
-in  R.renamingSchema
+in  R.schema
       [ R.rule
           P.always
           ( R.Name.template

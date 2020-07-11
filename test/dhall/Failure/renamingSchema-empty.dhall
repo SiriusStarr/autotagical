@@ -1,5 +1,5 @@
-let R = ../../../dhall/RenamingSchema/package.dhall
+let R = ../../../dhall/Renaming/package.dhall
 
 let Rule = ../../../dhall/Internal/RenamingSchema/RenamingRule
 
-in  R.renamingSchema ([] : List Rule)
+in  R.schema ([] : List Rule)

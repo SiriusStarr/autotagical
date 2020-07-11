@@ -1,6 +1,9 @@
 { clobberDestination =
       ./clobberDestination sha256:b6e3d069effc85fbf49b9e81cec8db55c4896b7e9032f920f9b991aae0aa2c66
     ? ./clobberDestination
+, dryRun =
+      ./dryRun sha256:f315c5497db797933dc8591919e51d0b44bead38a87d4aad39006c92dbb2d4c7
+    ? ./dryRun
 , ignorePatterns =
       ./ignorePatterns sha256:a088d5df5be35cd12afa08021010992475cb7287035158d6c5e7bbaa7d0defcb
     ? ./ignorePatterns

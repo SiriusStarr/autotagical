@@ -1,4 +1,4 @@
-let F = ../../../dhall/SortingSchema/Folder/package.dhall
+let F = ../../../dhall/Sorting/Folder/package.dhall
 
 let P = ../../../dhall/Predicate/package.dhall
 

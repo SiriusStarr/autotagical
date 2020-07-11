@@ -781,6 +781,7 @@ spec = do
             setLogLevel LevelError
             writeFile (dir </> "fileIn") "test"
             copyFileToPath
+              False
               (ClobberDestination False)
               (dir </> "fileIn")
               (dir </> "fileOut")
@@ -796,6 +797,7 @@ spec = do
             setLogLevel LevelError
             writeFile (dir </> "fileIn") "test"
             copyFileToPath
+              False
               (ClobberDestination False)
               (dir </> "fileIn")
               (dir </> "subDir" </> "subSubDir" </> "fileOut")
@@ -804,7 +806,7 @@ spec = do
             readFile (dir </> "subDir" </> "subSubDir" </> "fileOut")
               `shouldReturn` "test"
         )
-    it "fails when desination exists and clobber is false"
+    it "fails when destination exists and clobber is false"
       $ withStdoutLogging
       $ withSystemTempDirectory
         "autotagicalTest"
@@ -812,6 +814,7 @@ spec = do
             writeFile (dir </> "fileIn") "test1"
             writeFile (dir </> "fileOut") "test2"
             copyFileToPath
+              False
               (ClobberDestination False)
               (dir </> "fileIn")
               (dir </> "fileOut")
@@ -820,7 +823,7 @@ spec = do
             readFile (dir </> "fileIn") `shouldReturn` "test1"
             readFile (dir </> "fileOut") `shouldReturn` "test2"
         )
-    it "clobbers files when desination exists and specified"
+    it "clobbers files when destination exists and specified"
       $ withStdoutLogging
       $ withSystemTempDirectory
         "autotagicalTest"
@@ -828,6 +831,7 @@ spec = do
             writeFile (dir </> "fileIn") "test1"
             writeFile (dir </> "fileOut") "test2"
             copyFileToPath
+              False
               (ClobberDestination True)
               (dir </> "fileIn")
               (dir </> "fileOut")
@@ -835,7 +839,7 @@ spec = do
             readFile (dir </> "fileIn") `shouldReturn` "test1"
             readFile (dir </> "fileOut") `shouldReturn` "test1"
         )
-    it "failes files when desination exists and is a folder without clobber"
+    it "fails files when destination exists and is a folder without clobber"
       $ withStdoutLogging
       $ withSystemTempDirectory
         "autotagicalTest"
@@ -843,6 +847,7 @@ spec = do
             writeFile (dir </> "fileIn") "test1"
             createDirectory (dir </> "fileOut")
             copyFileToPath
+              False
               (ClobberDestination False)
               (dir </> "fileIn")
               (dir </> "fileOut")
@@ -850,7 +855,7 @@ spec = do
             readFile (dir </> "fileIn") `shouldReturn` "test1"
             doesDirectoryExist (dir </> "fileOut") `shouldReturn` True
         )
-    it "fails files when desination exists and is a folder with clobber"
+    it "fails files when destination exists and is a folder with clobber"
       $ withStdoutLogging
       $ withSystemTempDirectory
         "autotagicalTest"
@@ -858,6 +863,7 @@ spec = do
             writeFile (dir </> "fileIn") "test1"
             createDirectory (dir </> "fileOut")
             copyFileToPath
+              False
               (ClobberDestination True)
               (dir </> "fileIn")
               (dir </> "fileOut")
@@ -866,6 +872,108 @@ spec = do
             readFile (dir </> "fileIn") `shouldReturn` "test1"
             doesDirectoryExist (dir </> "fileOut") `shouldReturn` True
         )
+    context "when dry run is true" $ do
+      it "does not move files when successful"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              setLogLevel LevelError
+              writeFile (dir </> "fileIn") "test"
+              copyFileToPath
+                True
+                (ClobberDestination False)
+                (dir </> "fileIn")
+                (dir </> "fileOut")
+                `shouldReturn` V.Success ()
+              readFile (dir </> "fileIn") `shouldReturn` "test"
+              doesPathExist (dir </> "fileOut") `shouldReturn` False
+          )
+      it "does not move files when it is necessary to create folders successfully"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              setLogLevel LevelError
+              writeFile (dir </> "fileIn") "test"
+              copyFileToPath
+                True
+                (ClobberDestination False)
+                (dir </> "fileIn")
+                (dir </> "subDir" </> "subSubDir" </> "fileOut")
+                `shouldReturn` V.Success ()
+              readFile (dir </> "fileIn") `shouldReturn` "test"
+              doesPathExist (dir </> "subDir" </> "subSubDir")
+                `shouldReturn` False
+              doesPathExist (dir </> "subDir" </> "subSubDir" </> "fileOut")
+                `shouldReturn` False
+          )
+      it "fails when destination exists and clobber is false"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              writeFile (dir </> "fileIn") "test1"
+              writeFile (dir </> "fileOut") "test2"
+              copyFileToPath
+                True
+                (ClobberDestination False)
+                (dir </> "fileIn")
+                (dir </> "fileOut")
+                `shouldReturn` V.Failure
+                  [DestinationFileExists (dir </> "fileIn") (dir </> "fileOut")]
+              readFile (dir </> "fileIn") `shouldReturn` "test1"
+              readFile (dir </> "fileOut") `shouldReturn` "test2"
+          )
+      it "does not clobber files when destination exists and specified"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              writeFile (dir </> "fileIn") "test1"
+              writeFile (dir </> "fileOut") "test2"
+              copyFileToPath
+                True
+                (ClobberDestination True)
+                (dir </> "fileIn")
+                (dir </> "fileOut")
+                `shouldReturn` V.Success ()
+              readFile (dir </> "fileIn") `shouldReturn` "test1"
+              readFile (dir </> "fileOut") `shouldReturn` "test2"
+          )
+      it "fails files when destination exists and is a folder without clobber"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              writeFile (dir </> "fileIn") "test1"
+              createDirectory (dir </> "fileOut")
+              copyFileToPath
+                True
+                (ClobberDestination False)
+                (dir </> "fileIn")
+                (dir </> "fileOut")
+                `shouldReturn` V.Failure [DirectoryInDestination (dir </> "fileIn") (dir </> "fileOut")]
+              readFile (dir </> "fileIn") `shouldReturn` "test1"
+              doesDirectoryExist (dir </> "fileOut") `shouldReturn` True
+          )
+      it "fails files when destination exists and is a folder with clobber"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              writeFile (dir </> "fileIn") "test1"
+              createDirectory (dir </> "fileOut")
+              copyFileToPath
+                True
+                (ClobberDestination True)
+                (dir </> "fileIn")
+                (dir </> "fileOut")
+                `shouldReturn` V.Failure
+                  [DirectoryInDestination (dir </> "fileIn") (dir </> "fileOut")]
+              readFile (dir </> "fileIn") `shouldReturn` "test1"
+              doesDirectoryExist (dir </> "fileOut") `shouldReturn` True
+          )
   describe "moveFile" $ do
     it "moves file to single output when successful and does not keep copy"
       $ withStdoutLogging
@@ -875,6 +983,7 @@ spec = do
             setLogLevel LevelError
             writeFile (dir </> "fileIn") "test"
             moveFile
+              False
               (ClobberDestination False)
               False
               [dir]
@@ -890,6 +999,7 @@ spec = do
         ( \dir -> do
             writeFile (dir </> "fileIn") "test"
             moveFile
+              False
               (ClobberDestination False)
               True
               [dir]
@@ -905,6 +1015,7 @@ spec = do
         ( \dir -> do
             writeFile (dir </> "fileIn") "test"
             moveFile
+              False
               (ClobberDestination False)
               False
               [dir </> "dir1", dir </> "dir2"]
@@ -923,13 +1034,14 @@ spec = do
             createDirectory (dir </> "dir2")
             writeFile (dir </> "dir2" </> "fileOut") "test2"
             moveFile
+              False
               (ClobberDestination False)
               False
               [dir </> "dir1", dir </> "dir2"]
               (dir </> "fileIn", "fileOut")
               `shouldReturn` V.Failure
                 [DestinationFileExists (dir </> "fileIn") (dir </> "dir2" </> "fileOut")]
-            doesPathExist (dir </> "fileIn") `shouldReturn` True
+            readFile (dir </> "fileIn") `shouldReturn` "test1"
             readFile (dir </> "dir1" </> "fileOut") `shouldReturn` "test1"
             readFile (dir </> "dir2" </> "fileOut") `shouldReturn` "test2"
         )
@@ -943,6 +1055,7 @@ spec = do
             writeFile (dir </> "dir2" </> "fileOut") "test2"
             createDirectoryIfMissing True (dir </> "dir1" </> "fileOut")
             moveFile
+              False
               (ClobberDestination False)
               False
               [dir </> "dir1", dir </> "dir2"]
@@ -951,11 +1064,106 @@ spec = do
                 [ DirectoryInDestination (dir </> "fileIn") (dir </> "dir1" </> "fileOut"),
                   DestinationFileExists (dir </> "fileIn") (dir </> "dir2" </> "fileOut")
                 ]
-            doesPathExist (dir </> "fileIn") `shouldReturn` True
+            readFile (dir </> "fileIn") `shouldReturn` "test1"
             doesDirectoryExist (dir </> "dir1" </> "fileOut")
               `shouldReturn` True
             readFile (dir </> "dir2" </> "fileOut") `shouldReturn` "test2"
         )
+    context "when dry run is true" $ do
+      it "does not move file to single output when successful and does keep copy"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              setLogLevel LevelError
+              writeFile (dir </> "fileIn") "test"
+              moveFile
+                True
+                (ClobberDestination False)
+                False
+                [dir]
+                (dir </> "fileIn", "fileOut")
+                `shouldReturn` V.Success ()
+              readFile (dir </> "fileIn") `shouldReturn` "test"
+              doesPathExist (dir </> "fileOut") `shouldReturn` False
+          )
+      it "does not move file to single output when successful and keeps copy"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              writeFile (dir </> "fileIn") "test"
+              moveFile
+                True
+                (ClobberDestination False)
+                True
+                [dir]
+                (dir </> "fileIn", "fileOut")
+                `shouldReturn` V.Success ()
+              readFile (dir </> "fileIn") `shouldReturn` "test"
+              doesPathExist (dir </> "fileOut") `shouldReturn` False
+          )
+      it "does not move file to multiple outputs when successful and keeps copy"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              writeFile (dir </> "fileIn") "test"
+              moveFile
+                True
+                (ClobberDestination False)
+                False
+                [dir </> "dir1", dir </> "dir2"]
+                (dir </> "fileIn", "fileOut")
+                `shouldReturn` V.Success ()
+              readFile (dir </> "fileIn") `shouldReturn` "test"
+              doesPathExist (dir </> "dir1" </> "fileOut") `shouldReturn` False
+              doesPathExist (dir </> "dir2" </> "fileOut") `shouldReturn` False
+          )
+      it "does not remove original if at least one fails"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              writeFile (dir </> "fileIn") "test1"
+              createDirectory (dir </> "dir2")
+              writeFile (dir </> "dir2" </> "fileOut") "test2"
+              moveFile
+                True
+                (ClobberDestination False)
+                False
+                [dir </> "dir1", dir </> "dir2"]
+                (dir </> "fileIn", "fileOut")
+                `shouldReturn` V.Failure
+                  [DestinationFileExists (dir </> "fileIn") (dir </> "dir2" </> "fileOut")]
+              readFile (dir </> "fileIn") `shouldReturn` "test1"
+              doesPathExist (dir </> "dir1" </> "fileOut") `shouldReturn` False
+              readFile (dir </> "dir2" </> "fileOut") `shouldReturn` "test2"
+          )
+      it "accumulates errors, rather than stopping at first"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              writeFile (dir </> "fileIn") "test1"
+              createDirectory (dir </> "dir2")
+              writeFile (dir </> "dir2" </> "fileOut") "test2"
+              createDirectoryIfMissing True (dir </> "dir1" </> "fileOut")
+              moveFile
+                True
+                (ClobberDestination False)
+                False
+                [dir </> "dir1", dir </> "dir2"]
+                (dir </> "fileIn", "fileOut")
+                `shouldReturn` V.Failure
+                  [ DirectoryInDestination (dir </> "fileIn") (dir </> "dir1" </> "fileOut"),
+                    DestinationFileExists (dir </> "fileIn") (dir </> "dir2" </> "fileOut")
+                  ]
+              readFile (dir </> "fileIn") `shouldReturn` "test1"
+              doesDirectoryExist (dir </> "dir1" </> "fileOut")
+                `shouldReturn` True
+              readFile (dir </> "dir2" </> "fileOut") `shouldReturn` "test2"
+          )
   describe "moveFiles" $ do
     it "moves files to single output when successful and does not keep copy"
       $ withStdoutLogging
@@ -966,6 +1174,7 @@ spec = do
             writeFile (dir </> "fileIn1") "test1"
             writeFile (dir </> "fileIn2") "test2"
             moveFiles
+              False
               (ClobberDestination False)
               False
               [dir]
@@ -988,6 +1197,7 @@ spec = do
             writeFile (dir </> "fileIn1") "test1"
             writeFile (dir </> "fileIn2") "test2"
             moveFiles
+              False
               (ClobberDestination False)
               True
               [dir]
@@ -1010,6 +1220,7 @@ spec = do
             writeFile (dir </> "fileIn1") "test1"
             writeFile (dir </> "fileIn2") "test2"
             moveFiles
+              False
               (ClobberDestination False)
               False
               [dir </> "dir1", dir </> "dir2"]
@@ -1036,6 +1247,7 @@ spec = do
             createDirectory (dir </> "dir2")
             writeFile (dir </> "dir2" </> "fileOut1") "test3"
             moveFiles
+              False
               (ClobberDestination False)
               False
               [dir </> "dir1", dir </> "dir2"]
@@ -1063,6 +1275,7 @@ spec = do
             createDirectory (dir </> "dir2")
             writeFile (dir </> "dir2" </> "fileOut1") "test3"
             moveFiles
+              False
               (ClobberDestination True)
               False
               [dir </> "dir1", dir </> "dir2"]
@@ -1092,6 +1305,7 @@ spec = do
             writeFile (dir </> "dir2" </> "fileOut1") "test4"
             writeFile (dir </> "dir2" </> "fileOut2") "test5"
             moveFiles
+              False
               (ClobberDestination False)
               False
               [dir </> "dir1", dir </> "dir2"]
@@ -1112,3 +1326,165 @@ spec = do
             readFile (dir </> "dir2" </> "fileOut1") `shouldReturn` "test4"
             readFile (dir </> "dir2" </> "fileOut2") `shouldReturn` "test5"
         )
+    context "when dry run is true" $ do
+      it "does not move files to single output when successful and keeps copy"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              setLogLevel LevelError
+              writeFile (dir </> "fileIn1") "test1"
+              writeFile (dir </> "fileIn2") "test2"
+              moveFiles
+                True
+                (ClobberDestination False)
+                False
+                [dir]
+                ( M.fromList
+                    [ (dir </> "fileIn1", "fileOut1"),
+                      (dir </> "fileIn2", "fileOut2")
+                    ]
+                )
+                `shouldReturn` V.Success ()
+              readFile (dir </> "fileIn1") `shouldReturn` "test1"
+              readFile (dir </> "fileIn2") `shouldReturn` "test2"
+              doesPathExist (dir </> "fileOut1") `shouldReturn` False
+              doesPathExist (dir </> "fileOut2") `shouldReturn` False
+          )
+      it "does not move files to single output when successful and keeps copies"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              writeFile (dir </> "fileIn1") "test1"
+              writeFile (dir </> "fileIn2") "test2"
+              moveFiles
+                True
+                (ClobberDestination False)
+                True
+                [dir]
+                ( M.fromList
+                    [ (dir </> "fileIn1", "fileOut1"),
+                      (dir </> "fileIn2", "fileOut2")
+                    ]
+                )
+                `shouldReturn` V.Success ()
+              readFile (dir </> "fileIn1") `shouldReturn` "test1"
+              readFile (dir </> "fileIn2") `shouldReturn` "test2"
+              doesPathExist (dir </> "fileOut1") `shouldReturn` False
+              doesPathExist (dir </> "fileOut2") `shouldReturn` False
+          )
+      it "does not move file to multiple outputs when successful and keeps copy"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              writeFile (dir </> "fileIn1") "test1"
+              writeFile (dir </> "fileIn2") "test2"
+              moveFiles
+                True
+                (ClobberDestination False)
+                False
+                [dir </> "dir1", dir </> "dir2"]
+                ( M.fromList
+                    [ (dir </> "fileIn1", "fileOut1"),
+                      (dir </> "fileIn2", "fileOut2")
+                    ]
+                )
+                `shouldReturn` V.Success ()
+              readFile (dir </> "fileIn1") `shouldReturn` "test1"
+              readFile (dir </> "fileIn2") `shouldReturn` "test2"
+              doesPathExist (dir </> "dir1" </> "fileOut1") `shouldReturn` False
+              doesPathExist (dir </> "dir1" </> "fileOut2") `shouldReturn` False
+              doesPathExist (dir </> "dir2" </> "fileOut1") `shouldReturn` False
+              doesPathExist (dir </> "dir2" </> "fileOut2") `shouldReturn` False
+          )
+      it "fails a single file if any output fails and keeps a copy, while processing the rest correctly"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              writeFile (dir </> "fileIn1") "test1"
+              writeFile (dir </> "fileIn2") "test2"
+              createDirectory (dir </> "dir2")
+              writeFile (dir </> "dir2" </> "fileOut1") "test3"
+              moveFiles
+                True
+                (ClobberDestination False)
+                False
+                [dir </> "dir1", dir </> "dir2"]
+                ( M.fromList
+                    [ (dir </> "fileIn1", "fileOut1"),
+                      (dir </> "fileIn2", "fileOut2")
+                    ]
+                )
+                `shouldReturn` V.Failure
+                  [DestinationFileExists (dir </> "fileIn1") (dir </> "dir2" </> "fileOut1")]
+              readFile (dir </> "fileIn1") `shouldReturn` "test1"
+              readFile (dir </> "fileIn2") `shouldReturn` "test2"
+              doesPathExist (dir </> "dir1" </> "fileOut1") `shouldReturn` False
+              doesPathExist (dir </> "dir1" </> "fileOut2") `shouldReturn` False
+              readFile (dir </> "dir2" </> "fileOut1") `shouldReturn` "test3"
+              doesPathExist (dir </> "dir2" </> "fileOut2") `shouldReturn` False
+          )
+      it "does not clobber when specified"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              writeFile (dir </> "fileIn1") "test1"
+              writeFile (dir </> "fileIn2") "test2"
+              createDirectory (dir </> "dir2")
+              writeFile (dir </> "dir2" </> "fileOut1") "test3"
+              moveFiles
+                True
+                (ClobberDestination True)
+                False
+                [dir </> "dir1", dir </> "dir2"]
+                ( M.fromList
+                    [ (dir </> "fileIn1", "fileOut1"),
+                      (dir </> "fileIn2", "fileOut2")
+                    ]
+                )
+                `shouldReturn` V.Success ()
+              readFile (dir </> "fileIn1") `shouldReturn` "test1"
+              readFile (dir </> "fileIn2") `shouldReturn` "test2"
+              doesPathExist (dir </> "dir1" </> "fileOut1") `shouldReturn` False
+              doesPathExist (dir </> "dir1" </> "fileOut2") `shouldReturn` False
+              readFile (dir </> "dir2" </> "fileOut1") `shouldReturn` "test3"
+              doesPathExist (dir </> "dir2" </> "fileOut2") `shouldReturn` False
+          )
+      it "accumulates multiple errors"
+        $ withStdoutLogging
+        $ withSystemTempDirectory
+          "autotagicalTest"
+          ( \dir -> do
+              writeFile (dir </> "fileIn1") "test1"
+              writeFile (dir </> "fileIn2") "test2"
+              createDirectory (dir </> "dir1")
+              writeFile (dir </> "dir1" </> "fileOut1") "test3"
+              createDirectory (dir </> "dir2")
+              writeFile (dir </> "dir2" </> "fileOut1") "test4"
+              writeFile (dir </> "dir2" </> "fileOut2") "test5"
+              moveFiles
+                True
+                (ClobberDestination False)
+                False
+                [dir </> "dir1", dir </> "dir2"]
+                ( M.fromList
+                    [ (dir </> "fileIn1", "fileOut1"),
+                      (dir </> "fileIn2", "fileOut2")
+                    ]
+                )
+                `shouldReturn` V.Failure
+                  [ DestinationFileExists (dir </> "fileIn1") (dir </> "dir1" </> "fileOut1"),
+                    DestinationFileExists (dir </> "fileIn1") (dir </> "dir2" </> "fileOut1"),
+                    DestinationFileExists (dir </> "fileIn2") (dir </> "dir2" </> "fileOut2")
+                  ]
+              readFile (dir </> "fileIn1") `shouldReturn` "test1"
+              readFile (dir </> "fileIn2") `shouldReturn` "test2"
+              readFile (dir </> "dir1" </> "fileOut1") `shouldReturn` "test3"
+              doesPathExist (dir </> "dir1" </> "fileOut2") `shouldReturn` False
+              readFile (dir </> "dir2" </> "fileOut1") `shouldReturn` "test4"
+              readFile (dir </> "dir2" </> "fileOut2") `shouldReturn` "test5"
+          )

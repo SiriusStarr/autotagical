@@ -27,6 +27,7 @@ let SortingSchema =
       ? ../SortingSchema/Type
 
 in  { clobberDestination : Optional Text
+    , dryRun : Bool
     , ignorePatterns : Optional GlobPatterns
     , inputFolders : List Text
     , inputFormat : InputFormat

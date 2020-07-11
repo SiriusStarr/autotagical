@@ -36,7 +36,7 @@ where
 
 import Control.Exception (IOException, try)
 import Control.Logging
-import Control.Monad (filterM)
+import Control.Monad (filterM, unless)
 import Data.Bifunctor (first)
 import Data.Either (isLeft)
 import Data.Either.Combinators (mapBoth)
@@ -69,7 +69,14 @@ import Renaming
   )
 import SafeType (NonEmptyList, safeText)
 import Sorting (SortingError, SortingSchema, sortBySchema)
-import System.Directory (copyFileWithMetadata, createDirectoryIfMissing, doesFileExist, doesPathExist, makeAbsolute, removeFile)
+import System.Directory
+  ( copyFileWithMetadata,
+    createDirectoryIfMissing,
+    doesFileExist,
+    doesPathExist,
+    makeAbsolute,
+    removeFile,
+  )
 import System.FilePath ((</>), makeRelative, takeDirectory)
 import qualified System.FilePath.Glob as G
 import System.FilePath.Glob (CompOptions (..), Pattern)
@@ -808,25 +815,27 @@ instance Show MoveError where
 --   files, a list of output folders, and a list of moves to perform, actually
 --   perform said file moves.
 moveFiles ::
+  Bool ->
   ClobberDestination ->
   Bool ->
   NonEmptyList FilePath ->
   Map InputPath OutputPath ->
   IO (Validation [MoveError] ())
-moveFiles clobber keepCopy outputDirs fs =
-  sequenceA_ <$> mapM (moveFile clobber keepCopy outputDirs) (M.assocs fs)
+moveFiles dryRun clobber keepCopy outputDirs fs =
+  sequenceA_ <$> mapM (moveFile dryRun clobber keepCopy outputDirs) (M.assocs fs)
 
 -- | Given whether to clobber destination, whether to keep a copy of the input
 --   file, a list of output folders, and a move to perform, actually perform
 --   said file move, with appropriate logging.
 moveFile ::
+  Bool ->
   ClobberDestination ->
   Bool ->
   NonEmptyList FilePath ->
   (InputPath, OutputPath) ->
   IO (Validation [MoveError] ())
-moveFile clobber keepCopy outputDirs (inPath, destPath) = do
-  moves <- mapM (\d -> copyFileToPath clobber inPath (d </> destPath)) (toList outputDirs)
+moveFile dryRun clobber keepCopy outputDirs (inPath, destPath) = do
+  moves <- mapM (\d -> copyFileToPath dryRun clobber inPath (d </> destPath)) (toList outputDirs)
   case sequenceA_ moves of
     Success () ->
       if keepCopy
@@ -843,7 +852,10 @@ moveFile clobber keepCopy outputDirs (inPath, destPath) = do
               <> " moved successfully.  Removing original."
           eitherToValidation
             . first ((: []) . FileRemovalException inPath . T.pack . show)
-              <$> (try $ removeFile inPath :: IO (Either IOException ()))
+              <$> ( try $ unless dryRun $
+                      removeFile inPath ::
+                      IO (Either IOException ())
+                  )
     Failure es -> do
       warn $
         "Due to copying errors, the original file at "
@@ -854,19 +866,23 @@ moveFile clobber keepCopy outputDirs (inPath, destPath) = do
 -- | Given whether to clobber destination, an output path, and an input path,
 --   copy a file or fail with a descriptive error.
 copyFileToPath ::
+  Bool ->
   ClobberDestination ->
   FilePath ->
   FilePath ->
   IO (Validation [MoveError] ())
-copyFileToPath clobber inPath outPath = do
+copyFileToPath dryRun clobber inPath outPath = do
   pathExists <- doesPathExist outPath
   if not pathExists
     then do
-      createDirectoryIfMissing True (takeDirectory outPath)
+      unless dryRun $ createDirectoryIfMissing True (takeDirectory outPath)
       debug $ "Copying file from " <> T.pack inPath <> " to " <> T.pack outPath
       eitherToValidation
         . first ((: []) . FileCopyException inPath outPath . T.pack . show)
-          <$> (try $ copyFileWithMetadata inPath outPath :: IO (Either IOException ()))
+          <$> ( try $ unless dryRun $
+                  copyFileWithMetadata inPath outPath ::
+                  IO (Either IOException ())
+              )
     else do
       fileExists <- doesFileExist outPath
       if fileExists
@@ -879,7 +895,10 @@ copyFileToPath clobber inPath outPath = do
                 <> T.pack inPath
             eitherToValidation
               . first ((: []) . FileCopyException inPath outPath . T.pack . show)
-                <$> (try $ copyFileWithMetadata inPath outPath :: IO (Either IOException ()))
+                <$> ( try $ unless dryRun $
+                        copyFileWithMetadata inPath outPath ::
+                        IO (Either IOException ())
+                    )
           ClobberDestination False ->
             return $ Failure [DestinationFileExists inPath outPath]
         else return $ Failure [DirectoryInDestination inPath outPath]

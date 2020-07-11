@@ -1,6 +1,6 @@
 let P = ../../../dhall/Predicate/package.dhall
 
-let R = ../../../dhall/RenamingSchema/package.dhall
+let R = ../../../dhall/Renaming/package.dhall
 
 in  R.rule
       P.always
