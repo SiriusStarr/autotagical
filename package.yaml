@@ -7,10 +7,6 @@ author: "SiriusStarr"
 maintainer: "2049163+SiriusStarr@users.noreply.github.com"
 copyright: "(c) 2020 SiriusStarr"
 
-extra-source-files:
-  - README.md
-  - CHANGELOG.md
-
 description: A utility to automagically rename and sort tagged files (such as those produced by TagSpaces) according to user-defined schemas.
 
 dependencies:
@@ -89,3 +85,15 @@ tests:
       - quickcheck-instances >= 0.3.20
       - generic-random >= 1.2
       - temporary >= 1.3
+
+extra-doc-files:
+  - docs/**
+
+extra-source-files:
+  - README.md
+  - CHANGELOG.md
+  - dhall/**
+  - test/dhall/success/*.dhall
+  - test/dhall/failure/*.dhall
+  - test/json/valid/*.json
+  - test/json/invalid/*.json

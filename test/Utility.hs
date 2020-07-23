@@ -50,13 +50,13 @@ makePatterns errorRecovery =
 -- | Confirm that a specified Dhall file decodes to the expected Haskell value.
 importSucceeds :: (Eq a, Show a) => Decoder a -> a -> FilePath -> Expectation
 importSucceeds d expect f =
-  D.inputFile d (joinPath [".", "test", "dhall", "Success", f])
+  D.inputFile d (joinPath [".", "test", "dhall", "success", f])
     `shouldReturn` expect
 
 -- | Confirm that a specified Dhall file fails to decode with an extract error.
 importFails :: Decoder a -> FilePath -> Expectation
 importFails d f =
-  D.inputFile d (joinPath [".", "test", "dhall", "Failure", f])
+  D.inputFile d (joinPath [".", "test", "dhall", "failure", f])
     `shouldThrow` dhallExtractError
   where
     dhallExtractError :: D.ExtractErrors Src Void -> Bool

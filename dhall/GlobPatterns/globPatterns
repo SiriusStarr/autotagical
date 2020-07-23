@@ -1,1 +1,0 @@
-λ(patterns : List Text) → { errorRecovery = False, patterns }

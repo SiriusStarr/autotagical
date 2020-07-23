@@ -1,7 +1,7 @@
-{ config =
-      ./config sha256:3b70f969b178c33b6faed7cf94b7c91a675688d79ee2a83d8b7827d5d3bb2547
-    ? ./config
+{ default =
+      ./default.dhall sha256:0fc1d426865a16a1cb7462d86e9090e08a64d7acafcf954ff83cae7ffcb20e75
+    ? ./default.dhall
 , With =
-      ./With/package.dhall sha256:b5b8fc7bf6b621111215c65e27cce499cd171211c1a425935061d81f1ebff289
+      ./With/package.dhall sha256:1ebdb7a934184d7b0acd86de4824f37d169fcd3a9a9e1079a3f2f21a43d971c7
     ? ./With/package.dhall
 }

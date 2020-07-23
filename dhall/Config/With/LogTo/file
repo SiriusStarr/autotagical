@@ -1,5 +1,0 @@
-let LogDestination =
-        ../../../Internal/Logging/LogDestination sha256:47393d4c5bdc46697670d9b6d4c73c4875c1df2f2cf2f1cbe68b2afe03c0816f
-      ? ../../../Internal/Logging/LogDestination
-
-in  λ(path : Text) → { logDestination = LogDestination.File path }

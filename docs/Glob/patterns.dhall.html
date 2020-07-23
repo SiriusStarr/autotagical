@@ -1,0 +1,22 @@
+<!DOCTYPE HTML><html><head><title>/Glob/patterns.dhall</title><link href="../index.css" type="text/css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Lato:ital,wght@0,400;0,700;1,400&amp;display=swap" type="text/css" rel="stylesheet"><script src="../index.js" type="text/javascript"></script><meta charset="UTF-8"></head><body><div class="nav-bar"><img src="../dhall-icon.svg" class="dhall-icon"><p class="package-title">Autotagical</p><div class="nav-bar-content-divider"></div><a id="switch-light-dark-mode" class="nav-option">Switch Light/Dark Mode</a></div><div class="main-container"><h2 class="doc-title"><span class="crumb-divider">/</span><a href="../index.html">Autotagical</a><span class="crumb-divider">/</span><a href="index.html" class="title-crumb">Glob</a><span class="crumb-divider">/</span><span href="index.html" class="title-crumb">patterns.dhall</span></h2><a data-path="/Glob/patterns.dhall" class="copy-to-clipboard"><i><small>Copy path to clipboard</small></i></a><br><div class="doc-contents"><h1 id="globpatterns">Glob.patterns</h1>
+<h2 id="function">Function</h2>
+<p>Compile a list of <code>Text</code> patterns into glob patterns, used for input, ignore,
+and unnamed file matching.  These patterns follow standard POSIX glob behavior;
+for more details, check out the documentation of
+<a href="http://hackage.haskell.org/package/Glob-0.10.0/docs/System-FilePath-Glob.html#v:compile">System.FilePath.Glob</a>,
+which is what is used internally.</p>
+<h2 id="default-behavior">Default Behavior</h2>
+<p>By default, error recovery is turned off.  Patterns that contain syntactical
+errors will fail to compile, resulting in an error when you try to import the
+config into <code>autotagical</code>.  To override this behavior, use
+<code>Glob.With.errorRecovery</code>.</p>
+<p><strong>Important:</strong> All glob patterns are <strong>relative</strong> to the input folder.  This
+means that, if a file is in a subdirectory of the input folder, <code>*.jpg</code> will not
+match it.  Use <code>**</code> if you need to match path separators as well, e.g. to match
+files in subfolders as well.</p>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-dhall">let Autotagical = https://siriusstarr.github.io/autotagical/dhall/package.dhall
+
+in  Autotagical.Glob.patterns [ &quot;*.jpg&quot;, &quot;*.png&quot; ]
+</code></pre>
+</div><h3>Source</h3><div class="source-code"><pre><span class="dhall-keyword">let</span> <span class="dhall-label">GlobPatterns</span> <span class="dhall-syntax">=</span><br>        ../Internal/GlobPatterns/Type sha256:26a29e0113646fb623fba2a6657b31b99127b689d510ef6761df7dd49da8a5bb<br>      <span class="dhall-operator">?</span> ../Internal/GlobPatterns/Type<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">patterns</span><br>    <span class="dhall-syntax">:</span> <span class="dhall-builtin">List</span> <span class="dhall-builtin">Text</span> <span class="dhall-syntax">→</span> <span class="dhall-label">GlobPatterns</span><br>    <span class="dhall-syntax">=</span> <span class="dhall-syntax">λ</span><span class="dhall-syntax">(</span><span class="dhall-label">patterns</span> <span class="dhall-syntax">:</span> <span class="dhall-builtin">List</span> <span class="dhall-builtin">Text</span><span class="dhall-syntax">)</span> <span class="dhall-syntax">→</span> <span class="dhall-syntax">{</span> <span class="dhall-label">errorRecovery</span> <span class="dhall-syntax">=</span> <span class="dhall-builtin">False</span><span class="dhall-syntax">,</span> <span class="dhall-label">patterns</span> <span class="dhall-syntax">}</span><br><br><span class="dhall-keyword">in</span>  <span class="dhall-label">patterns</span></pre></div></div></body></html>

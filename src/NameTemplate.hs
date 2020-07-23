@@ -246,7 +246,7 @@ instance Show Interpret where
 --   file information.
 data FolderNameComponent
   = FolderFormatAs
-      { component :: FolderNameComponent,
+      { components :: NonEmptyList FolderNameComponent,
         formatCase :: Case
       }
   | FolderIfThenElse
@@ -264,10 +264,10 @@ data FolderNameComponent
   deriving (Eq, Generic)
 
 instance Show FolderNameComponent where
-  show FolderFormatAs {component, formatCase} =
+  show FolderFormatAs {components, formatCase} =
     concat
       [ "Format ",
-        show component,
+        show components,
         " as ",
         show formatCase
       ]
@@ -302,8 +302,8 @@ deriving instance FromDhall a => FromDhall (FolderNameComponentF a)
 validateFolderNameComponent :: FolderNameComponent -> Validation Text ()
 validateFolderNameComponent (FolderIfThenElse _ [] []) =
   Failure "The IfThenElse folder name component must have at least one component, i.e. at least one of the true components or false components must be non-empty.  This should not be achievable using the normal Dhall interface, so if you weren't messing around with internal Dhall types, please report it as a bug."
-validateFolderNameComponent (FolderFormatAs c _) =
-  validateFolderNameComponent c
+validateFolderNameComponent (FolderFormatAs cs _) =
+  traverse_ validateFolderNameComponent cs
 validateFolderNameComponent (FolderIfThenElse _ c1s c2s) =
   traverse_ validateFolderNameComponent $ c1s ++ c2s
 validateFolderNameComponent (FolderInterpret c _) =
@@ -344,7 +344,7 @@ instance Show FolderName where
 data FileNameComponent
   = FileDuplicateNumber
   | FileFormatAs
-      { component :: FileNameComponent,
+      { components :: NonEmptyList FileNameComponent,
         formatCase :: Case
       }
   | FileIfDuplicate (NonEmptyList FileNameComponent)
@@ -364,10 +364,10 @@ data FileNameComponent
 
 instance Show FileNameComponent where
   show FileDuplicateNumber = "Duplicate number"
-  show FileFormatAs {component, formatCase} =
+  show FileFormatAs {components, formatCase} =
     concat
       [ "Format ",
-        show component,
+        show components,
         " as ",
         show formatCase
       ]
@@ -403,7 +403,8 @@ deriving instance FromDhall a => FromDhall (FileNameComponentF a)
 validateFileNameComponent :: FileNameComponent -> Validation Text ()
 validateFileNameComponent (FileIfThenElse _ [] []) =
   Failure "The IfThenElse file name component must have at least one component, i.e. at least one of the true components or false components must be non-empty, but I encountered one anyways.  This should not be achievable using the normal Dhall interface, so if you weren't messing around with internal Dhall types, please report it as a bug."
-validateFileNameComponent (FileFormatAs c _) = validateFileNameComponent c
+validateFileNameComponent (FileFormatAs cs _) =
+  traverse_ validateFileNameComponent cs
 validateFileNameComponent (FileIfThenElse _ c1s c2s) =
   traverse_ validateFileNameComponent $ c1s ++ c2s
 validateFileNameComponent (FileInterpret c _) = validateFileNameComponent c
@@ -506,8 +507,9 @@ translateFolderComponent ::
   Text ->
   FolderNameComponent ->
   Validation [NameTemplateError] Text
-translateFolderComponent f sep (FolderFormatAs c format) =
-  toCase <$> translateFolderComponent f sep c
+translateFolderComponent f sep (FolderFormatAs cs format) =
+  toCase . T.strip . T.intercalate " " . toList
+    <$> traverse (translateFolderComponent f sep) cs
   where
     toCase = case format of
       AsTitleCase -> toTitle
@@ -584,8 +586,9 @@ translateFileComponent ::
   Validation [NameTemplateError] Text
 translateFileComponent _ d _ FileDuplicateNumber =
   Success $ maybe "" (T.pack . show) d
-translateFileComponent f d sep (FileFormatAs c format) =
-  toCase <$> translateFileComponent f d sep c
+translateFileComponent f d sep (FileFormatAs cs format) =
+  toCase . T.strip . T.intercalate " " . toList
+    <$> traverse (translateFileComponent f d sep) cs
   where
     toCase = case format of
       AsTitleCase -> toTitle

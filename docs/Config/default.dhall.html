@@ -1,0 +1,87 @@
+<!DOCTYPE HTML><html><head><title>/Config/default.dhall</title><link href="../index.css" type="text/css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Lato:ital,wght@0,400;0,700;1,400&amp;display=swap" type="text/css" rel="stylesheet"><script src="../index.js" type="text/javascript"></script><meta charset="UTF-8"></head><body><div class="nav-bar"><img src="../dhall-icon.svg" class="dhall-icon"><p class="package-title">Autotagical</p><div class="nav-bar-content-divider"></div><a id="switch-light-dark-mode" class="nav-option">Switch Light/Dark Mode</a></div><div class="main-container"><h2 class="doc-title"><span class="crumb-divider">/</span><a href="../index.html">Autotagical</a><span class="crumb-divider">/</span><a href="index.html" class="title-crumb">Config</a><span class="crumb-divider">/</span><span href="index.html" class="title-crumb">default.dhall</span></h2><a data-path="/Config/default.dhall" class="copy-to-clipboard"><i><small>Copy path to clipboard</small></i></a><br><div class="doc-contents"><h1 id="configdefault">Config.default</h1>
+<h2 id="record-completion">Record Completion</h2>
+<p><code>autotagical</code> uses record completion to build a configuration, so default
+options don&#39;t have to be explicitly set.  If you&#39;re importing the full package,
+you can work from that record directly instead of using this file.</p>
+<p>The following fields are mandatory:</p>
+<pre><code class="language-dhall">{ inputFolders : List Text
+, inputFormat : InputFormat
+, inputPatterns : GlobPatterns
+, outputFolders : List Text
+, sortingSchema : SortingSchema
+}
+</code></pre>
+<h2 id="multiply-input-files">Multiply Input Files</h2>
+<p>In general, it is bad practice to use input folders that overlap, e.g. using
+<code>[ &quot;./folder&quot;, &quot;./folder/subfolder&quot;]</code> if any patterns match recursively.  More
+specifically, situations in which files are matched via multiple input folders
+can result in unanticipated behavior.</p>
+<p>In the case that a file is input via multiple input folders, the information of
+the <em>last</em> is used.  However, <strong>matches that determine the file to be unnamed
+are preferred to those that find it to be named</strong> (if <code>Config.With.renaming</code> is
+used).</p>
+<p>Additionally, if <strong>any match finds that the file should be ignored</strong> (if
+<code>Config.With.ignorePatterns</code> is used), it will be, overriding any other inputs.</p>
+<h2 id="default-behavior">Default Behavior</h2>
+<p>By default, <code>autotagical</code> will:</p>
+<ul>
+<li>
+Not overwrite destination files.
+</li>
+<li>
+Actually move files.
+</li>
+<li>
+Not ignore any input files.
+</li>
+<li>
+Not keep a copy of files (files will be moved, not copied).
+</li>
+<li>
+Log only warnings and errors.
+</li>
+<li>
+Log to <code>stdout</code>.
+</li>
+<li>
+Not rewrite tags in a new format.
+</li>
+<li>
+Not rename unnamed files.
+</li>
+</ul>
+<p>To override any of this behavior, use <code>Config.With</code>.</p>
+<h2 id="usage">Usage</h2>
+<p>The following are equivalent:</p>
+<pre><code class="language-dhall">let Autotagical = https://siriusstarr.github.io/autotagical/dhall/package.dhall
+
+in  Autotagical::{
+    , inputFolders = [ &quot;input&quot; ]
+    , inputFormat = Autotagical.Input.tagSpacesFormat
+    , inputPatterns = Autotagical.Glob.patterns [ &quot;*.jpg&quot;, &quot;*.png&quot; ]
+    , outputFolders = [ &quot;output&quot; ]
+    , sortingSchema =
+        Autotagical.Sorting.schema
+          [ Autotagical.Sorting.Folder.leaf
+              &quot;folder&quot;
+              Autotagical.Predicate.always
+          ]
+    }
+</code></pre>
+<p>and</p>
+<pre><code class="language-dhall">let Autotagical = https://siriusstarr.github.io/autotagical/dhall/package.dhall
+
+in  Autotagical.Config.default::{
+    , inputFolders = [ &quot;input&quot; ]
+    , inputFormat = Autotagical.Input.tagSpacesFormat
+    , inputPatterns = Autotagical.Glob.patterns [ &quot;*.jpg&quot;, &quot;*.png&quot; ]
+    , outputFolders = [ &quot;output&quot; ]
+    , sortingSchema =
+        Autotagical.Sorting.schema
+          [ Autotagical.Sorting.Folder.leaf
+              &quot;folder&quot;
+              Autotagical.Predicate.always
+          ]
+    }
+</code></pre>
+</div><h3>Source</h3><div class="source-code"><pre><span class="dhall-keyword">let</span> <span class="dhall-label">Config</span> <span class="dhall-syntax">=</span><br>        ../Internal/Config/Type sha256:7ef0deccb653c8ae143d2c42e625b2d748123b4e4b1bdc835c8c706fb71e2d39<br>      <span class="dhall-operator">?</span> ../Internal/Config/Type<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">GlobPatterns</span> <span class="dhall-syntax">=</span><br>        ../Internal/GlobPatterns/Type sha256:26a29e0113646fb623fba2a6657b31b99127b689d510ef6761df7dd49da8a5bb<br>      <span class="dhall-operator">?</span> ../Internal/GlobPatterns/Type<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">LogDestination</span> <span class="dhall-syntax">=</span><br>        ../Internal/Logging/LogDestination sha256:47393d4c5bdc46697670d9b6d4c73c4875c1df2f2cf2f1cbe68b2afe03c0816f<br>      <span class="dhall-operator">?</span> ../Internal/Logging/LogDestination<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">LogLevel</span> <span class="dhall-syntax">=</span><br>        ../Internal/Logging/LogLevel sha256:8b0ef97f0f052a52dd67e11fa031d0efe3ff18c020f9911ab2179066dee3922e<br>      <span class="dhall-operator">?</span> ../Internal/Logging/LogLevel<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">OutputFormat</span> <span class="dhall-syntax">=</span><br>        ../Internal/OutputFormat/Type sha256:90a967648257956b041755ef770b4d5a1adce53345a9443d872080c2f511ca2c<br>      <span class="dhall-operator">?</span> ../Internal/OutputFormat/Type<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">Renaming</span> <span class="dhall-syntax">=</span><br>        ../Internal/Config/Renaming sha256:7023726a4e39329b1e662bff1e4ef99e230db28751a5097ff541b406d93f2f4e<br>      <span class="dhall-operator">?</span> ../Internal/Config/Renaming<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">DefaultOptions</span> <span class="dhall-syntax">=</span><br>      <span class="dhall-syntax">{</span> <span class="dhall-label">clobberDestination</span> <span class="dhall-syntax">:</span> <span class="dhall-builtin">Optional</span> <span class="dhall-builtin">Text</span><br>      <span class="dhall-syntax">,</span> <span class="dhall-label">dryRun</span> <span class="dhall-syntax">:</span> <span class="dhall-builtin">Bool</span><br>      <span class="dhall-syntax">,</span> <span class="dhall-label">ignorePatterns</span> <span class="dhall-syntax">:</span> <span class="dhall-builtin">Optional</span> <span class="dhall-label">GlobPatterns</span><br>      <span class="dhall-syntax">,</span> <span class="dhall-label">keepCopyInInputFolder</span> <span class="dhall-syntax">:</span> <span class="dhall-builtin">Bool</span><br>      <span class="dhall-syntax">,</span> <span class="dhall-label">logDestination</span> <span class="dhall-syntax">:</span> <span class="dhall-label">LogDestination</span><br>      <span class="dhall-syntax">,</span> <span class="dhall-label">logLevel</span> <span class="dhall-syntax">:</span> <span class="dhall-label">LogLevel</span><br>      <span class="dhall-syntax">,</span> <span class="dhall-label">outputFormat</span> <span class="dhall-syntax">:</span> <span class="dhall-builtin">Optional</span> <span class="dhall-label">OutputFormat</span><br>      <span class="dhall-syntax">,</span> <span class="dhall-label">renaming</span> <span class="dhall-syntax">:</span> <span class="dhall-builtin">Optional</span> <span class="dhall-label">Renaming</span><br>      <span class="dhall-syntax">}</span><br><br><span class="dhall-keyword">in</span>    <span class="dhall-syntax">{</span> <span class="dhall-label">Type</span> <span class="dhall-syntax">=</span> <span class="dhall-label">Config</span><br>      <span class="dhall-syntax">,</span> <span class="dhall-label">default</span> <span class="dhall-syntax">=</span><br>        <span class="dhall-syntax">{</span> <span class="dhall-label">clobberDestination</span> <span class="dhall-syntax">=</span> <span class="dhall-builtin">None</span> <span class="dhall-builtin">Text</span><br>        <span class="dhall-syntax">,</span> <span class="dhall-label">dryRun</span> <span class="dhall-syntax">=</span> <span class="dhall-builtin">False</span><br>        <span class="dhall-syntax">,</span> <span class="dhall-label">ignorePatterns</span> <span class="dhall-syntax">=</span> <span class="dhall-builtin">None</span> <span class="dhall-label">GlobPatterns</span><br>        <span class="dhall-syntax">,</span> <span class="dhall-label">keepCopyInInputFolder</span> <span class="dhall-syntax">=</span> <span class="dhall-builtin">False</span><br>        <span class="dhall-syntax">,</span> <span class="dhall-label">logDestination</span> <span class="dhall-syntax">=</span> <span class="dhall-label">LogDestination</span><span class="dhall-syntax">.</span><span class="dhall-label">StdOut</span><br>        <span class="dhall-syntax">,</span> <span class="dhall-label">logLevel</span> <span class="dhall-syntax">=</span> <span class="dhall-label">LogLevel</span><span class="dhall-syntax">.</span><span class="dhall-label">Warn</span><br>        <span class="dhall-syntax">,</span> <span class="dhall-label">outputFormat</span> <span class="dhall-syntax">=</span> <span class="dhall-builtin">None</span> <span class="dhall-label">OutputFormat</span><br>        <span class="dhall-syntax">,</span> <span class="dhall-label">renaming</span> <span class="dhall-syntax">=</span> <span class="dhall-builtin">None</span> <span class="dhall-label">Renaming</span><br>        <span class="dhall-syntax">}</span><br>      <span class="dhall-syntax">}</span><br>    <span class="dhall-syntax">:</span> <span class="dhall-syntax">{</span> <span class="dhall-label">Type</span> <span class="dhall-syntax">:</span> <span class="dhall-builtin">Type</span><span class="dhall-syntax">,</span> <span class="dhall-label">default</span> <span class="dhall-syntax">:</span> <span class="dhall-label">DefaultOptions</span> <span class="dhall-syntax">}</span></pre></div></div></body></html>

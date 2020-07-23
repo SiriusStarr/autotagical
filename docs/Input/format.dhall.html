@@ -1,0 +1,34 @@
+<!DOCTYPE HTML><html><head><title>/Input/format.dhall</title><link href="../index.css" type="text/css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Lato:ital,wght@0,400;0,700;1,400&amp;display=swap" type="text/css" rel="stylesheet"><script src="../index.js" type="text/javascript"></script><meta charset="UTF-8"></head><body><div class="nav-bar"><img src="../dhall-icon.svg" class="dhall-icon"><p class="package-title">Autotagical</p><div class="nav-bar-content-divider"></div><a id="switch-light-dark-mode" class="nav-option">Switch Light/Dark Mode</a></div><div class="main-container"><h2 class="doc-title"><span class="crumb-divider">/</span><a href="../index.html">Autotagical</a><span class="crumb-divider">/</span><a href="index.html" class="title-crumb">Input</a><span class="crumb-divider">/</span><span href="index.html" class="title-crumb">format.dhall</span></h2><a data-path="/Input/format.dhall" class="copy-to-clipboard"><i><small>Copy path to clipboard</small></i></a><br><div class="doc-contents"><h1 id="inputformat">Input.format</h1>
+<h2 id="function">Function</h2>
+<p>Given an opening <code>Separator</code> for tags, a <code>Separator</code> between tags, and a closing
+<code>Separator</code> for tags, create an input format that recognizes files tagged with
+that format.</p>
+<h2 id="default-behavior">Default Behavior</h2>
+<p>By default, input formats created with this function expect the following:</p>
+<ul>
+<li>
+Files are tagged in the order <code>File Name -&gt; Tags -&gt; File Extension</code>.
+</li>
+<li>
+Leading tag separators are optional, e.g. <code>[,tag1,tag2]</code> and <code>[tag1,tag2]</code> are
+both valid, if the tag separator is <code>,</code>.
+</li>
+<li>
+Trailing tag separators are optional, e.g. <code>[tag1,tag2,]</code> and <code>[tag1,tag2]</code>
+are both valid, if the tag separator is <code>,</code>.
+</li>
+<li>
+Tagged values are forbidden, i.e. all tags will be interpreted as purely
+literal tags.
+</li>
+</ul>
+<p>To override any of this behavior, use <code>Input.With</code>.</p>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-dhall">let Autotagical = https://siriusstarr.github.io/autotagical/dhall/package.dhall
+
+in  Autotagical.Input.format
+      (Autotagical.Input.Separator.keyword &quot;[&quot;)
+      Autotagical.Input.Separator.whitespace
+      (Autotagical.Input.Separator.keyword &quot;]&quot;)
+</code></pre>
+</div><h3>Source</h3><div class="source-code"><pre><span class="dhall-keyword">let</span> <span class="dhall-label">InputFormat</span> <span class="dhall-syntax">=</span><br>        ../Internal/InputFormat/Type sha256:33b17ef96b10f2f3395cb0138d822bb04bbdc89bf57837a9b4de4e60a94a203f<br>      <span class="dhall-operator">?</span> ../Internal/InputFormat/Type<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">Order</span> <span class="dhall-syntax">=</span><br>        ../Internal/InputFormat/Order sha256:77ea7cca209ab0ef9afd003a580efa8aba29cf572cbe095698679fb25a96d24c<br>      <span class="dhall-operator">?</span> ../Internal/InputFormat/Order<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">Separator</span> <span class="dhall-syntax">=</span><br>        ../Internal/InputFormat/Separator sha256:0e5d8464af2df9c7ffae603f39803634d3dcecb28de50af26875820a1074c36d<br>      <span class="dhall-operator">?</span> ../Internal/InputFormat/Separator<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">SeparatorRequirement</span> <span class="dhall-syntax">=</span><br>        ../Internal/InputFormat/SeparatorRequirement sha256:047b627a9979b467750a376b4f61681cd1071d132c71007fcd2f7a00df993a17<br>      <span class="dhall-operator">?</span> ../Internal/InputFormat/SeparatorRequirement<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">TaggedValueFormat</span> <span class="dhall-syntax">=</span><br>        ../Internal/InputFormat/TaggedValueFormat sha256:62b80103bf88b5ca5f35005b578267a5679fdbdcfb0b77229c3651b882961551<br>      <span class="dhall-operator">?</span> ../Internal/InputFormat/TaggedValueFormat<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">format</span><br>    <span class="dhall-syntax">:</span> <span class="dhall-label">Separator</span> <span class="dhall-syntax">→</span> <span class="dhall-label">Separator</span> <span class="dhall-syntax">→</span> <span class="dhall-label">Separator</span> <span class="dhall-syntax">→</span> <span class="dhall-label">InputFormat</span><br>    <span class="dhall-syntax">=</span> <span class="dhall-syntax">λ</span><span class="dhall-syntax">(</span><span class="dhall-label">openingSeparator</span> <span class="dhall-syntax">:</span> <span class="dhall-label">Separator</span><span class="dhall-syntax">)</span> <span class="dhall-syntax">→</span><br>      <span class="dhall-syntax">λ</span><span class="dhall-syntax">(</span><span class="dhall-label">tagSeparator</span> <span class="dhall-syntax">:</span> <span class="dhall-label">Separator</span><span class="dhall-syntax">)</span> <span class="dhall-syntax">→</span><br>      <span class="dhall-syntax">λ</span><span class="dhall-syntax">(</span><span class="dhall-label">closingSeparator</span> <span class="dhall-syntax">:</span> <span class="dhall-label">Separator</span><span class="dhall-syntax">)</span> <span class="dhall-syntax">→</span><br>        <span class="dhall-syntax">{</span> <span class="dhall-label">tagOrder</span> <span class="dhall-syntax">=</span> <span class="dhall-label">Order</span><span class="dhall-syntax">.</span><span class="dhall-label">NameTagsExtension</span><br>        <span class="dhall-syntax">,</span> <span class="dhall-label">openingSeparator</span><br>        <span class="dhall-syntax">,</span> <span class="dhall-label">leadingTagSeparator</span> <span class="dhall-syntax">=</span> <span class="dhall-label">SeparatorRequirement</span><span class="dhall-syntax">.</span><span class="dhall-label">Optional</span><br>        <span class="dhall-syntax">,</span> <span class="dhall-label">tagSeparator</span><br>        <span class="dhall-syntax">,</span> <span class="dhall-label">taggedValueFormat</span> <span class="dhall-syntax">=</span> <span class="dhall-builtin">None</span> <span class="dhall-label">TaggedValueFormat</span><br>        <span class="dhall-syntax">,</span> <span class="dhall-label">trailingTagSeparator</span> <span class="dhall-syntax">=</span> <span class="dhall-label">SeparatorRequirement</span><span class="dhall-syntax">.</span><span class="dhall-label">Optional</span><br>        <span class="dhall-syntax">,</span> <span class="dhall-label">closingSeparator</span><br>        <span class="dhall-syntax">}</span><br><br><span class="dhall-keyword">in</span>  <span class="dhall-label">format</span></pre></div></div></body></html>

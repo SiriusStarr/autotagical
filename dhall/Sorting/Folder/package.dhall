@@ -1,19 +1,16 @@
-{ folder =
-      ./folder sha256:f8214a8ce838d7b2091ed9c9718ef412ca260bc7a30ee382797b104ad24eb960
-    ? ./folder
-, leaf =
-      ./leaf sha256:fc4a2a1325a790dbf8810a60818b7caf7956da8a55f190b2ee73e74e0b066be4
-    ? ./leaf
+{ fromText =
+      ./fromText.dhall sha256:0d95cdd4b2891f647d7dadb03b2fda726aaec5a5d94ac6540a4ad6d22a5ebf8a
+    ? ./fromText.dhall
+, leafFromText =
+      ./leafFromText.dhall sha256:c1ed5baf24996bc75ffad3f757f0b2073b630a8bfeacb7961b78751ac8995361
+    ? ./leafFromText.dhall
 , leafFromTemplate =
-      ./leafFromTemplate sha256:3dcbc6543af5131ac6939d13b4403390f6be1f4aa2af4634e3c0470fc80c9f9e
-    ? ./leafFromTemplate
+      ./leafFromTemplate.dhall sha256:9f2ca8de74502f42acdf0366dbf8506df1119be3a44df3b21e77fba4812d5ce3
+    ? ./leafFromTemplate.dhall
 , Name =
-      ./Name/package.dhall sha256:a88cac8d34bcb4b7f89f243027b38314d50e32cd5fcc7fe7170749547d81ab77
+      ./Name/package.dhall sha256:7c26ba210b373431d418a79c98016be79d244070b5e1bc7ccd66cd7c997579e0
     ? ./Name/package.dhall
-, none =
-      ./none sha256:1a79af9daf8ad9001bad35b61b2400a8ac627146b4aa0d1253bf2431657db92d
-    ? ./none
 , fromTemplate =
-      ./fromTemplate sha256:68e44a87550023c768b1541b79b59b6db62c09220905d40b15318466920ad05a
-    ? ./fromTemplate
+      ./fromTemplate.dhall sha256:b38c725c90a8e91a6fa10c3334271ead9a8dd153840cb3a026eb0880c6ae3b0d
+    ? ./fromTemplate.dhall
 }

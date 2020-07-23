@@ -1,0 +1,21 @@
+<!DOCTYPE HTML><html><head><title>/Sorting/Folder/Name/With/separator.dhall</title><link href="../../../../index.css" type="text/css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Lato:ital,wght@0,400;0,700;1,400&amp;display=swap" type="text/css" rel="stylesheet"><script src="../../../../index.js" type="text/javascript"></script><meta charset="UTF-8"></head><body><div class="nav-bar"><img src="../../../../dhall-icon.svg" class="dhall-icon"><p class="package-title">Autotagical</p><div class="nav-bar-content-divider"></div><a id="switch-light-dark-mode" class="nav-option">Switch Light/Dark Mode</a></div><div class="main-container"><h2 class="doc-title"><span class="crumb-divider">/</span><a href="../../../../index.html">Autotagical</a><span class="crumb-divider">/</span><a href="../../../index.html" class="title-crumb">Sorting</a><span class="crumb-divider">/</span><a href="../../index.html" class="title-crumb">Folder</a><span class="crumb-divider">/</span><a href="../index.html" class="title-crumb">Name</a><span class="crumb-divider">/</span><a href="index.html" class="title-crumb">With</a><span class="crumb-divider">/</span><span href="index.html" class="title-crumb">separator.dhall</span></h2><a data-path="/Sorting/Folder/Name/With/separator.dhall" class="copy-to-clipboard"><i><small>Copy path to clipboard</small></i></a><br><div class="doc-contents"><h1 id="sortingfoldernamewithseparator">Sorting.Folder.Name.With.separator</h1>
+<h2 id="default-behavior">Default Behavior</h2>
+<p>Components are concatenated directly without any spaces or other separators
+between them.  To override this, use <code>Sorting.Folder.Name.With</code>.</p>
+<h2 id="option-behavior">Option Behavior</h2>
+<p>Given a supplied text separator, intercalate it between components, e.g. if the
+separator is a space, a space will be placed between each component (but not at
+either end).</p>
+<p>Components: <code>[ &quot;component1&quot;, &quot;component2&quot;, &quot;component3&quot; ]</code></p>
+<p>Separator: <code>&quot;,&quot;</code></p>
+<p>Result: <code>&quot;component1,component2,component3&quot;</code></p>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-dhall">let Autotagical = https://siriusstarr.github.io/autotagical/dhall/package.dhall
+
+in    Autotagical.Sorting.Folder.Name.template
+        [ Autotagical.Sorting.Folder.Name.Component.originalName
+        , Autotagical.Sorting.Folder.Name.Component.text &quot;Has Tag 1&quot;
+        ]
+    ⫽ Autotagical.Sorting.Folder.Name.With.separator &quot;,&quot;
+</code></pre>
+</div><h3>Source</h3><div class="source-code"><pre><span class="dhall-keyword">let</span> <span class="dhall-label">separator</span><br>    <span class="dhall-syntax">:</span> <span class="dhall-builtin">Text</span> <span class="dhall-syntax">→</span> <span class="dhall-syntax">{</span> <span class="dhall-label">separator</span> <span class="dhall-syntax">:</span> <span class="dhall-builtin">Optional</span> <span class="dhall-builtin">Text</span> <span class="dhall-syntax">}</span><br>    <span class="dhall-syntax">=</span> <span class="dhall-syntax">λ</span><span class="dhall-syntax">(</span><span class="dhall-label">separator</span> <span class="dhall-syntax">:</span> <span class="dhall-builtin">Text</span><span class="dhall-syntax">)</span> <span class="dhall-syntax">→</span> <span class="dhall-syntax">{</span> <span class="dhall-label">separator</span> <span class="dhall-syntax">=</span> <span class="dhall-builtin">Some</span> <span class="dhall-label">separator</span> <span class="dhall-syntax">}</span><br><br><span class="dhall-keyword">in</span>  <span class="dhall-label">separator</span></pre></div></div></body></html>

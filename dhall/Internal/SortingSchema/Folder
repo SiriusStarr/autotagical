@@ -1,5 +1,5 @@
 let NameTemplate =
-        ../NameTemplate/Folder/Type sha256:64c9b5b4460cf305506169a8bfe165370816c6f6496bd4c3eb7234e9789f28d1
+        ../NameTemplate/Folder/Type sha256:15bf2c05808377075efee4ca436b514cfca6ee0d0bac8f1ff065dd3d4813d4f7
       ? ../NameTemplate/Folder/Type
 
 let Predicate =

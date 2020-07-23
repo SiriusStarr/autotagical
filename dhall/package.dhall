@@ -1,31 +1,28 @@
 let Config =
-        ./Config/package.dhall sha256:78f7f5b4a2973df4097d65905d3e0d21f33056190bf980cd8c80897ce5a9c739
+        ./Config/package.dhall sha256:24112516be8c479893aa318bdab00185bbc7b39fc9599db208289fd6429d2964
       ? ./Config/package.dhall
 
-in    Config.config
+in    Config.default
     ∧ { Config
-      , GlobPatterns =
-            ./GlobPatterns/package.dhall sha256:116e3c55bcf84e892027a75f013cefeba054bc40984024f041c50fabc171d0b6
-          ? ./GlobPatterns/package.dhall
-      , InputFormat =
-            ./InputFormat/package.dhall sha256:60b602b4b404262db028a8d86ce1f74c464add8cf7f8e7e38e91ed4155ccf607
-          ? ./InputFormat/package.dhall
-      , OutputFormat =
-            ./OutputFormat/package.dhall sha256:dd8a8c715c9997c77e1b34cb829973d1aa45bac324d3678446c72baa47152a34
-          ? ./OutputFormat/package.dhall
+      , Glob =
+            ./Glob/package.dhall sha256:d9cea79579678810f84fb27db6b8794dc9b758caaa740a33cce9b9d461bd8632
+          ? ./Glob/package.dhall
+      , Input =
+            ./Input/package.dhall sha256:4e2d9d9d75e925e8cb315cf40916e8c57b86b2eba52d7a474ba03b959f2bbacb
+          ? ./Input/package.dhall
+      , Output =
+            ./Output/package.dhall sha256:046c8fca2323a1337a7ee62d07ee54a50e1c454dbbd28fa0ed39bd7926f4434d
+          ? ./Output/package.dhall
       , Predicate =
             ./Predicate/package.dhall sha256:2b93a271f7409d961486dde301ef44b3f0e2d549b256e3f254eb6eba5863af70
           ? ./Predicate/package.dhall
       , Renaming =
-            ./Renaming/package.dhall sha256:bf8f210593a53bde7807d0268467ef36358d603d35f0ce854117d071111cd85a
+            ./Renaming/package.dhall sha256:efe60f030019d8b8a661d1f7e92a043fe08bb7ffc8f9476c37195f6985638c37
           ? ./Renaming/package.dhall
       , Sorting =
-            ./Sorting/package.dhall sha256:2c2983ff69eb8d7a76dffb664143a838607d2dbd16cc4e35f8c7cc9277747b8f
+            ./Sorting/package.dhall sha256:fc0ae7ee7cad2f95b6e7d686a7727385e87b8c3fd96cc3586a3d162aad0790a8
           ? ./Sorting/package.dhall
-      , Tag =
-            ./Tag/package.dhall sha256:da707da6758d7d20006abc4f461628ad993bc42b5d53d30e183cfde17a991c59
-          ? ./Tag/package.dhall
-      , TagGroup =
-            ./TagGroup/package.dhall sha256:c0c57d4995b05347690803964a36a22e359c6e6dd19b7e02d510f3e0c43ef21e
-          ? ./TagGroup/package.dhall
+      , Tags =
+            ./Tags/package.dhall sha256:0d4aa67dcbe6b530636fd134152e2c870adfcc04b9964fdf229d50998deac077
+          ? ./Tags/package.dhall
       }

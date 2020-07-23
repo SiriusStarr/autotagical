@@ -1,6 +1,0 @@
-let tagsBeforeValues =
-        ./tagsBeforeValues sha256:deb356761e0161f49f51ea06b23db36b4ba8aba986d547edfdf3390d88253458
-      ? ./tagsBeforeValues
-
-in  λ(pureTagsAllowed : Bool) →
-      tagsBeforeValues (None Text) "=" (None Text) pureTagsAllowed

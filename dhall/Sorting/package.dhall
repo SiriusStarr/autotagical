@@ -1,7 +1,7 @@
 { Folder =
-      ./Folder/package.dhall sha256:649937484ca6f3167d6d8b55fc57624b12a43a8b1bfbb9f05c261277712b5960
+      ./Folder/package.dhall sha256:8f07bcfb121e5c3a24027fba18c3779f05301c93f852a4daddeabfc38ac66c14
     ? ./Folder/package.dhall
 , schema =
-      ./schema sha256:da45daf8c12d93e4ad6664646ab9869f3e93efd305f340d9329fb9e5e6e80f15
-    ? ./schema
+      ./schema.dhall sha256:329b6c99020335dd1b1de01da792f6c7a052cd5cbb6494071eecb2a075a2cf79
+    ? ./schema.dhall
 }

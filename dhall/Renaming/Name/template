@@ -1,5 +1,0 @@
-let Component =
-        ../../Internal/NameTemplate/File/Component sha256:8c2763a38b757b216571c7bc3fd5cde3d94b4de0da8354ba9d732f6df73708dd
-      ? ../../Internal/NameTemplate/File/Component
-
-in  λ(components : List Component) → { components, separator = None Text }

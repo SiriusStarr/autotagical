@@ -1,5 +1,0 @@
-let Folder =
-        ../Internal/SortingSchema/Folder sha256:bec2134c606d713bbb01d757a4f5d30cb7e798d8c2efea3cbe0d52b1916b2ebd
-      ? ../Internal/SortingSchema/Folder
-
-in  λ(fs : List Folder) → fs

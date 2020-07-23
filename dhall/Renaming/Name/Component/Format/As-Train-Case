@@ -1,9 +1,0 @@
-let Case =
-        ../../../../Internal/NameTemplate/Case sha256:9e2d5a3c338b63a4e067de578f9e65952648ed6ffcf4ee0caaa211cdb2b3a3c5
-      ? ../../../../Internal/NameTemplate/Case
-
-let format =
-        ../../../../Internal/NameTemplate/File/format sha256:ec41bd7f92d7f6ec99c53be9c3f40f4bac341206a519599a0f790811e2957ba5
-      ? ../../../../Internal/NameTemplate/File/format
-
-in  format Case.AsTrainCase

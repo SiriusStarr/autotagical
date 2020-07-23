@@ -1,19 +1,19 @@
 { asCamelCase =
-      ./asCamelCase sha256:608c5ddf1d03a058b9193cd4df77bae38c98966854f6a7f81c5fe95e59fd3b18
-    ? ./asCamelCase
+      ./asCamelCase.dhall sha256:68ddcd61b262f421993115fecf491b41adcdadc6d6c0a079001e819cc4593a03
+    ? ./asCamelCase.dhall
 , AsPascalCase =
-      ./AsPascalCase sha256:c8f63016f2c3b0eb1eecfc36292aa75b9a8ce9f570bebaaaafc361d51533258b
-    ? ./AsPascalCase
+      ./AsPascalCase.dhall sha256:54ef4af3bcf846fdc3670644a92f66a487efab2ca377123acf075f553b5a12f7
+    ? ./AsPascalCase.dhall
 , as_snake_case =
-      ./as_snake_case sha256:266ac581d32a86f69b84db02ea740d9e6f775446c6f1674a6e422cb53c7d40f9
-    ? ./as_snake_case
+      ./as_snake_case.dhall sha256:430cce58de6fceed059647a8a2176c904fbfbd3382ee3d389f9330741a7490d7
+    ? ./as_snake_case.dhall
 , as-spinal-case =
-      ./as-spinal-case sha256:885639e2a4a8ee2177bfaec90c6aca3f325bea0fcc05fd43792a82d2554e4b17
-    ? ./as-spinal-case
+      ./as-spinal-case.dhall sha256:28d3d6ae22efb84903266d826511c8521b8671872a6b7854f511a2158a5c9744
+    ? ./as-spinal-case.dhall
 , `As Title Case` =
-      ./AsTitleCase sha256:993026f740294da20be51ee3fe816d2e6281c6d9624641a0239fa3588d601c06
-    ? ./AsTitleCase
+      ./AsTitleCase.dhall sha256:dd7aaee7bfc76c706c7d13d85c9eb0f0fb71d6d27628b50b2edefddbbcd7be87
+    ? ./AsTitleCase.dhall
 , As-Train-Case =
-      ./As-Train-Case sha256:1108df56c70bbc77aa171ab67cbbd89322c8b4428a95034891d95bfd2f12db24
-    ? ./As-Train-Case
+      ./As-Train-Case.dhall sha256:0c1a5803d86c3217cc4ea80b861a08d6655bc6803390952f9649a6fcfce0dda1
+    ? ./As-Train-Case.dhall
 }

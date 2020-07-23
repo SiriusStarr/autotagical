@@ -1,1 +1,0 @@
-λ(separator : Text) → { separator = Some separator }

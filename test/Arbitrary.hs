@@ -170,13 +170,13 @@ instance Arbitrary Interpret where
   arbitrary = genericArbitraryU
 
 instance Arbitrary FolderNameComponent where
-  arbitrary = genericArbitraryRec (4 % 2 % 4 % 10 % 10 % 20 % ())
+  arbitrary = genericArbitraryRec (2 % 2 % 4 % 10 % 10 % 20 % ())
 
 instance Arbitrary FolderName where
   arbitrary = genericArbitraryU
 
 instance Arbitrary FileNameComponent where
-  arbitrary = genericArbitraryRec (10 % 4 % 1 % 1 % 4 % 10 % 10 % 20 % ())
+  arbitrary = genericArbitraryRec (10 % 1 % 1 % 1 % 4 % 10 % 10 % 20 % ())
 
 instance Arbitrary FileName where
   arbitrary = genericArbitraryU

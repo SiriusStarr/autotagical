@@ -1,0 +1,21 @@
+<!DOCTYPE HTML><html><head><title>/Input/With/tagsBeforeFileName.dhall</title><link href="../../index.css" type="text/css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Lato:ital,wght@0,400;0,700;1,400&amp;display=swap" type="text/css" rel="stylesheet"><script src="../../index.js" type="text/javascript"></script><meta charset="UTF-8"></head><body><div class="nav-bar"><img src="../../dhall-icon.svg" class="dhall-icon"><p class="package-title">Autotagical</p><div class="nav-bar-content-divider"></div><a id="switch-light-dark-mode" class="nav-option">Switch Light/Dark Mode</a></div><div class="main-container"><h2 class="doc-title"><span class="crumb-divider">/</span><a href="../../index.html">Autotagical</a><span class="crumb-divider">/</span><a href="../index.html" class="title-crumb">Input</a><span class="crumb-divider">/</span><a href="index.html" class="title-crumb">With</a><span class="crumb-divider">/</span><span href="index.html" class="title-crumb">tagsBeforeFileName.dhall</span></h2><a data-path="/Input/With/tagsBeforeFileName.dhall" class="copy-to-clipboard"><i><small>Copy path to clipboard</small></i></a><br><div class="doc-contents"><h1 id="inputwithtagsbeforefilename">Input.With.tagsBeforeFileName</h1>
+<h2 id="default-behavior">Default Behavior</h2>
+<p>By default, input formats assume that files are tagged in the order
+<code>File Name -&gt; Tags -&gt; File Extension</code>.</p>
+<h2 id="option-behavior">Option Behavior</h2>
+<p>This option sets the input format to expect files tagged in the order
+<code>Tags -&gt; File Name -&gt; Extension</code>.</p>
+<p><strong>Important:</strong> Reversing the order impacts greediness with respect to extension
+parsing.  Specifically, the parser prefers extensions to file names.  For
+example, the file: <code>[tag1,tag2,tag3]file.name.tar.gz</code> will parse with the file
+name: <code>file</code> and the extensions <code>.name.tar.gz</code>.  It <em>will</em> always parse a
+nonempty file name, however, so dotfiles will parse correctly, e.g.
+<code>[tag1,tag2,tag3].file.name.tar.gz</code> will parse with the file name: <code>.file</code> and
+the extensions <code>.name.tar.gz</code></p>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-dhall">let Autotagical = https://siriusstarr.github.io/autotagical/dhall/package.dhall
+
+in    Autotagical.Input.tagSpacesFormat
+    ⫽ Autotagical.Input.With.tagsBeforeFileName
+</code></pre>
+</div><h3>Source</h3><div class="source-code"><pre><span class="dhall-keyword">let</span> <span class="dhall-label">Order</span> <span class="dhall-syntax">=</span><br>        ../../Internal/InputFormat/Order sha256:77ea7cca209ab0ef9afd003a580efa8aba29cf572cbe095698679fb25a96d24c<br>      <span class="dhall-operator">?</span> ../../Internal/InputFormat/Order<br><br><span class="dhall-keyword">in</span>  <span class="dhall-syntax">{</span> <span class="dhall-label">tagOrder</span> <span class="dhall-syntax">=</span> <span class="dhall-label">Order</span><span class="dhall-syntax">.</span><span class="dhall-label">TagsNameExtension</span> <span class="dhall-syntax">}</span> <span class="dhall-syntax">:</span> <span class="dhall-syntax">{</span> <span class="dhall-label">tagOrder</span> <span class="dhall-syntax">:</span> <span class="dhall-label">Order</span> <span class="dhall-syntax">}</span></pre></div></div></body></html>

@@ -1,0 +1,21 @@
+<!DOCTYPE HTML><html><head><title>/Renaming/Name/Component/Format/as-spinal-case.dhall</title><link href="../../../../index.css" type="text/css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Lato:ital,wght@0,400;0,700;1,400&amp;display=swap" type="text/css" rel="stylesheet"><script src="../../../../index.js" type="text/javascript"></script><meta charset="UTF-8"></head><body><div class="nav-bar"><img src="../../../../dhall-icon.svg" class="dhall-icon"><p class="package-title">Autotagical</p><div class="nav-bar-content-divider"></div><a id="switch-light-dark-mode" class="nav-option">Switch Light/Dark Mode</a></div><div class="main-container"><h2 class="doc-title"><span class="crumb-divider">/</span><a href="../../../../index.html">Autotagical</a><span class="crumb-divider">/</span><a href="../../../index.html" class="title-crumb">Renaming</a><span class="crumb-divider">/</span><a href="../../index.html" class="title-crumb">Name</a><span class="crumb-divider">/</span><a href="../index.html" class="title-crumb">Component</a><span class="crumb-divider">/</span><a href="index.html" class="title-crumb">Format</a><span class="crumb-divider">/</span><span href="index.html" class="title-crumb">as-spinal-case.dhall</span></h2><a data-path="/Renaming/Name/Component/Format/as-spinal-case.dhall" class="copy-to-clipboard"><i><small>Copy path to clipboard</small></i></a><br><div class="doc-contents"><h1 id="renamingnamecomponentformatasspinalcase">Renaming.Name.Component.Format.as-spinal-case</h1>
+<h2 id="component">Component</h2>
+<p>Given a list of name components, format them as &quot;spinal case&quot;, which consists
+of all lowercase letters with words separated by hyphens, e.g.
+<code>as-spinal-case</code>.</p>
+<p>Individual components are considered word boundaries, as well as whitespace,
+case-sensitivity, and non-letter characters.  Leading and trailing whitespace is
+trimmed.</p>
+<p><strong>Important:</strong> If Renaming.Name.With.separator is used, the separator will
+<strong>not</strong> be intercalated between the components in the list passed to this
+function.  (Separators will still be inserted where applicable in the components
+themselves, as well as <em>around</em> this entire component.)</p>
+<h2 id="example">Example</h2>
+<p><code>[&quot;This_isSpinal&quot;, &quot;tap&quot;]</code> will be converted to <code>&quot;this-is-spinal-tap&quot;</code></p>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-dhall">let Autotagical = https://siriusstarr.github.io/autotagical/dhall/package.dhall
+
+in  Autotagical.Renaming.Name.Component.Format.as-spinal-case
+      [Autotagical.Renaming.Name.Component.text &quot;toSpinal-case&quot;]
+</code></pre>
+</div><h3>Source</h3><div class="source-code"><pre><span class="dhall-keyword">let</span> <span class="dhall-label">Case</span> <span class="dhall-syntax">=</span><br>        ../../../../Internal/NameTemplate/Case sha256:9e2d5a3c338b63a4e067de578f9e65952648ed6ffcf4ee0caaa211cdb2b3a3c5<br>      <span class="dhall-operator">?</span> ../../../../Internal/NameTemplate/Case<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">Component</span> <span class="dhall-syntax">=</span><br>        ../../../../Internal/NameTemplate/File/Component sha256:b637988aae2ec7c1ee2b6fc7059008b03da8b57b1901dda79951c2045662bdfd<br>      <span class="dhall-operator">?</span> ../../../../Internal/NameTemplate/File/Component<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">format</span> <span class="dhall-syntax">=</span><br>        ../../../../Internal/NameTemplate/File/format sha256:9412d0b754af1c6dbb1a8e6be30bb969abd3342bd31144581cb7d308677505df<br>      <span class="dhall-operator">?</span> ../../../../Internal/NameTemplate/File/format<br><br><span class="dhall-keyword">in</span>  <span class="dhall-label">format</span> <span class="dhall-label">Case</span><span class="dhall-syntax">.</span><span class="dhall-label">AsSpinalCase</span> <span class="dhall-syntax">:</span> <span class="dhall-builtin">List</span> <span class="dhall-label">Component</span> <span class="dhall-syntax">→</span> <span class="dhall-label">Component</span></pre></div></div></body></html>

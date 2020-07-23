@@ -16,7 +16,7 @@ let Tag =
 
 in  ∀(Component : Type) →
     ∀ ( Fix
-      : < FolderFormatAsF : { componentF : Component, formatCaseF : Case }
+      : < FolderFormatAsF : { componentsF : List Component, formatCaseF : Case }
         | FolderIfThenElseF :
             { predicateF : Predicate
             , trueComponentsF : List Component

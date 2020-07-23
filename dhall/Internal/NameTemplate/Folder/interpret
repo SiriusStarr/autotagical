@@ -3,7 +3,7 @@ let Case =
       ? ../Case
 
 let Component =
-        ./Component sha256:3db17b8944377e5c72d75a57b4c0741ba2ba707ad2ebc873f01627ace7bbe066
+        ./Component sha256:ed3197d74431e1d211f013f10b0cfcabf17c13084847cfdd7fc519cc551fa2bb
       ? ./Component
 
 let Interpret =
@@ -22,7 +22,8 @@ in  λ(interpret : Interpret) →
     λ(component : Component) →
     λ(Component : Type) →
       let ComponentF =
-            < FolderFormatAsF : { componentF : Component, formatCaseF : Case }
+            < FolderFormatAsF :
+                { componentsF : List Component, formatCaseF : Case }
             | FolderIfThenElseF :
                 { predicateF : Predicate
                 , trueComponentsF : List Component

@@ -1,0 +1,19 @@
+<!DOCTYPE HTML><html><head><title>/Glob/With/errorRecovery.dhall</title><link href="../../index.css" type="text/css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Lato:ital,wght@0,400;0,700;1,400&amp;display=swap" type="text/css" rel="stylesheet"><script src="../../index.js" type="text/javascript"></script><meta charset="UTF-8"></head><body><div class="nav-bar"><img src="../../dhall-icon.svg" class="dhall-icon"><p class="package-title">Autotagical</p><div class="nav-bar-content-divider"></div><a id="switch-light-dark-mode" class="nav-option">Switch Light/Dark Mode</a></div><div class="main-container"><h2 class="doc-title"><span class="crumb-divider">/</span><a href="../../index.html">Autotagical</a><span class="crumb-divider">/</span><a href="../index.html" class="title-crumb">Glob</a><span class="crumb-divider">/</span><a href="index.html" class="title-crumb">With</a><span class="crumb-divider">/</span><span href="index.html" class="title-crumb">errorRecovery.dhall</span></h2><a data-path="/Glob/With/errorRecovery.dhall" class="copy-to-clipboard"><i><small>Copy path to clipboard</small></i></a><br><div class="doc-contents"><h1 id="globwitherrorrecovery">Glob.With.errorRecovery</h1>
+<h2 id="default-behavior">Default Behavior</h2>
+<p>By default, glob patterns will fail to compile if invalid syntax is encountered.
+This will result in the Dhall configuration failing to load (so no risk of
+your patterns accidentally doing the wrong thing).</p>
+<h2 id="option-behavior">Option Behavior</h2>
+<p>This option turns on error recovery for patterns.  With error recovery, if any
+part of a pattern is invalid, it is simply interpreted as literal characters.</p>
+<p>For example, the pattern <code>[abc</code> fails to compile without error recovery, as it
+contains an incomplete character range.  With error recovery, the pattern will
+compile and will just match the literal sequence of characters <code>[abc</code>.</p>
+<p>See <a href="http://hackage.haskell.org/package/Glob-0.10.0/docs/System-FilePath-Glob.html#t:CompOptions">System.FilePath.Glob</a>
+for more details.</p>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-dhall">let Autotagical = https://siriusstarr.github.io/autotagical/dhall/package.dhall
+
+in  Autotagical.Glob.patterns [ &quot;[abc&quot; ] ⫽ Autotagical.Glob.With.errorRecovery
+</code></pre>
+</div><h3>Source</h3><div class="source-code"><pre><span class="dhall-syntax">{</span> <span class="dhall-label">errorRecovery</span> <span class="dhall-syntax">=</span> <span class="dhall-builtin">True</span> <span class="dhall-syntax">}</span> <span class="dhall-syntax">:</span> <span class="dhall-syntax">{</span> <span class="dhall-label">errorRecovery</span> <span class="dhall-syntax">:</span> <span class="dhall-builtin">Bool</span> <span class="dhall-syntax">}</span></pre></div></div></body></html>

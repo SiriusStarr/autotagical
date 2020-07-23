@@ -1,5 +1,0 @@
-let TaggedValueFormat =
-        ../../Internal/OutputFormat/TaggedValueFormat sha256:695155008931bf451f550cd682d0057920d1498dceac6e133774c6b200c6ba40
-      ? ../../Internal/OutputFormat/TaggedValueFormat
-
-in  λ(format : TaggedValueFormat) → { taggedValueFormat = Some format }

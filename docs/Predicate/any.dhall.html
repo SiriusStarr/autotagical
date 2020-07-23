@@ -1,0 +1,26 @@
+<!DOCTYPE HTML><html><head><title>/Predicate/any.dhall</title><link href="../index.css" type="text/css" rel="stylesheet"><link href="https://fonts.googleapis.com/css2?family=Fira+Code:wght@400;500;600;700&amp;family=Lato:ital,wght@0,400;0,700;1,400&amp;display=swap" type="text/css" rel="stylesheet"><script src="../index.js" type="text/javascript"></script><meta charset="UTF-8"></head><body><div class="nav-bar"><img src="../dhall-icon.svg" class="dhall-icon"><p class="package-title">Autotagical</p><div class="nav-bar-content-divider"></div><a id="switch-light-dark-mode" class="nav-option">Switch Light/Dark Mode</a></div><div class="main-container"><h2 class="doc-title"><span class="crumb-divider">/</span><a href="../index.html">Autotagical</a><span class="crumb-divider">/</span><a href="index.html" class="title-crumb">Predicate</a><span class="crumb-divider">/</span><span href="index.html" class="title-crumb">any.dhall</span></h2><a data-path="/Predicate/any.dhall" class="copy-to-clipboard"><i><small>Copy path to clipboard</small></i></a><br><div class="doc-contents"><h1 id="predicateany">Predicate.any</h1>
+<h2 id="predicate">Predicate</h2>
+<p>Given a nonempty list of predicates, evaluates to true if one or more of the
+predicates in the list evaluates to true; otherwise, evaluates to false.</p>
+<h2 id="examples">Examples</h2>
+<p>Tags: <code>tag1</code>, <code>tag2</code>, <code>tag3</code></p>
+<ul>
+<li>
+<p><code>any [hasTag &quot;tag1&quot;, hasTag &quot;tag3&quot;]: True</code></p>
+</li>
+<li>
+<p><code>any [hasTag &quot;tag1&quot;, hasTag &quot;tag4&quot;]: True</code></p>
+</li>
+<li>
+<p><code>any [hasTag &quot;tag4&quot;, hasTag &quot;tag5&quot;]: False</code></p>
+</li>
+</ul>
+<h2 id="usage">Usage</h2>
+<pre><code class="language-dhall">let Autotagical = https://siriusstarr.github.io/autotagical/dhall/package.dhall
+
+in  Autotagical.Predicate.any
+      [ Autotagical.Predicate.hasTag (Autotagical.Tags.tag &quot;tag1&quot;)
+      , Autotagical.Predicate.hasTag (Autotagical.Tags.tag &quot;tag2&quot;)
+      ]
+</code></pre>
+</div><h3>Source</h3><div class="source-code"><pre><span class="dhall-keyword">let</span> <span class="dhall-label">between</span> <span class="dhall-syntax">=</span><br>        ../Internal/Predicate/between sha256:d9e26bcb027406f03cb1b0cefc0faadbaea36ddf516d6f0ed6bad7476ae27129<br>      <span class="dhall-operator">?</span> ../Internal/Predicate/between<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">Bound</span> <span class="dhall-syntax">=</span><br>        ../Internal/Predicate/Bound sha256:5df84f4de5c95a2e6e0cadea46dd4fcf4a0345e2190fe034f064351ede3ec30d<br>      <span class="dhall-operator">?</span> ../Internal/Predicate/Bound<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">Predicate</span> <span class="dhall-syntax">=</span><br>        ../Internal/Predicate/Type sha256:7bbd5275d9b92c0c5b1c7c0f05885b85796a14c4813d02aae7148a9d418deedf<br>      <span class="dhall-operator">?</span> ../Internal/Predicate/Type<br><br><span class="dhall-keyword">let</span> <span class="dhall-label">any</span><br>    <span class="dhall-syntax">:</span> <span class="dhall-builtin">List</span> <span class="dhall-label">Predicate</span> <span class="dhall-syntax">→</span> <span class="dhall-label">Predicate</span><br>    <span class="dhall-syntax">=</span> <span class="dhall-syntax">λ</span><span class="dhall-syntax">(</span><span class="dhall-label">predicates</span> <span class="dhall-syntax">:</span> <span class="dhall-builtin">List</span> <span class="dhall-label">Predicate</span><span class="dhall-syntax">)</span> <span class="dhall-syntax">→</span><br>        <span class="dhall-label">between</span> <span class="dhall-syntax">(</span><span class="dhall-label">Bound</span><span class="dhall-syntax">.</span><span class="dhall-label">Bound</span> <span class="dhall-literal">1</span><span class="dhall-syntax">)</span> <span class="dhall-label">Bound</span><span class="dhall-syntax">.</span><span class="dhall-label">AllPredicates</span> <span class="dhall-label">predicates</span><br><br><span class="dhall-keyword">in</span>  <span class="dhall-label">any</span></pre></div></div></body></html>

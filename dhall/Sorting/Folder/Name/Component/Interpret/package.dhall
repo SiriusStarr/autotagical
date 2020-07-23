@@ -1,16 +1,16 @@
 { numberAsMonth =
-      ./numberAsMonth sha256:e9fe7a8430e46b7dbf3eb9d4fa0dadc008ff131a0928c5566d2bab61e91b27e2
-    ? ./numberAsMonth
+      ./numberAsMonth.dhall sha256:b4d923a161c5bd5f77dbf68f5dfb007a0528db5fe82919e8511fa6efa693b53d
+    ? ./numberAsMonth.dhall
 , numberAsOrdinal =
-      ./numberAsOrdinal sha256:a9f6cae81c5874b678fac3f31e40b0d82104a717b1a74c509129706181e23d71
-    ? ./numberAsOrdinal
+      ./numberAsOrdinal.dhall sha256:0ff9824d4c85c3fc310095f8069c93c3084d24fdc5e84f7968822772bdf38acf
+    ? ./numberAsOrdinal.dhall
 , numberAsYear =
-      ./numberAsYear sha256:c902ba92c69b70d05f5531e4874ca1ce86147df1966416b368b7516a0332cb85
-    ? ./numberAsYear
+      ./numberAsYear.dhall sha256:7902fa3e098d40053798121f86a98fd9121150ba7c687d78e6545bcfffeb6cd6
+    ? ./numberAsYear.dhall
 , MonthFormat =
-      ./MonthFormat sha256:dfd6b189f8bb549ba658f2920c2e586c4f47842badfae531a21b215882b773b2
-    ? ./MonthFormat
+      ./MonthFormat.dhall sha256:dfd6b189f8bb549ba658f2920c2e586c4f47842badfae531a21b215882b773b2
+    ? ./MonthFormat.dhall
 , YearFormat =
-      ./YearFormat sha256:d19143b5ab758fc6d480f319dad48a2ad2a6d28760ae5efa0de86162d927f472
-    ? ./YearFormat
+      ./YearFormat.dhall sha256:d19143b5ab758fc6d480f319dad48a2ad2a6d28760ae5efa0de86162d927f472
+    ? ./YearFormat.dhall
 }

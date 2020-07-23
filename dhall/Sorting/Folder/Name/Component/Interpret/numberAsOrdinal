@@ -1,9 +1,0 @@
-let interpret =
-        ../../../../../Internal/NameTemplate/Folder/interpret sha256:ade3ff0b47a2f2fe5035294a51f6149bad57066434519651cce73d65a7e129b7
-      ? ../../../../../Internal/NameTemplate/Folder/interpret
-
-let Interpret =
-        ../../../../../Internal/NameTemplate/Interpret sha256:da352ee981f47618957222659071fb284597087a51e9426729b3fde383c77a91
-      ? ../../../../../Internal/NameTemplate/Interpret
-
-in  interpret Interpret.NumberAsOrdinal

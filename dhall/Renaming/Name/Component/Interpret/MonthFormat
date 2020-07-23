@@ -1,9 +1,0 @@
-let MonthFormat =
-        ../../../../Internal/NameTemplate/MonthFormat sha256:68591e45385f2983783395728381d90d988fae4c5194a187355131f84b1e1a0a
-      ? ../../../../Internal/NameTemplate/MonthFormat
-
-in  { `1` = MonthFormat.OneDigitMonth
-    , `01` = MonthFormat.TwoDigitMonth
-    , Jan = MonthFormat.ThreeLetterMonth
-    , January = MonthFormat.MonthName
-    }

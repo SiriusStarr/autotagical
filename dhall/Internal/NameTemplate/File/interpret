@@ -3,7 +3,7 @@ let Case =
       ? ../Case
 
 let Component =
-        ./Component sha256:8c2763a38b757b216571c7bc3fd5cde3d94b4de0da8354ba9d732f6df73708dd
+        ./Component sha256:b637988aae2ec7c1ee2b6fc7059008b03da8b57b1901dda79951c2045662bdfd
       ? ./Component
 
 let Interpret =
@@ -23,7 +23,8 @@ in  λ(interpret : Interpret) →
     λ(Component : Type) →
       let ComponentF =
             < FileDuplicateNumberF
-            | FileFormatAsF : { componentF : Component, formatCaseF : Case }
+            | FileFormatAsF :
+                { componentsF : List Component, formatCaseF : Case }
             | FileIfDuplicateF : List Component
             | FileIfThenElseF :
                 { predicateF : Predicate

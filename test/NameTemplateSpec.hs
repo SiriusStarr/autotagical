@@ -57,7 +57,8 @@ genOutOfRangeNatural =
 
 -- | Convert a `FolderNameComponent` to a `FileNameComponent` for testing
 convertComponent :: FolderNameComponent -> FileNameComponent
-convertComponent (FolderFormatAs c f) = FileFormatAs (convertComponent c) f
+convertComponent (FolderFormatAs cs f) =
+  FileFormatAs (convertComponent <$> cs) f
 convertComponent (FolderIfThenElse p ts fs) =
   FileIfThenElse p (convertComponent <$> ts) (convertComponent <$> fs)
 convertComponent (FolderInterpret c i) = FileInterpret (convertComponent c) i
@@ -114,17 +115,19 @@ spec = parallel $ do
     describe "FolderNameComponent" $ do
       let d = autoWith defaultInputNormalizer :: Decoder FolderNameComponent
       it "imports Format.asCamelCase" $
-        importSucceeds d (FolderFormatAs (FolderTextLiteral "test") AsCamelCase) "folderNameComponent-format-asCamelCase.dhall"
+        importSucceeds d (FolderFormatAs [FolderTextLiteral "test"] AsCamelCase) "folderNameComponent-format-asCamelCase.dhall"
       it "imports Format.AsPascalCase" $
-        importSucceeds d (FolderFormatAs (FolderTextLiteral "test") AsPascalCase) "folderNameComponent-format-asPascalCase.dhall"
+        importSucceeds d (FolderFormatAs [FolderTextLiteral "test"] AsPascalCase) "folderNameComponent-format-asPascalCase.dhall"
       it "imports Format.as_snake_case" $
-        importSucceeds d (FolderFormatAs (FolderTextLiteral "test") AsSnakeCase) "folderNameComponent-format-asSnakeCase.dhall"
+        importSucceeds d (FolderFormatAs [FolderTextLiteral "test"] AsSnakeCase) "folderNameComponent-format-asSnakeCase.dhall"
       it "imports Format.as-spinal-case" $
-        importSucceeds d (FolderFormatAs (FolderTextLiteral "test") AsSpinalCase) "folderNameComponent-format-asSpinalCase.dhall"
+        importSucceeds d (FolderFormatAs [FolderTextLiteral "test"] AsSpinalCase) "folderNameComponent-format-asSpinalCase.dhall"
       it "imports Format.`As Title Case`" $
-        importSucceeds d (FolderFormatAs (FolderTextLiteral "test") AsTitleCase) "folderNameComponent-format-asTitleCase.dhall"
+        importSucceeds d (FolderFormatAs [FolderTextLiteral "test"] AsTitleCase) "folderNameComponent-format-asTitleCase.dhall"
       it "imports Format.As-Train-Case" $
-        importSucceeds d (FolderFormatAs (FolderTextLiteral "test") AsTrainCase) "folderNameComponent-format-asTrainCase.dhall"
+        importSucceeds d (FolderFormatAs [FolderTextLiteral "test"] AsTrainCase) "folderNameComponent-format-asTrainCase.dhall"
+      it "fails with empty format components" $
+        importFails d "folderNameComponent-emptyFormatComponents.dhall"
       it "imports ifThenElse" $
         importSucceeds
           d
@@ -192,17 +195,19 @@ spec = parallel $ do
       it "imports duplicateNumber" $
         importSucceeds d FileDuplicateNumber "fileNameComponent-duplicateNumber.dhall"
       it "imports Format.asCamelCase" $
-        importSucceeds d (FileFormatAs (FileTextLiteral "test") AsCamelCase) "fileNameComponent-format-asCamelCase.dhall"
+        importSucceeds d (FileFormatAs [FileTextLiteral "test"] AsCamelCase) "fileNameComponent-format-asCamelCase.dhall"
       it "imports Format.AsPascalCase" $
-        importSucceeds d (FileFormatAs (FileTextLiteral "test") AsPascalCase) "fileNameComponent-format-asPascalCase.dhall"
+        importSucceeds d (FileFormatAs [FileTextLiteral "test"] AsPascalCase) "fileNameComponent-format-asPascalCase.dhall"
       it "imports Format.as_snake_case" $
-        importSucceeds d (FileFormatAs (FileTextLiteral "test") AsSnakeCase) "fileNameComponent-format-asSnakeCase.dhall"
+        importSucceeds d (FileFormatAs [FileTextLiteral "test"] AsSnakeCase) "fileNameComponent-format-asSnakeCase.dhall"
       it "imports Format.as-spinal-case" $
-        importSucceeds d (FileFormatAs (FileTextLiteral "test") AsSpinalCase) "fileNameComponent-format-asSpinalCase.dhall"
+        importSucceeds d (FileFormatAs [FileTextLiteral "test"] AsSpinalCase) "fileNameComponent-format-asSpinalCase.dhall"
       it "imports Format.`As Title Case`" $
-        importSucceeds d (FileFormatAs (FileTextLiteral "test") AsTitleCase) "fileNameComponent-format-asTitleCase.dhall"
+        importSucceeds d (FileFormatAs [FileTextLiteral "test"] AsTitleCase) "fileNameComponent-format-asTitleCase.dhall"
       it "imports Format.As-Train-Case" $
-        importSucceeds d (FileFormatAs (FileTextLiteral "test") AsTrainCase) "fileNameComponent-format-asTrainCase.dhall"
+        importSucceeds d (FileFormatAs [FileTextLiteral "test"] AsTrainCase) "fileNameComponent-format-asTrainCase.dhall"
+      it "fails with empty format components" $
+        importFails d "fileNameComponent-emptyFormatComponents.dhall"
       it "imports ifDuplicate" $
         importSucceeds
           d
@@ -273,14 +278,24 @@ spec = parallel $ do
           translateFolderComponent
             f
             sep
-            (FolderFormatAs (FolderTextLiteral "This_isCamelCasing") AsCamelCase)
+            ( FolderFormatAs
+                [ FolderTextLiteral "This_isCamel",
+                  FolderTextLiteral "Casing"
+                ]
+                AsCamelCase
+            )
             `shouldBe` V.Success "thisIsCamelCasing"
       prop "properly formats PascalCase" $
         \f sep ->
           translateFolderComponent
             f
             sep
-            (FolderFormatAs (FolderTextLiteral "This_isPascal-Casing") AsPascalCase)
+            ( FolderFormatAs
+                [ FolderTextLiteral "This",
+                  FolderTextLiteral "isPascal-Casing"
+                ]
+                AsPascalCase
+            )
             `shouldBe` V.Success
               "ThisIsPascalCasing"
       prop "properly formats snake_case" $
@@ -288,28 +303,44 @@ spec = parallel $ do
           translateFolderComponent
             f
             sep
-            (FolderFormatAs (FolderTextLiteral "This_is-Snake_casing") AsSnakeCase)
+            ( FolderFormatAs
+                [ FolderTextLiteral "This_",
+                  FolderTextLiteral "   ",
+                  FolderTextLiteral "is-Snake_casing"
+                ]
+                AsSnakeCase
+            )
             `shouldBe` V.Success "this_is_snake_casing"
       prop "properly formats spinal-case" $
         \f sep ->
           translateFolderComponent
             f
             sep
-            (FolderFormatAs (FolderTextLiteral "This_is_SpinalTap") AsSpinalCase)
+            ( FolderFormatAs
+                [ FolderTextLiteral " ",
+                  FolderTextLiteral "This_is_SpinalTap"
+                ]
+                AsSpinalCase
+            )
             `shouldBe` V.Success "this-is-spinal-tap"
       prop "properly formats Title Case" $
         \f sep ->
           translateFolderComponent
             f
             sep
-            (FolderFormatAs (FolderTextLiteral "this_IsTitle_Casing") AsTitleCase)
+            ( FolderFormatAs
+                [ FolderTextLiteral "this_IsTitle_Casing",
+                  FolderTextLiteral "  "
+                ]
+                AsTitleCase
+            )
             `shouldBe` V.Success "This Is Title Casing"
       prop "properly formats Train-Case" $
         \f sep ->
           translateFolderComponent
             f
             sep
-            (FolderFormatAs (FolderTextLiteral "this_Is-train_Casing") AsTrainCase)
+            (FolderFormatAs [FolderTextLiteral "this_Is-train_Casing"] AsTrainCase)
             `shouldBe` V.Success "This-Is-Train-Casing"
     context "when component is ifThenElse" $ do
       prop "is always equal to the true components if predicate is true" $

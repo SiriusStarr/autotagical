@@ -1,9 +1,13 @@
+let List/map =
+        https://prelude.dhall-lang.org/List/map sha256:dd845ffb4568d40327f2a817eb42d1c6138b929ca758d50bc33112ef3c885680
+      ? https://prelude.dhall-lang.org/List/map
+
 let Case =
         ../Case sha256:9e2d5a3c338b63a4e067de578f9e65952648ed6ffcf4ee0caaa211cdb2b3a3c5
       ? ../Case
 
 let Component =
-        ./Component sha256:8c2763a38b757b216571c7bc3fd5cde3d94b4de0da8354ba9d732f6df73708dd
+        ./Component sha256:b637988aae2ec7c1ee2b6fc7059008b03da8b57b1901dda79951c2045662bdfd
       ? ./Component
 
 let Interpret =
@@ -19,11 +23,12 @@ let Tag =
       ? ../../Tag/Type
 
 in  λ(case : Case) →
-    λ(component : Component) →
+    λ(components : List Component) →
     λ(Component : Type) →
       let ComponentF =
             < FileDuplicateNumberF
-            | FileFormatAsF : { componentF : Component, formatCaseF : Case }
+            | FileFormatAsF :
+                { componentsF : List Component, formatCaseF : Case }
             | FileIfDuplicateF : List Component
             | FileIfThenElseF :
                 { predicateF : Predicate
@@ -40,5 +45,12 @@ in  λ(case : Case) →
       in  λ(Fix : ComponentF → Component) →
             Fix
               ( ComponentF.FileFormatAsF
-                  { componentF = component Component Fix, formatCaseF = case }
+                  { componentsF =
+                      List/map
+                        Component@1
+                        Component
+                        (λ(c : Component@1) → c Component Fix)
+                        components
+                  , formatCaseF = case
+                  }
               )
