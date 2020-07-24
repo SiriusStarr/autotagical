@@ -1,4 +1,4 @@
-{-
+{-|
 # Config.With.renaming
 
 ## Default Behavior

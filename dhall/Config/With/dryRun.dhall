@@ -1,4 +1,4 @@
-{-
+{-|
 # Config.With.dryRun
 
 ## Default Behavior

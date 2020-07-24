@@ -1,4 +1,4 @@
-{-
+{-|
 # Predicate.exactly
 
 ## Predicate

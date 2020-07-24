@@ -1,4 +1,4 @@
-{-
+{-|
 # Input.Separator.keyword
 
 ## Function

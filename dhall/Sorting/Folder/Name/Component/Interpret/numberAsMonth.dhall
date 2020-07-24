@@ -1,4 +1,4 @@
-{-
+{-|
 # Sorting.Folder.Name.Component.Interpret.numberAsMonth
 
 ## Component

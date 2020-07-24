@@ -1,4 +1,4 @@
-{-
+{-|
 # Output.With.trailingTagSeparator
 
 ## Default Behavior

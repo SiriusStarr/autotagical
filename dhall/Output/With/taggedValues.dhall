@@ -1,4 +1,4 @@
-{-
+{-|
 # Output.With.taggedValues
 
 ## Default Behavior

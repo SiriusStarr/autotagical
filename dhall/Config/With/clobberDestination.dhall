@@ -1,4 +1,4 @@
-{-
+{-|
 # Config.With.clobberDestination
 
 ## Default Behavior

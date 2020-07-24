@@ -1,4 +1,4 @@
-{-
+{-|
 # Output.With.leadingTagSeparator
 
 ## Default Behavior

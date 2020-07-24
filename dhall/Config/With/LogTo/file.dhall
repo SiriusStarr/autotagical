@@ -1,4 +1,4 @@
-{-
+{-|
 # Config.With.LogTo.file
 
 ## Default Behavior

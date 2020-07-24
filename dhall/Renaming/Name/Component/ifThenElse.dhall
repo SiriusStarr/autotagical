@@ -1,4 +1,4 @@
-{-
+{-|
 # Renaming.Name.Component.ifThenElse
 
 ## Component

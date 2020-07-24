@@ -1,4 +1,4 @@
-{-
+{-|
 # Input.With.LeadingTagSeparator.forbidden
 
 ## Default Behavior

@@ -1,4 +1,4 @@
-{-
+{-|
 # Output.TaggedValueFormat.tag=value
 
 ## Function

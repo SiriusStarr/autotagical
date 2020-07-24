@@ -1,4 +1,4 @@
-{-
+{-|
 # Sorting.Folder.Name.With.separator
 
 ## Default Behavior

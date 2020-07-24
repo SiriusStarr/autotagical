@@ -1,4 +1,4 @@
-{-
+{-|
 # Glob.With.errorRecovery
 
 ## Default Behavior

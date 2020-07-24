@@ -1,4 +1,4 @@
-{-
+{-|
 # Sorting.schema
 
 ## Function

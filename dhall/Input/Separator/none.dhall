@@ -1,4 +1,4 @@
-{-
+{-|
 # Input.Separator.none
 
 ## Value

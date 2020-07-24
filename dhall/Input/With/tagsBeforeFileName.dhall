@@ -1,4 +1,4 @@
-{-
+{-|
 # Input.With.tagsBeforeFileName
 
 ## Default Behavior

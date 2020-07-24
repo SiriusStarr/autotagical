@@ -1,4 +1,4 @@
-{-
+{-|
 # Predicate.hasTagWithValue
 
 ## Predicate

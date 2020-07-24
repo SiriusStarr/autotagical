@@ -1,4 +1,4 @@
-{-
+{-|
 # Renaming.rule
 
 ## Function

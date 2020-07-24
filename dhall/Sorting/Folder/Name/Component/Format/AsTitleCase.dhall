@@ -1,4 +1,4 @@
-{-
+{-|
 # Sorting.Folder.Name.Component.Format.\`As Title Case\`
 
 ## Component

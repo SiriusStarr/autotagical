@@ -1,4 +1,4 @@
-{-
+{-|
 # Renaming.Name.Component.Format.AsPascalCase
 
 ## Component

@@ -1,4 +1,4 @@
-{-
+{-|
 # Renaming.Name.Component.Interpret.numberAsYear
 
 ## Component

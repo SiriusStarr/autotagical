@@ -1,4 +1,4 @@
-{-
+{-|
 # Config.With.ignorePatterns
 
 ## Default Behavior

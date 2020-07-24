@@ -1,4 +1,4 @@
-{-
+{-|
 # Sorting.Folder.Name.Component.Format.as-spinal-case
 
 ## Component

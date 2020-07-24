@@ -1,4 +1,4 @@
-{-
+{-|
 # Renaming.Name.With.separator
 
 ## Default Behavior

@@ -1,4 +1,4 @@
-{-
+{-|
 # Config.With.newOutputFormat
 
 ## Default Behavior

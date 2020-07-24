@@ -1,4 +1,4 @@
-{-
+{-|
 # Sorting.Folder.Name.Component.Format.as\_snake\_case
 
 ## Component

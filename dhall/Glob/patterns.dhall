@@ -1,4 +1,4 @@
-{-
+{-|
 # Glob.patterns
 
 ## Function

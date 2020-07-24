@@ -1,4 +1,4 @@
-{-
+{-|
 # Config.With.keepInputCopy
 
 ## Default Behavior

@@ -1,4 +1,4 @@
-{-
+{-|
 # Config.default
 
 ## Record Completion

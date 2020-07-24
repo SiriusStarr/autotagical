@@ -1,4 +1,4 @@
-{-
+{-|
 # Renaming.Name.template
 
 ## Function

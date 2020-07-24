@@ -1,4 +1,4 @@
-{-
+{-|
 # Tags.group
 
 ## Function

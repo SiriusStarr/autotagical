@@ -1,4 +1,4 @@
-{-
+{-|
 # Config.With.LogTo.stdErr
 
 ## Default Behavior

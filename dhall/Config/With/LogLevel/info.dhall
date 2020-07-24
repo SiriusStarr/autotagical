@@ -1,4 +1,4 @@
-{-
+{-|
 # Config.With.LogLevel.info
 
 ## Default Behavior

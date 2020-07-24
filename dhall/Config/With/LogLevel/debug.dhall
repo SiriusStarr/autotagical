@@ -1,4 +1,4 @@
-{-
+{-|
 # Config.With.LogLevel.debug
 
 ## Default Behavior

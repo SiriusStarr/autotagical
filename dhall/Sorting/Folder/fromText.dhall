@@ -1,4 +1,4 @@
-{-
+{-|
 # Sorting.Folder.fromText
 
 ## Function
