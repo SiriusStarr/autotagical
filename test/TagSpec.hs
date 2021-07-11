@@ -13,9 +13,8 @@ import Test.Hspec
 import Utility (importFails, importSucceeds)
 
 spec :: Spec
-spec = parallel
-  $ context "FromDhall instances"
-  $ do
+spec =
+  context "FromDhall instances" $ do
     describe "Tag" $ do
       let d = autoWith defaultInputNormalizer :: Decoder Tag
       it "imports when valid" $

@@ -21,7 +21,7 @@ import Test.QuickCheck hiding (NonEmptyList)
 import Utility (importFails, importSucceeds)
 
 spec :: Spec
-spec = parallel $ do
+spec = do
   context "FromDhall instances" $ do
     describe "Bound" $ do
       let d = autoWith defaultInputNormalizer :: Decoder Bound
@@ -74,148 +74,153 @@ spec = parallel $ do
         importFails d "predicate-between-lowerBoundAllPredicates.dhall"
       it "fails when a deeply nested predicate is invalid" $
         importFails d "predicate-nestedInvalid.dhall"
-  describe "checkPredicate" $ do
-    context "when predicate is always" $ do
-      prop "is always True" $
-        \ts -> checkPredicate ts Always `shouldBe` True
-      it "is True even for no tags" $
-        checkPredicate (Tags M.empty) Always `shouldBe` True
-    context "when predicate is hasTag without values" $ do
-      prop "is always True if the predicate tag is contained in the tags" $
-        \t ts ->
-          checkPredicate (Tags $ M.insert t Present ts) (HasTag t Nothing)
-            `shouldBe` True
-      prop "is always True if the predicate tag is contained in the tags with a value" $
-        \t v ts ->
-          checkPredicate (Tags $ M.insert t (Value v) ts) (HasTag t Nothing)
-            `shouldBe` True
-      prop "is always False for no tags" $
-        \t -> checkPredicate (Tags M.empty) (HasTag t Nothing) `shouldBe` False
-      prop "is never True if the predicate tag is not contained in the tags" $
-        \t ts ->
-          checkPredicate (Tags $ M.delete t ts) (HasTag t Nothing)
-            `shouldBe` False
-    context "when predicate is hasTagWithValue" $ do
-      prop "is always True if the predicate tag is contained in the tags with the correct value" $
-        \t v vs ts ->
-          checkPredicate
-            (Tags $ M.insert t (Value v) ts)
-            (HasTag t . Just . makeNonEmptySet . fromList $ v : vs)
-            `shouldBe` True
-      prop "is never True if the predicate tag is contained in the tags but only with Present" $
-        \t vs ts ->
-          checkPredicate (Tags $ M.insert t Present ts) (HasTag t (Just vs))
-            `shouldBe` False
-      prop "is never True if the predicate tag is contained in the tags with a value other than the specified ones" $
-        \t v vs ts ->
-          not (v `S.member` toSet vs)
-            ==> checkPredicate
+  parallel $ do
+    describe "checkPredicate" $ do
+      context "when predicate is always" $ do
+        prop "is always True" $
+          \ts -> checkPredicate ts Always `shouldBe` True
+        it "is True even for no tags" $
+          checkPredicate (Tags M.empty) Always `shouldBe` True
+      context "when predicate is hasTag without values" $ do
+        prop "is always True if the predicate tag is contained in the tags" $
+          \t ts ->
+            checkPredicate (Tags $ M.insert t Present ts) (HasTag t Nothing)
+              `shouldBe` True
+        prop "is always True if the predicate tag is contained in the tags with a value" $
+          \t v ts ->
+            checkPredicate (Tags $ M.insert t (Value v) ts) (HasTag t Nothing)
+              `shouldBe` True
+        prop "is always False for no tags" $
+          \t -> checkPredicate (Tags M.empty) (HasTag t Nothing) `shouldBe` False
+        prop "is never True if the predicate tag is not contained in the tags" $
+          \t ts ->
+            checkPredicate (Tags $ M.delete t ts) (HasTag t Nothing)
+              `shouldBe` False
+      context "when predicate is hasTagWithValue" $ do
+        prop "is always True if the predicate tag is contained in the tags with the correct value" $
+          \t v vs ts ->
+            checkPredicate
               (Tags $ M.insert t (Value v) ts)
-              (HasTag t (Just vs))
+              (HasTag t . Just . makeNonEmptySet . fromList $ v : vs)
+              `shouldBe` True
+        prop "is never True if the predicate tag is contained in the tags but only with Present" $
+          \t vs ts ->
+            checkPredicate (Tags $ M.insert t Present ts) (HasTag t (Just vs))
               `shouldBe` False
-      prop "is always False for no tags" $
-        \t vs ->
-          checkPredicate (Tags M.empty) (HasTag t (Just vs))
-            `shouldBe` False
-      prop "is never True if the predicate tag is not contained in the tags" $
-        \t vs ts ->
-          checkPredicate (Tags $ M.delete t ts) (HasTag t (Just vs))
-            `shouldBe` False
-    context "when predicate is hasGroup" $ do
-      prop "is always False if there are no tags" $
-        \g -> checkPredicate (Tags M.empty) (HasGroup g) `shouldBe` False
-      prop "is True if at least one tag is in the group and False otherwise" $
-        \ts g ->
-          checkPredicate ts (HasGroup g)
-            `shouldBe` any (\t -> S.member t (toSet $ groupTags g)) (M.keys $ tagMap ts)
-    context "when predicate is not" $ do
-      prop "is always the opposite of the negated predicate" $
-        \ts p -> checkPredicate ts p `shouldNotBe` checkPredicate ts (Not p)
-      prop "is its own inverse" $
-        \ts p -> checkPredicate ts p `shouldBe` checkPredicate ts (Not (Not p))
-    context "when predicate is all" $ do
-      prop "is always False if any predicate is Not Always" $
-        -- Splice Not Always in between two lists of predicates, as this ensures it can comes at any position
-        \ts ps1 ps2 ->
-          checkPredicate
-            ts
-            ( Between AllPredicates AllPredicates $ fromList $
-                ps1 ++ Not Always : ps2
-            )
-            `shouldBe` False
-      prop "is always False if any predicate evaluates to False" $
-        \ts ps1 falseP ps2 ->
-          not (checkPredicate ts falseP)
-            ==> checkPredicate
-              ts
-              ( Between AllPredicates AllPredicates $ fromList $
-                  ps1 ++ falseP : ps2
-              )
-            `shouldBe` False
-      prop "is always True if all predicates evaluate to True" $
-        \ts ps ->
-          checkPredicate ts (Between AllPredicates AllPredicates ps)
-            `shouldBe` all (checkPredicate ts) ps
-    context "when predicate is any" $ do
-      prop "is always True if any predicate is Always" $
-        -- Splice Always in between two lists of predicates, as this ensures it can comes at any position
-        \ts ps1 ps2 ->
-          checkPredicate
-            ts
-            ( Between (Bound 1) AllPredicates $ fromList $
-                ps1 ++ Always : ps2
-            )
-            `shouldBe` True
-      prop "is always True if any predicate evaluates to True" $
-        \ts ps1 trueP ps2 ->
-          checkPredicate ts trueP
-            ==> checkPredicate
-              ts
-              ( Between (Bound 1) AllPredicates $ fromList $
-                  ps1 ++ trueP : ps2
-              )
-      prop "is always False if all predicates evaluate to False and True otherwise" $
-        \ts ps ->
-          checkPredicate ts (Between (Bound 1) AllPredicates ps)
-            `shouldBe` any (checkPredicate ts) ps
-    context "when Predicate is atLeast"
-      $ prop "is always True if number of matches is greater than lower bound and false otherwise"
-      $ \ts ps n ->
-        checkPredicate ts (Between (Bound n) AllPredicates ps)
-          `shouldBe` countTrue ts ps >= n
-    context "when Predicate is atMost"
-      $ prop "is always True if number of matches is less than or equal to upper bound"
-      $ \ts ps n ->
-        checkPredicate ts (Between (Bound 0) (Bound n) ps)
-          `shouldBe` countTrue ts ps <= n
-    context "when Predicate is between" $ do
-      prop "is always False if greater than upper bound" $
-        \ts ps lb ->
-          let len = countTrue ts ps
-           in len >= 1
-                ==> checkPredicate ts (Between (Bound lb) (Bound (len - 1)) ps)
+        prop "is never True if the predicate tag is contained in the tags with a value other than the specified ones" $
+          \t v vs ts ->
+            not (v `S.member` toSet vs)
+              ==> checkPredicate
+                (Tags $ M.insert t (Value v) ts)
+                (HasTag t (Just vs))
                 `shouldBe` False
-      prop "is never True if lower bound is greater than upper bound" $
-        \ts ps lB uB ->
-          lB > uB
-            ==> checkPredicate ts (Between (Bound lB) (Bound uB) ps)
+        prop "is always False for no tags" $
+          \t vs ->
+            checkPredicate (Tags M.empty) (HasTag t (Just vs))
               `shouldBe` False
-      prop "is never True if upper bound is zero, unless lower bound is also" $
-        \ts ps lB ->
-          lB > 0
-            ==> checkPredicate ts (Between (Bound lB) (Bound 0) ps)
-            `shouldBe` False
-      prop "is True if number of true predicates is between lower and upper bounds" $
-        \ts ps lB uB ->
-          lB < uB
-            ==> let len = countTrue ts ps
-                 in checkPredicate ts (Between (Bound lB) (Bound uB) ps)
-                      `shouldBe` len >= lB && len <= uB
-    context "when predicate is exactly"
-      $ prop "is True if number of true predicates is exactly the number"
-      $ \ts ps n ->
-        checkPredicate ts (Between (Bound n) (Bound n) ps)
-          `shouldBe` countTrue ts ps == n
+        prop "is never True if the predicate tag is not contained in the tags" $
+          \t vs ts ->
+            checkPredicate (Tags $ M.delete t ts) (HasTag t (Just vs))
+              `shouldBe` False
+      context "when predicate is hasGroup" $ do
+        prop "is always False if there are no tags" $
+          \g -> checkPredicate (Tags M.empty) (HasGroup g) `shouldBe` False
+        prop "is True if at least one tag is in the group and False otherwise" $
+          \ts g ->
+            checkPredicate ts (HasGroup g)
+              `shouldBe` any (\t -> S.member t (toSet $ groupTags g)) (M.keys $ tagMap ts)
+      context "when predicate is not" $ do
+        prop "is always the opposite of the negated predicate" $
+          \ts p -> checkPredicate ts p `shouldNotBe` checkPredicate ts (Not p)
+        prop "is its own inverse" $
+          \ts p -> checkPredicate ts p `shouldBe` checkPredicate ts (Not (Not p))
+      context "when predicate is all" $ do
+        prop "is always False if any predicate is Not Always" $
+          -- Splice Not Always in between two lists of predicates, as this ensures it can comes at any position
+          \ts ps1 ps2 ->
+            checkPredicate
+              ts
+              ( Between AllPredicates AllPredicates $
+                  fromList $
+                    ps1 ++ Not Always : ps2
+              )
+              `shouldBe` False
+        prop "is always False if any predicate evaluates to False" $
+          \ts ps1 falseP ps2 ->
+            not (checkPredicate ts falseP)
+              ==> checkPredicate
+                ts
+                ( Between AllPredicates AllPredicates $
+                    fromList $
+                      ps1 ++ falseP : ps2
+                )
+              `shouldBe` False
+        prop "is always True if all predicates evaluate to True" $
+          \ts ps ->
+            checkPredicate ts (Between AllPredicates AllPredicates ps)
+              `shouldBe` all (checkPredicate ts) ps
+      context "when predicate is any" $ do
+        prop "is always True if any predicate is Always" $
+          -- Splice Always in between two lists of predicates, as this ensures it can comes at any position
+          \ts ps1 ps2 ->
+            checkPredicate
+              ts
+              ( Between (Bound 1) AllPredicates $
+                  fromList $
+                    ps1 ++ Always : ps2
+              )
+              `shouldBe` True
+        prop "is always True if any predicate evaluates to True" $
+          \ts ps1 trueP ps2 ->
+            checkPredicate ts trueP
+              ==> checkPredicate
+                ts
+                ( Between (Bound 1) AllPredicates $
+                    fromList $
+                      ps1 ++ trueP : ps2
+                )
+        prop "is always False if all predicates evaluate to False and True otherwise" $
+          \ts ps ->
+            checkPredicate ts (Between (Bound 1) AllPredicates ps)
+              `shouldBe` any (checkPredicate ts) ps
+      context "when Predicate is atLeast" $
+        prop "is always True if number of matches is greater than lower bound and false otherwise" $
+          \ts ps n ->
+            checkPredicate ts (Between (Bound n) AllPredicates ps)
+              `shouldBe` countTrue ts ps >= n
+      context "when Predicate is atMost" $
+        prop "is always True if number of matches is less than or equal to upper bound" $
+          \ts ps n ->
+            checkPredicate ts (Between (Bound 0) (Bound n) ps)
+              `shouldBe` countTrue ts ps <= n
+      context "when Predicate is between" $ do
+        prop "is always False if greater than upper bound" $
+          \ts ps lb ->
+            let len = countTrue ts ps
+             in len >= 1
+                  ==> checkPredicate ts (Between (Bound lb) (Bound (len - 1)) ps)
+                  `shouldBe` False
+        prop "is never True if lower bound is greater than upper bound" $
+          \ts ps lB uB ->
+            lB > uB
+              ==> checkPredicate ts (Between (Bound lB) (Bound uB) ps)
+                `shouldBe` False
+        prop "is never True if upper bound is zero, unless lower bound is also" $
+          \ts ps lB ->
+            lB > 0
+              ==> checkPredicate ts (Between (Bound lB) (Bound 0) ps)
+              `shouldBe` False
+        prop "is True if number of true predicates is between lower and upper bounds" $
+          \ts ps lB uB ->
+            lB < uB
+              ==> let len = countTrue ts ps
+                   in checkPredicate ts (Between (Bound lB) (Bound uB) ps)
+                        `shouldBe` len >= lB && len <= uB
+      context "when predicate is exactly" $
+        prop "is True if number of true predicates is exactly the number" $
+          \ts ps n ->
+            checkPredicate ts (Between (Bound n) (Bound n) ps)
+              `shouldBe` countTrue ts ps == n
 
 countTrue :: (Num a) => Tags -> NonEmptyList Predicate -> a
 countTrue ts = genericLength . filter (checkPredicate ts) . toList
