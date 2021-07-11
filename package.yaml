@@ -2,7 +2,7 @@ name: autotagical
 version: 0.1.0.0
 github: "SiriusStarr/autotagical"
 license: GPL-3
-license-file: LICENSE.md
+license-file: LICENSE
 author: "SiriusStarr"
 maintainer: "2049163+SiriusStarr@users.noreply.github.com"
 copyright: "(c) 2020 SiriusStarr"
