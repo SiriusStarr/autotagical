@@ -82,19 +82,19 @@ sameError e1s e2s = and $ zipWith same e1s e2s
     same NumberAsYearOutOfRange {} _ = False
 
 spec :: Spec
-spec = parallel $ do
+spec = do
   context "FromDhall instances" $ do
-    describe "Case"
-      $ it "imports all correctly"
-      $ let d = autoWith defaultInputNormalizer :: Decoder [Case]
+    describe "Case" $
+      it "imports all correctly" $
+        let d = autoWith defaultInputNormalizer :: Decoder [Case]
          in importSucceeds d [AsCamelCase, AsPascalCase, AsSnakeCase, AsSpinalCase, AsTitleCase, AsTrainCase] "case.dhall"
-    describe "MonthFormat"
-      $ it "imports all correctly"
-      $ let d = autoWith defaultInputNormalizer :: Decoder [MonthFormat]
+    describe "MonthFormat" $
+      it "imports all correctly" $
+        let d = autoWith defaultInputNormalizer :: Decoder [MonthFormat]
          in importSucceeds d [MonthName, ThreeLetterMonth, TwoDigitMonth, OneDigitMonth] "monthFormat.dhall"
-    describe "YearFormat"
-      $ it "imports all correctly"
-      $ let d = autoWith defaultInputNormalizer :: Decoder [YearFormat]
+    describe "YearFormat" $
+      it "imports all correctly" $
+        let d = autoWith defaultInputNormalizer :: Decoder [YearFormat]
          in importSucceeds d [FourDigitYear, TwoDigitYear] "yearFormat.dhall"
     describe "LatestYear" $ do
       let d = autoWith defaultInputNormalizer :: Decoder LatestYear
@@ -271,417 +271,418 @@ spec = parallel $ do
         importFails d "fileName-emptySeparator.dhall"
       it "fails with a slash in the separator" $
         importFails d "fileName-slash.dhall"
-  describe "translateFolderComponent" $ do
-    context "when component is Format" $ do
-      prop "properly formats camelCase" $
-        \f sep ->
-          translateFolderComponent
-            f
-            sep
-            ( FolderFormatAs
-                [ FolderTextLiteral "This_isCamel",
-                  FolderTextLiteral "Casing"
-                ]
-                AsCamelCase
-            )
-            `shouldBe` V.Success "thisIsCamelCasing"
-      prop "properly formats PascalCase" $
-        \f sep ->
-          translateFolderComponent
-            f
-            sep
-            ( FolderFormatAs
-                [ FolderTextLiteral "This",
-                  FolderTextLiteral "isPascal-Casing"
-                ]
-                AsPascalCase
-            )
-            `shouldBe` V.Success
-              "ThisIsPascalCasing"
-      prop "properly formats snake_case" $
-        \f sep ->
-          translateFolderComponent
-            f
-            sep
-            ( FolderFormatAs
-                [ FolderTextLiteral "This_",
-                  FolderTextLiteral "   ",
-                  FolderTextLiteral "is-Snake_casing"
-                ]
-                AsSnakeCase
-            )
-            `shouldBe` V.Success "this_is_snake_casing"
-      prop "properly formats spinal-case" $
-        \f sep ->
-          translateFolderComponent
-            f
-            sep
-            ( FolderFormatAs
-                [ FolderTextLiteral " ",
-                  FolderTextLiteral "This_is_SpinalTap"
-                ]
-                AsSpinalCase
-            )
-            `shouldBe` V.Success "this-is-spinal-tap"
-      prop "properly formats Title Case" $
-        \f sep ->
-          translateFolderComponent
-            f
-            sep
-            ( FolderFormatAs
-                [ FolderTextLiteral "this_IsTitle_Casing",
-                  FolderTextLiteral "  "
-                ]
-                AsTitleCase
-            )
-            `shouldBe` V.Success "This Is Title Casing"
-      prop "properly formats Train-Case" $
-        \f sep ->
-          translateFolderComponent
-            f
-            sep
-            (FolderFormatAs [FolderTextLiteral "this_Is-train_Casing"] AsTrainCase)
-            `shouldBe` V.Success "This-Is-Train-Casing"
-    context "when component is ifThenElse" $ do
-      prop "is always equal to the true components if predicate is true" $
-        \p ts fs f sep ->
-          checkPredicate (fileTags f) p
-            ==> translateFolderComponent f sep (FolderIfThenElse p ts fs)
-              `shouldBe` translateFolderComponents f sep ts
-      prop "is always equal to the false components if predicate is false" $
-        \p ts fs f sep ->
-          not (checkPredicate (fileTags f) p)
-            ==> translateFolderComponent f sep (FolderIfThenElse p ts fs)
-              `shouldBe` translateFolderComponents f sep fs
-    context "when component is Interpret" $ do
-      prop "fails appropriately on non-numbers" $
-        \i f sep ->
-          translateFolderComponent
-            f
-            sep
-            (FolderInterpret (FolderTextLiteral "sd") i)
-            `shouldSatisfy` ( \case
-                                V.Failure [InterpretNumberOnNonNumber {}] -> True
-                                _ -> False
-                            )
-      context "when numberAsMonth" $ do
-        let numbers = toSafeText . T.pack . show <$> ([1 .. 12] :: [Natural])
-        prop "properly outputs all month names" $
+  parallel $ do
+    describe "translateFolderComponent" $ do
+      context "when component is Format" $ do
+        prop "properly formats camelCase" $
           \f sep ->
-            traverse
-              ( \t ->
-                  translateFolderComponent
-                    f
-                    sep
-                    ( FolderInterpret
-                        (FolderTextLiteral t)
-                        (NumberAsMonth MonthName)
-                    )
+            translateFolderComponent
+              f
+              sep
+              ( FolderFormatAs
+                  [ FolderTextLiteral "This_isCamel",
+                    FolderTextLiteral "Casing"
+                  ]
+                  AsCamelCase
               )
-              numbers
-              `shouldBe` V.Success ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
-        prop "properly outputs all three letter month names" $
+              `shouldBe` V.Success "thisIsCamelCasing"
+        prop "properly formats PascalCase" $
           \f sep ->
-            traverse
-              ( \t ->
-                  translateFolderComponent
-                    f
-                    sep
-                    ( FolderInterpret
-                        (FolderTextLiteral t)
-                        (NumberAsMonth ThreeLetterMonth)
-                    )
+            translateFolderComponent
+              f
+              sep
+              ( FolderFormatAs
+                  [ FolderTextLiteral "This",
+                    FolderTextLiteral "isPascal-Casing"
+                  ]
+                  AsPascalCase
               )
-              numbers
-              `shouldBe` V.Success ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
-        prop "properly outputs 2 digit months" $
+              `shouldBe` V.Success
+                "ThisIsPascalCasing"
+        prop "properly formats snake_case" $
           \f sep ->
-            traverse
-              ( \t ->
-                  translateFolderComponent
-                    f
-                    sep
-                    ( FolderInterpret
-                        (FolderTextLiteral t)
-                        (NumberAsMonth TwoDigitMonth)
-                    )
+            translateFolderComponent
+              f
+              sep
+              ( FolderFormatAs
+                  [ FolderTextLiteral "This_",
+                    FolderTextLiteral "   ",
+                    FolderTextLiteral "is-Snake_casing"
+                  ]
+                  AsSnakeCase
               )
-              numbers
-              `shouldBe` V.Success ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
-        prop "properly outputs 1 digit months" $
+              `shouldBe` V.Success "this_is_snake_casing"
+        prop "properly formats spinal-case" $
           \f sep ->
-            traverse
-              ( \t ->
-                  translateFolderComponent
-                    f
-                    sep
-                    ( FolderInterpret
-                        (FolderTextLiteral t)
-                        (NumberAsMonth OneDigitMonth)
-                    )
+            translateFolderComponent
+              f
+              sep
+              ( FolderFormatAs
+                  [ FolderTextLiteral " ",
+                    FolderTextLiteral "This_is_SpinalTap"
+                  ]
+                  AsSpinalCase
               )
-              numbers
-              `shouldBe` V.Success (safeText <$> numbers)
-        prop "fails appropriately on numbers out of range" $
-          \format f sep n ->
-            (n :: Natural) == 0 || n > 12
-              ==> translateFolderComponent
-                f
-                sep
-                ( FolderInterpret
-                    (FolderTextLiteral . toSafeText . T.pack . show $ n)
-                    (NumberAsMonth format)
-                )
+              `shouldBe` V.Success "this-is-spinal-tap"
+        prop "properly formats Title Case" $
+          \f sep ->
+            translateFolderComponent
+              f
+              sep
+              ( FolderFormatAs
+                  [ FolderTextLiteral "this_IsTitle_Casing",
+                    FolderTextLiteral "  "
+                  ]
+                  AsTitleCase
+              )
+              `shouldBe` V.Success "This Is Title Casing"
+        prop "properly formats Train-Case" $
+          \f sep ->
+            translateFolderComponent
+              f
+              sep
+              (FolderFormatAs [FolderTextLiteral "this_Is-train_Casing"] AsTrainCase)
+              `shouldBe` V.Success "This-Is-Train-Casing"
+      context "when component is ifThenElse" $ do
+        prop "is always equal to the true components if predicate is true" $
+          \p ts fs f sep ->
+            checkPredicate (fileTags f) p
+              ==> translateFolderComponent f sep (FolderIfThenElse p ts fs)
+                `shouldBe` translateFolderComponents f sep ts
+        prop "is always equal to the false components if predicate is false" $
+          \p ts fs f sep ->
+            not (checkPredicate (fileTags f) p)
+              ==> translateFolderComponent f sep (FolderIfThenElse p ts fs)
+                `shouldBe` translateFolderComponents f sep fs
+      context "when component is Interpret" $ do
+        prop "fails appropriately on non-numbers" $
+          \i f sep ->
+            translateFolderComponent
+              f
+              sep
+              (FolderInterpret (FolderTextLiteral "sd") i)
               `shouldSatisfy` ( \case
-                                  V.Failure [NumberAsMonthOutOfRange {}] -> True
+                                  V.Failure [InterpretNumberOnNonNumber {}] -> True
                                   _ -> False
                               )
-      context "when numberAsOrdinal"
-        $ prop "properly interprets numbers"
-        $ \f sep ->
-          translateFolderComponent
-            f
-            sep
-            ( FolderInterpret
-                (FolderTextLiteral "5")
-                NumberAsOrdinal
-            )
-            `shouldBe` V.Success "5th"
-      context "when numberAsYear" $ do
-        prop "properly outputs 4 digit years given 4 digit years" $
-          \f sep y ->
-            translateFolderComponent
-              f
-              sep
-              ( FolderInterpret
-                  (FolderTextLiteral "1952")
-                  (NumberAsYear y FourDigitYear)
-              )
-              `shouldBe` V.Success "1952"
-        prop "properly outputs 2 digit years given 4 digit years" $
-          \f sep y ->
-            translateFolderComponent
-              f
-              sep
-              ( FolderInterpret
-                  (FolderTextLiteral "1952")
-                  (NumberAsYear y TwoDigitYear)
-              )
-              `shouldBe` V.Success "52"
-        prop "properly interprets years before latest year" $
-          \f sep ->
-            translateFolderComponent
-              f
-              sep
-              ( FolderInterpret
-                  (FolderTextLiteral "19")
-                  (NumberAsYear (LatestYear 2021) FourDigitYear)
-              )
-              `shouldBe` V.Success "2019"
-        prop "properly interprets years after latest year" $
-          \f sep ->
-            translateFolderComponent
-              f
-              sep
-              ( FolderInterpret
-                  (FolderTextLiteral "51")
-                  (NumberAsYear (LatestYear 2021) FourDigitYear)
-              )
-              `shouldBe` V.Success "1951"
-        prop "properly interprets years equal to latest year" $
-          \f sep ->
-            translateFolderComponent
-              f
-              sep
-              ( FolderInterpret
-                  (FolderTextLiteral "21")
-                  (NumberAsYear (LatestYear 2021) FourDigitYear)
-              )
-              `shouldBe` V.Success "2021"
-        prop "fails on years in 100-1000 or >9999" $
-          forAll
-            genOutOfRangeNatural
-            ( \n f sep y yf ->
-                translateFolderComponent
+        context "when numberAsMonth" $ do
+          let numbers = toSafeText . T.pack . show <$> ([1 .. 12] :: [Natural])
+          prop "properly outputs all month names" $
+            \f sep ->
+              traverse
+                ( \t ->
+                    translateFolderComponent
+                      f
+                      sep
+                      ( FolderInterpret
+                          (FolderTextLiteral t)
+                          (NumberAsMonth MonthName)
+                      )
+                )
+                numbers
+                `shouldBe` V.Success ["January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December"]
+          prop "properly outputs all three letter month names" $
+            \f sep ->
+              traverse
+                ( \t ->
+                    translateFolderComponent
+                      f
+                      sep
+                      ( FolderInterpret
+                          (FolderTextLiteral t)
+                          (NumberAsMonth ThreeLetterMonth)
+                      )
+                )
+                numbers
+                `shouldBe` V.Success ["Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec"]
+          prop "properly outputs 2 digit months" $
+            \f sep ->
+              traverse
+                ( \t ->
+                    translateFolderComponent
+                      f
+                      sep
+                      ( FolderInterpret
+                          (FolderTextLiteral t)
+                          (NumberAsMonth TwoDigitMonth)
+                      )
+                )
+                numbers
+                `shouldBe` V.Success ["01", "02", "03", "04", "05", "06", "07", "08", "09", "10", "11", "12"]
+          prop "properly outputs 1 digit months" $
+            \f sep ->
+              traverse
+                ( \t ->
+                    translateFolderComponent
+                      f
+                      sep
+                      ( FolderInterpret
+                          (FolderTextLiteral t)
+                          (NumberAsMonth OneDigitMonth)
+                      )
+                )
+                numbers
+                `shouldBe` V.Success (safeText <$> numbers)
+          prop "fails appropriately on numbers out of range" $
+            \format f sep n ->
+              (n :: Natural) == 0 || n > 12
+                ==> translateFolderComponent
                   f
                   sep
                   ( FolderInterpret
                       (FolderTextLiteral . toSafeText . T.pack . show $ n)
-                      (NumberAsYear y yf)
+                      (NumberAsMonth format)
                   )
-                  `shouldSatisfy` \case
-                    V.Failure [NumberAsYearOutOfRange {}] -> True
-                    _ -> False
-            )
-    context "when component is originalName"
-      $ prop "is always equal to the original file name"
-      $ \f sep ->
-        translateFolderComponent f sep FolderOriginalName
-          `shouldBe` (V.Success . safeText . originalName $ f)
-    context "when component is tagValue" $ do
-      prop "is always equal to the value of the tag if the tag exists and is a tagged value" $
-        \t v ts raw name ext sep ->
-          translateFolderComponent
-            (FileInfo (Tags $ M.insert t (Value v) ts) raw name ext)
-            sep
-            (FolderTagValue t)
-            `shouldBe` V.Success (safeText v)
-      prop "is always equal to the name of the tag if the tag exists and is merely Present" $
-        \t ts raw name ext sep ->
-          translateFolderComponent
-            (FileInfo (Tags $ M.insert t Present ts) raw name ext)
-            sep
-            (FolderTagValue t)
-            `shouldBe` (V.Success . safeText . Tag.tag $ t)
-      prop "errors out if the tag isn't found" $
-        \t ts raw name ext sep ->
-          translateFolderComponent
-            (FileInfo (Tags $ M.delete t ts) raw name ext)
-            sep
-            (FolderTagValue t)
-            `shouldBe` V.Failure [TagValueWithoutTag t]
-    context "when component is text"
-      $ prop "is just the text, literally"
-      $ \t f sep ->
-        translateFolderComponent f sep (FolderTextLiteral t)
-          `shouldBe` V.Success (safeText t)
-  describe "translateFolderComponents" $ do
-    prop "is always equivalent to translateFolderComponent for a single component" $
-      \c f sep ->
-        translateFolderComponents f sep [c]
-          `shouldBe` translateFolderComponent f sep c
-    prop "is always empty for no components" $
-      \f sep ->
-        translateFolderComponents f sep []
-          `shouldBe` V.Success ""
-    prop "does not introduce extra separators for empty components" $
-      \f ->
-        translateFolderComponents f " " [FolderTextLiteral "a", FolderIfThenElse Always [] [], FolderTextLiteral "b", FolderIfThenElse Always [] []]
-          `shouldBe` V.Success "a b"
-    prop "is always equivalent to non-empty translateFolderComponents separated by sep for multiple components" $
-      \cs f sep ->
-        translateFolderComponents f sep cs
-          `shouldBe` ( T.intercalate sep . filter (not . T.null)
-                         <$> traverse (translateFolderComponent f sep) cs
-                     )
-  describe "translateFolderName" $ do
-    prop "is always equivalent to translateFolderComponents if not null" $
-      \f cs sep ->
-        let fromCs = translateFolderComponents f (maybe "" safeText sep) (toList cs)
-         in fromCs /= V.Success ""
-              ==> translateFolderName f (FolderName cs sep) `shouldBe` fromCs
-    prop "is never null" $
-      \f n ->
-        translateFolderName f n `shouldNotBe` V.Success ""
-    prop "always errors out for empty templates" $
-      \f ->
-        translateFolderName
-          f
-          ( FolderName
-              [ FolderIfThenElse Always [] [FolderTextLiteral "a"],
-                FolderIfThenElse (Not Always) [FolderTextLiteral "b"] []
-              ]
-              Nothing
-          )
-          `shouldBe` V.Failure
-            [ NullNameTemplate
-                ( T.pack $
-                    show
-                      ( FolderName
-                          [ FolderIfThenElse Always [] [FolderTextLiteral "a"],
-                            FolderIfThenElse (Not Always) [FolderTextLiteral "b"] []
-                          ]
-                          Nothing
-                      )
+                `shouldSatisfy` ( \case
+                                    V.Failure [NumberAsMonthOutOfRange {}] -> True
+                                    _ -> False
+                                )
+        context "when numberAsOrdinal" $
+          prop "properly interprets numbers" $
+            \f sep ->
+              translateFolderComponent
+                f
+                sep
+                ( FolderInterpret
+                    (FolderTextLiteral "5")
+                    NumberAsOrdinal
                 )
-            ]
-  describe "translateFileComponent" $ do
-    context "when component is duplicateNumber" $ do
-      prop "is always null for non-duplicates" $
+                `shouldBe` V.Success "5th"
+        context "when numberAsYear" $ do
+          prop "properly outputs 4 digit years given 4 digit years" $
+            \f sep y ->
+              translateFolderComponent
+                f
+                sep
+                ( FolderInterpret
+                    (FolderTextLiteral "1952")
+                    (NumberAsYear y FourDigitYear)
+                )
+                `shouldBe` V.Success "1952"
+          prop "properly outputs 2 digit years given 4 digit years" $
+            \f sep y ->
+              translateFolderComponent
+                f
+                sep
+                ( FolderInterpret
+                    (FolderTextLiteral "1952")
+                    (NumberAsYear y TwoDigitYear)
+                )
+                `shouldBe` V.Success "52"
+          prop "properly interprets years before latest year" $
+            \f sep ->
+              translateFolderComponent
+                f
+                sep
+                ( FolderInterpret
+                    (FolderTextLiteral "19")
+                    (NumberAsYear (LatestYear 2021) FourDigitYear)
+                )
+                `shouldBe` V.Success "2019"
+          prop "properly interprets years after latest year" $
+            \f sep ->
+              translateFolderComponent
+                f
+                sep
+                ( FolderInterpret
+                    (FolderTextLiteral "51")
+                    (NumberAsYear (LatestYear 2021) FourDigitYear)
+                )
+                `shouldBe` V.Success "1951"
+          prop "properly interprets years equal to latest year" $
+            \f sep ->
+              translateFolderComponent
+                f
+                sep
+                ( FolderInterpret
+                    (FolderTextLiteral "21")
+                    (NumberAsYear (LatestYear 2021) FourDigitYear)
+                )
+                `shouldBe` V.Success "2021"
+          prop "fails on years in 100-1000 or >9999" $
+            forAll
+              genOutOfRangeNatural
+              ( \n f sep y yf ->
+                  translateFolderComponent
+                    f
+                    sep
+                    ( FolderInterpret
+                        (FolderTextLiteral . toSafeText . T.pack . show $ n)
+                        (NumberAsYear y yf)
+                    )
+                    `shouldSatisfy` \case
+                      V.Failure [NumberAsYearOutOfRange {}] -> True
+                      _ -> False
+              )
+      context "when component is originalName" $
+        prop "is always equal to the original file name" $
+          \f sep ->
+            translateFolderComponent f sep FolderOriginalName
+              `shouldBe` (V.Success . safeText . originalName $ f)
+      context "when component is tagValue" $ do
+        prop "is always equal to the value of the tag if the tag exists and is a tagged value" $
+          \t v ts raw name ext sep ->
+            translateFolderComponent
+              (FileInfo (Tags $ M.insert t (Value v) ts) raw name ext)
+              sep
+              (FolderTagValue t)
+              `shouldBe` V.Success (safeText v)
+        prop "is always equal to the name of the tag if the tag exists and is merely Present" $
+          \t ts raw name ext sep ->
+            translateFolderComponent
+              (FileInfo (Tags $ M.insert t Present ts) raw name ext)
+              sep
+              (FolderTagValue t)
+              `shouldBe` (V.Success . safeText . Tag.tag $ t)
+        prop "errors out if the tag isn't found" $
+          \t ts raw name ext sep ->
+            translateFolderComponent
+              (FileInfo (Tags $ M.delete t ts) raw name ext)
+              sep
+              (FolderTagValue t)
+              `shouldBe` V.Failure [TagValueWithoutTag t]
+      context "when component is text" $
+        prop "is just the text, literally" $
+          \t f sep ->
+            translateFolderComponent f sep (FolderTextLiteral t)
+              `shouldBe` V.Success (safeText t)
+    describe "translateFolderComponents" $ do
+      prop "is always equivalent to translateFolderComponent for a single component" $
+        \c f sep ->
+          translateFolderComponents f sep [c]
+            `shouldBe` translateFolderComponent f sep c
+      prop "is always empty for no components" $
         \f sep ->
-          translateFileComponent f Nothing sep FileDuplicateNumber
+          translateFolderComponents f sep []
             `shouldBe` V.Success ""
-      prop "is simply the duplicate number for duplicates" $
-        \f n sep ->
-          translateFileComponent f (Just n) sep FileDuplicateNumber
-            `shouldBe` (V.Success . T.pack . show $ n)
-    context "when component is ifDuplicate" $ do
-      prop "is always equal to the components if duplicate" $
-        \f n sep cs ->
-          translateFileComponent f (Just n) sep (FileIfDuplicate cs)
-            `shouldBe` translateFileComponents f (Just n) sep (toList cs)
-      prop "is always null if not a duplicate" $
-        \f sep cs ->
-          translateFileComponent f Nothing sep (FileIfDuplicate cs)
-            `shouldBe` V.Success ""
-    prop "when component is anything else, is equal to folder component" $
-      \f d sep c ->
-        ( translateFolderComponent f sep c,
-          translateFileComponent f d sep (convertComponent c)
-        )
-          `shouldSatisfy` ( \case
-                              (V.Success t1, V.Success t2) -> t1 == t2
-                              (V.Failure e1, V.Failure e2) ->
-                                sameError e1 e2
-                              _ -> False
-                          )
-  describe "translateFileComponents" $ do
-    prop "is always equivalent to translateFileComponent for a single component" $
-      \c f d sep ->
-        translateFileComponents f d sep [c]
-          `shouldBe` translateFileComponent f d sep c
-    prop "is always empty for no components" $
-      \f d sep ->
-        translateFileComponents f d sep []
-          `shouldBe` V.Success ""
-    prop "does not introduce extra separators for empty components" $
-      \f ->
-        translateFileComponents
-          f
-          Nothing
-          " "
-          [ FileTextLiteral "a",
-            FileIfThenElse Always [] [],
-            FileTextLiteral "b",
-            FileDuplicateNumber,
-            FileIfDuplicate [FileTextLiteral "c"]
-          ]
-          `shouldBe` V.Success "a b"
-    prop "is always equivalent to non-empty translateFileComponents separated by sep for multiple components" $
-      \cs f d sep ->
-        translateFileComponents f d sep cs
-          `shouldBe` ( T.intercalate sep . filter (not . T.null)
-                         <$> traverse (translateFileComponent f d sep) cs
-                     )
-  describe "translateFileName" $ do
-    prop "is always equivalent to translateFileComponents if not null" $
-      \f d cs sep ->
-        let fromCs = translateFileComponents f d (maybe "" safeText sep) (toList cs)
-         in fromCs /= V.Success ""
-              ==> translateFileName f d (FileName cs sep) `shouldBe` fromCs
-    prop "is never null" $
-      \f d n ->
-        translateFileName f d n `shouldNotBe` V.Success ""
-    prop "always errors out for empty templates" $
-      \f d ->
-        translateFileName
-          f
-          d
-          ( FileName
-              [ FileIfThenElse Always [] [],
-                FileIfThenElse Always [] []
+      prop "does not introduce extra separators for empty components" $
+        \f ->
+          translateFolderComponents f " " [FolderTextLiteral "a", FolderIfThenElse Always [] [], FolderTextLiteral "b", FolderIfThenElse Always [] []]
+            `shouldBe` V.Success "a b"
+      prop "is always equivalent to non-empty translateFolderComponents separated by sep for multiple components" $
+        \cs f sep ->
+          translateFolderComponents f sep cs
+            `shouldBe` ( T.intercalate sep . filter (not . T.null)
+                           <$> traverse (translateFolderComponent f sep) cs
+                       )
+    describe "translateFolderName" $ do
+      prop "is always equivalent to translateFolderComponents if not null" $
+        \f cs sep ->
+          let fromCs = translateFolderComponents f (maybe "" safeText sep) (toList cs)
+           in fromCs /= V.Success ""
+                ==> translateFolderName f (FolderName cs sep) `shouldBe` fromCs
+      prop "is never null" $
+        \f n ->
+          translateFolderName f n `shouldNotBe` V.Success ""
+      prop "always errors out for empty templates" $
+        \f ->
+          translateFolderName
+            f
+            ( FolderName
+                [ FolderIfThenElse Always [] [FolderTextLiteral "a"],
+                  FolderIfThenElse (Not Always) [FolderTextLiteral "b"] []
+                ]
+                Nothing
+            )
+            `shouldBe` V.Failure
+              [ NullNameTemplate
+                  ( T.pack $
+                      show
+                        ( FolderName
+                            [ FolderIfThenElse Always [] [FolderTextLiteral "a"],
+                              FolderIfThenElse (Not Always) [FolderTextLiteral "b"] []
+                            ]
+                            Nothing
+                        )
+                  )
               ]
-              Nothing
+    describe "translateFileComponent" $ do
+      context "when component is duplicateNumber" $ do
+        prop "is always null for non-duplicates" $
+          \f sep ->
+            translateFileComponent f Nothing sep FileDuplicateNumber
+              `shouldBe` V.Success ""
+        prop "is simply the duplicate number for duplicates" $
+          \f n sep ->
+            translateFileComponent f (Just n) sep FileDuplicateNumber
+              `shouldBe` (V.Success . T.pack . show $ n)
+      context "when component is ifDuplicate" $ do
+        prop "is always equal to the components if duplicate" $
+          \f n sep cs ->
+            translateFileComponent f (Just n) sep (FileIfDuplicate cs)
+              `shouldBe` translateFileComponents f (Just n) sep (toList cs)
+        prop "is always null if not a duplicate" $
+          \f sep cs ->
+            translateFileComponent f Nothing sep (FileIfDuplicate cs)
+              `shouldBe` V.Success ""
+      prop "when component is anything else, is equal to folder component" $
+        \f d sep c ->
+          ( translateFolderComponent f sep c,
+            translateFileComponent f d sep (convertComponent c)
           )
-          `shouldBe` V.Failure
-            [ NullNameTemplate
-                ( T.pack $
-                    show
-                      ( FileName
-                          [ FileIfThenElse Always [] [],
-                            FileIfThenElse Always [] []
-                          ]
-                          Nothing
-                      )
-                )
+            `shouldSatisfy` ( \case
+                                (V.Success t1, V.Success t2) -> t1 == t2
+                                (V.Failure e1, V.Failure e2) ->
+                                  sameError e1 e2
+                                _ -> False
+                            )
+    describe "translateFileComponents" $ do
+      prop "is always equivalent to translateFileComponent for a single component" $
+        \c f d sep ->
+          translateFileComponents f d sep [c]
+            `shouldBe` translateFileComponent f d sep c
+      prop "is always empty for no components" $
+        \f d sep ->
+          translateFileComponents f d sep []
+            `shouldBe` V.Success ""
+      prop "does not introduce extra separators for empty components" $
+        \f ->
+          translateFileComponents
+            f
+            Nothing
+            " "
+            [ FileTextLiteral "a",
+              FileIfThenElse Always [] [],
+              FileTextLiteral "b",
+              FileDuplicateNumber,
+              FileIfDuplicate [FileTextLiteral "c"]
             ]
+            `shouldBe` V.Success "a b"
+      prop "is always equivalent to non-empty translateFileComponents separated by sep for multiple components" $
+        \cs f d sep ->
+          translateFileComponents f d sep cs
+            `shouldBe` ( T.intercalate sep . filter (not . T.null)
+                           <$> traverse (translateFileComponent f d sep) cs
+                       )
+    describe "translateFileName" $ do
+      prop "is always equivalent to translateFileComponents if not null" $
+        \f d cs sep ->
+          let fromCs = translateFileComponents f d (maybe "" safeText sep) (toList cs)
+           in fromCs /= V.Success ""
+                ==> translateFileName f d (FileName cs sep) `shouldBe` fromCs
+      prop "is never null" $
+        \f d n ->
+          translateFileName f d n `shouldNotBe` V.Success ""
+      prop "always errors out for empty templates" $
+        \f d ->
+          translateFileName
+            f
+            d
+            ( FileName
+                [ FileIfThenElse Always [] [],
+                  FileIfThenElse Always [] []
+                ]
+                Nothing
+            )
+            `shouldBe` V.Failure
+              [ NullNameTemplate
+                  ( T.pack $
+                      show
+                        ( FileName
+                            [ FileIfThenElse Always [] [],
+                              FileIfThenElse Always [] []
+                            ]
+                            Nothing
+                        )
+                  )
+              ]

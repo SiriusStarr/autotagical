@@ -12,9 +12,8 @@ import Test.Hspec
 import Utility (importFails, importSucceeds)
 
 spec :: Spec
-spec = parallel
-  $ context "FromDhall instances"
-  $ do
+spec =
+  context "FromDhall instances" $ do
     describe "SafeText" $ do
       let d = autoWith defaultInputNormalizer :: Decoder SafeText
       it "imports when valid" $
